@@ -1,0 +1,36 @@
+{
+    "name": "knplabs/packagist-api",
+    "type": "library",
+    "description": "Packagist API client.",
+    "keywords": ["packagist", "api", "composer"],
+    "homepage": "http://knplabs.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KnpLabs Team",
+            "homepage": "http://knplabs.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "guzzle/guzzle": "*",
+        "doctrine/inflector": "*"
+    },
+    "require-dev": {
+        "phpspec/phpspec2": "*"
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": {
+            "Packagist": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}
