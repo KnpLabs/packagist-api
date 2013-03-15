@@ -3,18 +3,21 @@
 namespace spec\Packagist;
 
 use PHPSpec2\ObjectBehavior;
+use PHPSpec2\Exception\Example\MatcherException;
+use Mockery\Matcher\Type as TypeMatcher;
 use spec\Packagist\Fixture\FixtureLoader;
 
 class Packagist extends ObjectBehavior
 {
     /**
-     * @param spec\Packagist\Mock\ClientMock $client
-     * @param Guzzle\Http\Message\Request    $request
-     * @param Guzzle\Http\Message\Response   $response
+     * @param spec\Packagist\Mock\ClientMock    $client
+     * @param Packagist\Result\FactoryInterface $factory
+     * @param Guzzle\Http\Message\Request       $request
+     * @param Guzzle\Http\Message\Response      $response
      */
-    function let($client, $request, $response)
+    function let($client, $factory, $request, $response)
     {
-        $this->beConstructedWith($client);
+        $this->beConstructedWith($client, $factory);
 
         $request->send()->willReturn($response);
     }
@@ -24,24 +27,33 @@ class Packagist extends ObjectBehavior
         $this->shouldHaveType('Packagist\Packagist');
     }
 
-    function it_search_for_packages($client, $request, $response)
+    function it_search_for_packages($client, $factory, $request, $response)
     {
         $client->get('https://packagist.org/search.json?q=sylius')->shouldBeCalled()->willReturn($request);
+        $data = FixtureLoader::load('search.json');
+        $response->getBody(true)->shouldBeCalled()->willReturn($data);
+        $factory->create(json_decode($data, true))->shouldBeCalled();
 
-        $response->getBody(true)->shouldBeCalled()->willReturn(
-            FixtureLoader::load('search.json')
-        );
-
-        $this->search('sylius')->shouldHaveCount(15);
+        $this->search('sylius');
     }
 
-    function it_gets_package_details($client, $request, $response)
+    function it_gets_package_details($client, $factory, $request, $response)
     {
         $client->get('https://packagist.org/p/sylius/sylius.json')->shouldBeCalled()->willReturn($request);
-        $response->getBody(true)->shouldBeCalled()->willReturn(
-            FixtureLoader::load('get.json')
-        );
+        $data = FixtureLoader::load('get.json');
+        $response->getBody(true)->shouldBeCalled()->willReturn($data);
+        $factory->create(json_decode($data, true))->shouldBeCalled();
 
-        $this->get('sylius/sylius')->shouldHaveCount(2);
+        $this->get('sylius/sylius');
+    }
+
+    function it_lists_all_package_names($client, $factory, $request, $response)
+    {
+        $client->get('https://packagist.org/packages/list.json')->shouldBeCalled()->willReturn($request);
+        $data = FixtureLoader::load('all.json');
+        $response->getBody(true)->shouldBeCalled()->willReturn($data);
+        $factory->create(json_decode($data, true))->shouldBeCalled();
+
+        $this->all();
     }
 }

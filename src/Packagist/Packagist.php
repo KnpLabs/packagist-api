@@ -20,20 +20,20 @@ class Packagist
 
     public function search($query)
     {
-        return $this->response('/search.json?q='.$query);
+        return $this->respond('/search.json?q='.$query);
     }
 
     public function get($package)
     {
-        return $this->response(sprintf('/p/%s.json', $package));
+        return $this->respond(sprintf('/p/%s.json', $package));
     }
 
     public function all()
     {
-        return $this->response('/packages/list.json');
+        return $this->respond('/packages/list.json');
     }
 
-    protected function response($url)
+    protected function respond($url)
     {
         $response = $this->request($url);
         $response = $this->parse($response);

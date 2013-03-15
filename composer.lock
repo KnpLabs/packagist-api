@@ -1,5 +1,5 @@
 {
-    "hash": "3cb402c392c4d07f3ad2d4a41d6e9e33",
+    "hash": "31acc34cfb4765e1bc33ccc739251508",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -75,12 +75,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236"
+                "reference": "feaae5dc97c07c55bb4d43932c5ba06156d102f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
-                "reference": "f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/feaae5dc97c07c55bb4d43932c5ba06156d102f4",
+                "reference": "feaae5dc97c07c55bb4d43932c5ba06156d102f4",
                 "shasum": ""
             },
             "require": {
@@ -160,7 +160,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-03-11 22:42:27"
+            "time": "2013-03-15 20:26:03"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -515,9 +515,9 @@
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "phpspec/phpspec2": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": {
         "php": ">=5.3.2"
     },

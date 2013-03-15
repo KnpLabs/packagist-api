@@ -12,6 +12,8 @@ class Factory implements FactoryInterface
             return $this->createSearchResults($data['results']);
         } elseif (isset($data['packages'])) {
             return $this->createPackageResults(array_pop($data['packages']));
+        } elseif (isset($data['packageNames'])) {
+            return $data['packageNames'];
         }
 
         throw new InvalidArgumentException('Invalid input data.');
