@@ -21,8 +21,7 @@ class Factory implements FactoryInterface
     {
         $created = array();
         foreach ($results as $key => $result) {
-            $created[$key] = new Result();
-            $created[$key]->fromArray($result);
+            $created[$key] = $this->createResult('Packagist\Result\Result', $result);
         }
 
         return $created;
@@ -32,15 +31,27 @@ class Factory implements FactoryInterface
     {
         $created = array();
         foreach ($packages as $branch => $package) {
-            foreach ($package['authors'] as $key => $author) {
-                $package['authors'][$key] = new Package\Author();
-                $package['authors'][$key]->fromArray($author);
+            if (isset($package['authors'])) {
+                foreach ($package['authors'] as $key => $author) {
+                    $package['authors'][$key] = $this->createResult('Packagist\Result\Package\Author', $author);
+                }
             }
+
+            $package['source'] = $this->createResult('Packagist\Result\Package\Source', $package['source']);
+            $package['dist'] = $this->createResult('Packagist\Result\Package\Dist', $package['dist']);
 
             $created[$branch] = new Package();
             $created[$branch]->fromArray($package);
         }
 
         return $created;
+    }
+
+    protected function createResult($class, $data)
+    {
+        $result = new $class();
+        $result->fromArray($data);
+
+        return $result;
     }
 }
