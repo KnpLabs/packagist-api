@@ -32,7 +32,7 @@ class Packagist extends ObjectBehavior
         $client->get('https://packagist.org/search.json?q=sylius')->shouldBeCalled()->willReturn($request);
         $data = FixtureLoader::load('search.json');
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
-        $factory->create(json_decode($data, true))->shouldBeCalled();
+        $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn(array());
 
         $this->search('sylius');
     }

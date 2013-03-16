@@ -20,17 +20,31 @@ class Packagist
 
     public function search($query)
     {
-        return $this->respond('/search.json?q='.$query);
+        $results = $response = array();
+        $response['next'] = $this->url('/search.json?q='.$query);
+
+        do {
+            $response = $this->request($response['next']);
+            $response = $this->parse($response);
+            $results = array_merge($results, $this->create($response));
+        } while(isset($response['next']));
+
+        return $results;
     }
 
     public function get($package)
     {
-        return $this->respond(sprintf('/p/%s.json', $package));
+        return $this->respond(sprintf($this->url('/p/%s.json'), $package));
     }
 
     public function all()
     {
-        return $this->respond('/packages/list.json');
+        return $this->respond($this->url('/packages/list.json'));
+    }
+
+    protected function url($url)
+    {
+        return 'https://packagist.org'.$url;
     }
 
     protected function respond($url)
@@ -48,7 +62,7 @@ class Packagist
         }
 
         return $this->client
-            ->get('https://packagist.org'.$url)
+            ->get($url)
             ->send()
             ->getBody(true)
         ;
