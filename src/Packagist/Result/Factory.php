@@ -4,7 +4,7 @@ namespace Packagist\Result;
 
 use InvalidArgumentException;
 
-class Factory implements FactoryInterface
+class Factory
 {
     public function create(array $data)
     {

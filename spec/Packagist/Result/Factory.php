@@ -16,11 +16,6 @@ class Factory extends ObjectBehavior implements CustomMatchersProviderInterface
         $this->shouldHaveType('Packagist\Result\Factory');
     }
 
-    function it_implements_result_factory_interface()
-    {
-        $this->shouldHaveType('Packagist\Result\FactoryInterface');
-    }
-
     function it_creates_search_results()
     {
         $data = json_decode(FixtureLoader::load('search.json'), true);

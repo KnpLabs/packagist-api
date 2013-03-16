@@ -5,14 +5,13 @@ namespace Packagist;
 use Guzzle\Http\Client;
 use Guzzle\Http\ClientInterface;
 use Packagist\Result\Factory;
-use Packagist\Result\FactoryInterface;
 
 class Packagist
 {
     protected $client;
     protected $factory;
 
-    public function __construct(ClientInterface $client = null, FactoryInterface $factory = null)
+    public function __construct(ClientInterface $client = null, Factory $factory = null)
     {
         $this->client = $client;
         $this->factory = $factory;

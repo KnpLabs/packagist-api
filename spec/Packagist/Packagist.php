@@ -10,10 +10,10 @@ use spec\Packagist\Fixture\FixtureLoader;
 class Packagist extends ObjectBehavior
 {
     /**
-     * @param spec\Packagist\Mock\ClientMock    $client
-     * @param Packagist\Result\FactoryInterface $factory
-     * @param Guzzle\Http\Message\Request       $request
-     * @param Guzzle\Http\Message\Response      $response
+     * @param spec\Packagist\Mock\ClientMock $client
+     * @param Packagist\Result\Factory       $factory
+     * @param Guzzle\Http\Message\Request    $request
+     * @param Guzzle\Http\Message\Response   $response
      */
     function let($client, $factory, $request, $response)
     {
