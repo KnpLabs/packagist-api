@@ -13,19 +13,19 @@
     ],
     "require": {
         "php": ">=5.3.2",
-        "guzzle/guzzle": "*",
-        "doctrine/inflector": "*"
+        "guzzle/http": "~3.0",
+        "doctrine/inflector": "~1.0"
     },
     "require-dev": {
-        "phpspec/phpspec2": "1.0.*"
+        "phpspec/phpspec2": "1.0.*@dev",
+        "phpspec/php-diff": "*@dev"
     },
-    "minimum-stability": "dev",
     "config": {
         "bin-dir": "bin"
     },
     "autoload": {
         "psr-0": {
-            "Packagist": "src/"
+            "Packagist\\": "src/"
         }
     },
     "extra": {
