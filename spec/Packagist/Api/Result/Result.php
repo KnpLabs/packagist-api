@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Packagist\Result;
+namespace spec\Packagist\Api\Result;
 
 use PHPSpec2\ObjectBehavior;
 
@@ -19,12 +19,12 @@ class Result extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Result\Result');
+        $this->shouldHaveType('Packagist\Api\Result\Result');
     }
 
     function it_is_a_packagist_result()
     {
-        $this->shouldHaveType('Packagist\Result\AbstractResult');
+        $this->shouldHaveType('Packagist\Api\Result\AbstractResult');
     }
 
     function it_gets_name()

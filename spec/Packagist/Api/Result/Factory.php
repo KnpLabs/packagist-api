@@ -1,19 +1,19 @@
 <?php
 
-namespace spec\Packagist\Result;
+namespace spec\Packagist\Api\Result;
 
 use PHPSpec2\ObjectBehavior;
 use PHPSpec2\Matcher\CustomMatchersProviderInterface;
 use PHPSpec2\Matcher\InlineMatcher;
 use PHPSpec2\Exception\Example\MatcherException;
 use Mockery\Matcher\Type as TypeMatcher;
-use spec\Packagist\Fixture\FixtureLoader;
+use spec\Packagist\Api\Fixture\FixtureLoader;
 
 class Factory extends ObjectBehavior implements CustomMatchersProviderInterface
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Result\Factory');
+        $this->shouldHaveType('Packagist\Api\Result\Factory');
     }
 
     function it_creates_search_results()
@@ -22,7 +22,7 @@ class Factory extends ObjectBehavior implements CustomMatchersProviderInterface
 
         $results = $this->create($data);
         $results->shouldHaveCount(2);
-        $matcher = new TypeMatcher('Packagist\Result\Result');
+        $matcher = new TypeMatcher('Packagist\Api\Result\Result');
         foreach ($results->getWrappedSubject() as $result) {
             if (!$matcher->match($result)) {
                 throw new MatcherException(sprintf('Result expected, got %s.', get_class($result)));
@@ -38,7 +38,7 @@ class Factory extends ObjectBehavior implements CustomMatchersProviderInterface
         $packages->shouldHaveCount(2);
         $packages->shouldHaveBranch('dev-master');
         $packages->shouldHaveBranch('dev-checkout');
-        $matcher = new TypeMatcher('Packagist\Result\Package');
+        $matcher = new TypeMatcher('Packagist\Api\Result\Package');
         foreach ($packages->getWrappedSubject() as $package) {
             if (!$matcher->match($package)) {
                 throw new MatcherException(sprintf('Package expected, got %s.', get_class($package)));

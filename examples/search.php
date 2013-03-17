@@ -2,7 +2,7 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-$packagist = new Packagist\Packagist();
-$results = $packagist->search('sylius');
+$client = new Packagist\Api\Client();
+$results = $client->search('sylius');
 
 var_dump($results);

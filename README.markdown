@@ -21,8 +21,8 @@ Search for packages:
 ```php
 <?php
 
-$packagist = new Packagist\Packagist();
-$results = $packagist->search('sylius');
+$client = new Packagist\Api\Client();
+$results = $client->search('sylius');
 
 foreach ($results as $result) {
     echo $result->getName();
@@ -52,8 +52,8 @@ Get package details:
 ```php
 <?php
 
-$packagist = new Packagist\Packagist();
-$packages = $packagist->get('sylius/sylius');
+$client = new Packagist\Api\Client();
+$packages = $client->get('sylius/sylius');
 $package = $packages['dev-master'];
 
 printf(
@@ -72,8 +72,8 @@ List all packages:
 ```php
 <?php
 
-$packagist = new Packagist\Packagist();
-$packages = $packagist->all();
+$client = new Packagist\Api\Client();
+$packages = $client->all();
 
 foreach ($packages as $package) {
     echo $package;

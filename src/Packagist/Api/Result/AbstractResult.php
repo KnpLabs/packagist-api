@@ -1,6 +1,6 @@
 <?php
 
-namespace Packagist\Result;
+namespace Packagist\Api\Result;
 
 use Doctrine\Common\Inflector\Inflector;
 

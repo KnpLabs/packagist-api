@@ -2,7 +2,7 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-$packagist = new Packagist\Packagist();
-$packages = $packagist->all();
+$client = new Packagist\Api\Client();
+$packages = $client->all();
 
 var_dump($packages);

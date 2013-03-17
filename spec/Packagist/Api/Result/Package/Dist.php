@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Packagist\Result\Package;
+namespace spec\Packagist\Api\Result\Package;
 
 use PHPSpec2\ObjectBehavior;
 
@@ -18,7 +18,7 @@ class Dist extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Result\Package\Dist');
+        $this->shouldHaveType('Packagist\Api\Result\Package\Dist');
     }
 
     function it_gets_type()

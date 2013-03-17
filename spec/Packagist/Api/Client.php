@@ -1,17 +1,17 @@
 <?php
 
-namespace spec\Packagist;
+namespace spec\Packagist\Api;
 
 use PHPSpec2\ObjectBehavior;
 use PHPSpec2\Exception\Example\MatcherException;
 use Mockery\Matcher\Type as TypeMatcher;
-use spec\Packagist\Fixture\FixtureLoader;
+use spec\Packagist\Api\Fixture\FixtureLoader;
 
-class Packagist extends ObjectBehavior
+class Client extends ObjectBehavior
 {
     /**
-     * @param spec\Packagist\Mock\ClientMock $client
-     * @param Packagist\Result\Factory       $factory
+     * @param spec\Packagist\Api\Mock\ClientMock $client
+     * @param Packagist\Api\Result\Factory       $factory
      * @param Guzzle\Http\Message\Request    $request
      * @param Guzzle\Http\Message\Response   $response
      */
@@ -24,7 +24,7 @@ class Packagist extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Packagist');
+        $this->shouldHaveType('Packagist\Api\Client');
     }
 
     function it_search_for_packages($client, $factory, $request, $response)

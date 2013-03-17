@@ -1,8 +1,8 @@
 <?php
 
-namespace Packagist\Result\Package;
+namespace Packagist\Api\Result\Package;
 
-use Packagist\Result\AbstractResult;
+use Packagist\Api\Result\AbstractResult;
 
 class Source extends AbstractResult
 {

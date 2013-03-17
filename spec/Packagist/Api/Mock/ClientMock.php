@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Packagist\Mock;
+namespace spec\Packagist\Api\Mock;
 
 use Guzzle\Http\ClientInterface;
 

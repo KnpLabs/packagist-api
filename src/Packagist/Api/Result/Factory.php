@@ -1,6 +1,6 @@
 <?php
 
-namespace Packagist\Result;
+namespace Packagist\Api\Result;
 
 use InvalidArgumentException;
 
@@ -23,7 +23,7 @@ class Factory
     {
         $created = array();
         foreach ($results as $key => $result) {
-            $created[$key] = $this->createResult('Packagist\Result\Result', $result);
+            $created[$key] = $this->createResult('Packagist\Api\Result\Result', $result);
         }
 
         return $created;
@@ -35,12 +35,12 @@ class Factory
         foreach ($packages as $branch => $package) {
             if (isset($package['authors'])) {
                 foreach ($package['authors'] as $key => $author) {
-                    $package['authors'][$key] = $this->createResult('Packagist\Result\Package\Author', $author);
+                    $package['authors'][$key] = $this->createResult('Packagist\Api\Result\Package\Author', $author);
                 }
             }
 
-            $package['source'] = $this->createResult('Packagist\Result\Package\Source', $package['source']);
-            $package['dist'] = $this->createResult('Packagist\Result\Package\Dist', $package['dist']);
+            $package['source'] = $this->createResult('Packagist\Api\Result\Package\Source', $package['source']);
+            $package['dist'] = $this->createResult('Packagist\Api\Result\Package\Dist', $package['dist']);
 
             $created[$branch] = new Package();
             $created[$branch]->fromArray($package);

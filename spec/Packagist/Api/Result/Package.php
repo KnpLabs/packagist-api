@@ -1,15 +1,15 @@
 <?php
 
-namespace spec\Packagist\Result;
+namespace spec\Packagist\Api\Result;
 
 use PHPSpec2\ObjectBehavior;
 
 class Package extends ObjectBehavior
 {
     /**
-     * @param Packagist\Result\Package\Author $author
-     * @param Packagist\Result\Package\Source $source
-     * @param Packagist\Result\Package\Dist   $dist
+     * @param Packagist\Api\Result\Package\Author $author
+     * @param Packagist\Api\Result\Package\Source $source
+     * @param Packagist\Api\Result\Package\Dist   $dist
      * @param DateTime                            $time
      */
     function let($author, $source, $dist, $time)
@@ -37,12 +37,12 @@ class Package extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Result\Package');
+        $this->shouldHaveType('Packagist\Api\Result\Package');
     }
 
     function it_is_a_packagist_result()
     {
-        $this->shouldHaveType('Packagist\Result\AbstractResult');
+        $this->shouldHaveType('Packagist\Api\Result\AbstractResult');
     }
 
     function it_gets_name()

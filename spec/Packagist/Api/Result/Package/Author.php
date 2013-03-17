@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Packagist\Result\Package;
+namespace spec\Packagist\Api\Result\Package;
 
 use PHPSpec2\ObjectBehavior;
 
@@ -17,7 +17,7 @@ class Author extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Result\Package\Author');
+        $this->shouldHaveType('Packagist\Api\Result\Package\Author');
     }
 
     function it_gets_name()

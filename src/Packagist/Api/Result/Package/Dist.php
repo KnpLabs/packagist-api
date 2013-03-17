@@ -1,6 +1,6 @@
 <?php
 
-namespace Packagist\Result\Package;
+namespace Packagist\Api\Result\Package;
 
 class Dist extends Source
 {

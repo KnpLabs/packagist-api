@@ -1,6 +1,6 @@
 <?php
 
-namespace Packagist\Result;
+namespace Packagist\Api\Result;
 
 class Result extends AbstractResult
 {

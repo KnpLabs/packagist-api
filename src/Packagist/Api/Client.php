@@ -1,20 +1,20 @@
 <?php
 
-namespace Packagist;
+namespace Packagist\Api;
 
-use Guzzle\Http\Client;
+use Guzzle\Http\Client as HttpClient;
 use Guzzle\Http\ClientInterface;
-use Packagist\Result\Factory;
+use Packagist\Api\Result\Factory;
 
-class Packagist
+class Client
 {
-    protected $client;
-    protected $factory;
+    protected $httpClient;
+    protected $resultFactory;
 
-    public function __construct(ClientInterface $client = null, Factory $factory = null)
+    public function __construct(ClientInterface $httpClient = null, Factory $resultFactory = null)
     {
-        $this->client = $client;
-        $this->factory = $factory;
+        $this->httpClient = $httpClient;
+        $this->resultFactory = $resultFactory;
     }
 
     public function search($query)
@@ -56,11 +56,11 @@ class Packagist
 
     protected function request($url)
     {
-        if (null === $this->client) {
-            $this->client = new Client();
+        if (null === $this->httpClient) {
+            $this->httpClient = new HttpClient();
         }
 
-        return $this->client
+        return $this->httpClient
             ->get($url)
             ->send()
             ->getBody(true)
@@ -74,10 +74,10 @@ class Packagist
 
     protected function create(array $data)
     {
-        if (null === $this->factory) {
-            $this->factory = new Factory();
+        if (null === $this->resultFactory) {
+            $this->resultFactory = new Factory();
         }
 
-        return $this->factory->create($data);
+        return $this->resultFactory->create($data);
     }
 }

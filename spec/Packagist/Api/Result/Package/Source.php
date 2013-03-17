@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Packagist\Result\Package;
+namespace spec\Packagist\Api\Result\Package;
 
 use PHPSpec2\ObjectBehavior;
 
@@ -17,7 +17,7 @@ class Source extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Result\Package\Source');
+        $this->shouldHaveType('Packagist\Api\Result\Package\Source');
     }
 
     function it_gets_type()

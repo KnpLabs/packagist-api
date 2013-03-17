@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Packagist\Fixture;
+namespace spec\Packagist\Api\Fixture;
 
 class FixtureLoader
 {
