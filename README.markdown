@@ -1,4 +1,4 @@
-# Packagist API
+# Packagist API [![Build Status](https://travis-ci.org/KnpLabs/packagist-api.png)](https://travis-ci.org/KnpLabs/packagist-api)
 
 Simple object oriented wrapper for Packagist API.
 
@@ -9,7 +9,7 @@ The recommended way to install Packagist API is through composer:
 ```js
 {
     "require": {
-        "knplabs/packagist-api": "*"
+        "knplabs/packagist-api": "0.1.*"
     }
 }
 ```
