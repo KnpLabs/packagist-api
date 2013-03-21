@@ -26,7 +26,7 @@ class Client
             $response = $this->request($response['next']);
             $response = $this->parse($response);
             $results = array_merge($results, $this->create($response));
-        } while(isset($response['next']));
+        } while (isset($response['next']));
 
         return $results;
     }
