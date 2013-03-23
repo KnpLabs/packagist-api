@@ -36,9 +36,14 @@ class Client
         return $this->respond(sprintf($this->url('/p/%s.json'), $package));
     }
 
-    public function all()
+    public function all(array $filters = array())
     {
-        return $this->respond($this->url('/packages/list.json'));
+        $url = '/packages/list.json';
+        if ($filters) {
+            $url .= '?'.http_build_query($filters);
+        }
+
+        return $this->respond($this->url($url));
     }
 
     protected function url($url)

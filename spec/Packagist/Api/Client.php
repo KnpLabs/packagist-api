@@ -56,4 +56,24 @@ class Client extends ObjectBehavior
 
         $this->all();
     }
+
+    function it_filters_package_names_by_type($client, $factory, $request, $response)
+    {
+        $client->get('https://packagist.org/packages/list.json?type=library')->shouldBeCalled()->willReturn($request);
+        $data = FixtureLoader::load('all.json');
+        $response->getBody(true)->shouldBeCalled()->willReturn($data);
+        $factory->create(json_decode($data, true))->shouldBeCalled();
+
+        $this->all(array('type' => 'library'));
+    }
+
+    function it_filters_package_names_by_vendor($client, $factory, $request, $response)
+    {
+        $client->get('https://packagist.org/packages/list.json?vendor=sylius')->shouldBeCalled()->willReturn($request);
+        $data = FixtureLoader::load('all.json');
+        $response->getBody(true)->shouldBeCalled()->willReturn($data);
+        $factory->create(json_decode($data, true))->shouldBeCalled();
+
+        $this->all(array('vendor' => 'sylius'));
+    }
 }

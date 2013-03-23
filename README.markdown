@@ -52,7 +52,6 @@ Get package details:
 ```php
 <?php
 
-$client = new Packagist\Api\Client();
 $packages = $client->get('sylius/sylius');
 $package = $packages['dev-master'];
 
@@ -72,7 +71,6 @@ List all packages:
 ```php
 <?php
 
-$client = new Packagist\Api\Client();
 $packages = $client->all();
 
 foreach ($packages as $package) {
@@ -84,4 +82,13 @@ abhinavsingh/jaxl
 abishekrsrikaanth/fuel-util
 abmundi/database-commands-bundle
 ...
+```
+
+They can be filtered by type or vendor:
+
+```php
+<?php
+
+$client->all(array('type' => 'library'));
+$client->all(array('vendor' => 'sylius'));
 ```
