@@ -39,7 +39,7 @@ class Client extends ObjectBehavior
 
     function it_gets_package_details($client, $factory, $request, $response)
     {
-        $client->get('https://packagist.org/p/sylius/sylius.json')->shouldBeCalled()->willReturn($request);
+        $client->get('https://packagist.org/packages/sylius/sylius.json')->shouldBeCalled()->willReturn($request);
         $data = FixtureLoader::load('get.json');
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
         $factory->create(json_decode($data, true))->shouldBeCalled();

@@ -58,12 +58,11 @@ $package = $packages['dev-master'];
 printf(
     'Package %s. %s. Read more on %s.',
     $package->getName(),
-    $package->getDescription(),
-    $package->getHomepage()
+    $package->getDescription()
 );
 
 // Outputs:
-Package sylius/sylius. Modern ecommerce for Symfony2. Read more on http://sylius.org.
+Package sylius/sylius. Modern ecommerce for Symfony2.
 ```
 
 List all packages:

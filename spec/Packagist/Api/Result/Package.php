@@ -7,31 +7,25 @@ use PHPSpec2\ObjectBehavior;
 class Package extends ObjectBehavior
 {
     /**
-     * @param Packagist\Api\Result\Package\Author $author
-     * @param Packagist\Api\Result\Package\Source $source
-     * @param Packagist\Api\Result\Package\Dist   $dist
-     * @param DateTime                            $time
+     * @param Packagist\Api\Result\Package\Maintainer $maintainer
+     * @param Packagist\Api\Result\Package\Version    $version
+     * @param Packagist\Api\Result\Package\Source     $source
+     * @param Packagist\Api\Result\Package\Dist       $dist
+     * @param Packagist\Api\Result\Package\Downloads  $downloads
+     * @param DateTime                                $time
      */
-    function let($author, $source, $dist, $time)
+    function let($maintainer, $version, $source, $dist, $downloads, $time)
     {
         $this->fromArray(array(
-            'name'               => 'sylius/sylius',
-            'description'        => 'Modern ecommerce for Symfony2',
-            'keywords'           => array('sylius'),
-            'homepage'           => 'http://sylius.com',
-            'version'            => 'dev-checkout',
-            'version_normalized' => 'dev-checkout',
-            'license'            => 'MIT',
-            'authors'            => array($author),
-            'source'             => $source,
-            'dist'               => $dist,
-            'type'               => 'library',
-            'time'               => $time,
-            'autoload'           => array('psr-0' => array('Context' => 'features/')),
-            'extra'              => array('symfony-app-dir' => 'sylius'),
-            'require'            => array('php' => '>=5.4'),
-            'require-dev'        => array('phpspec/phpspec2' => 'dev-develop'),
-            'uid'                => 40293,
+            'name'        => 'sylius/sylius',
+            'description' => 'Modern ecommerce for Symfony2',
+            'time'        => $time,
+            'maintainers' => array($maintainer),
+            'versions'    => array($version),
+            'type'        => 'library',
+            'repository'  => 'https://github.com/Sylius/Sylius.git',
+            'downloads'   => $downloads,
+            'favers'      => 9999999999,
         ));
     }
 
@@ -55,44 +49,19 @@ class Package extends ObjectBehavior
         $this->getDescription()->shouldReturn('Modern ecommerce for Symfony2');
     }
 
-    function it_gets_keywords()
+    function it_gets_time($time)
     {
-        $this->getKeywords()->shouldReturn(array('sylius'));
+        $this->getTime()->shouldReturn($time);
     }
 
-    function it_gets_homepage()
+    function it_gets_maintainers($maintainer)
     {
-        $this->getHomepage()->shouldReturn('http://sylius.com');
+        $this->getMaintainers()->shouldReturn(array($maintainer));
     }
 
-    function it_gets_version()
+    function it_gets_versions($version)
     {
-        $this->getVersion()->shouldReturn('dev-checkout');
-    }
-
-    function it_gets_normalized_version()
-    {
-        $this->getVersionNormalized()->shouldReturn('dev-checkout');
-    }
-
-    function it_gets_license()
-    {
-        $this->getLicense()->shouldReturn('MIT');
-    }
-
-    function it_has_authors($author)
-    {
-        $this->getAuthors()->shouldReturn(array($author));
-    }
-
-    function it_gets_source($source)
-    {
-        $this->getSource()->shouldReturn($source);
-    }
-
-    function it_gets_dist($dist)
-    {
-        $this->getDist()->shouldReturn($dist);
+        $this->getVersions()->shouldReturn(array($version));
     }
 
     function it_gets_type()
@@ -100,33 +69,18 @@ class Package extends ObjectBehavior
         $this->getType()->shouldReturn('library');
     }
 
-    function it_gets_time($time)
+    function it_gets_repository()
     {
-        $this->getTime()->shouldReturn($time);
+        $this->getRepository()->shouldReturn('https://github.com/Sylius/Sylius.git');
     }
 
-    function it_gets_autoload()
+    function it_gets_downloads($downloads)
     {
-        $this->getAutoload()->shouldReturn(array('psr-0' => array('Context' => 'features/')));
+        $this->getDownloads()->shouldReturn($downloads);
     }
 
-    function it_gets_extra()
+    function it_gets_favers()
     {
-        $this->getExtra()->shouldReturn(array('symfony-app-dir' => 'sylius'));
-    }
-
-    function it_gets_require()
-    {
-        $this->getRequire()->shouldReturn(array('php' => '>=5.4'));
-    }
-
-    function it_gets_require_dev()
-    {
-        $this->getRequireDev()->shouldReturn(array('phpspec/phpspec2' => 'dev-develop'));
-    }
-
-    function it_gets_uid()
-    {
-        $this->getUid()->shouldReturn(40293);
+        $this->getFavers()->shouldReturn(9999999999);
     }
 }

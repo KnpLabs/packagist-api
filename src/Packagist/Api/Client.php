@@ -33,7 +33,7 @@ class Client
 
     public function get($package)
     {
-        return $this->respond(sprintf($this->url('/p/%s.json'), $package));
+        return $this->respond(sprintf($this->url('/packages/%s.json'), $package));
     }
 
     public function all(array $filters = array())

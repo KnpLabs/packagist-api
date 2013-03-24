@@ -34,16 +34,7 @@ class Factory extends ObjectBehavior implements CustomMatchersProviderInterface
     {
         $data = json_decode(FixtureLoader::load('get.json'), true);
 
-        $packages = $this->create($data);
-        $packages->shouldHaveCount(2);
-        $packages->shouldHaveBranch('dev-master');
-        $packages->shouldHaveBranch('dev-checkout');
-        $matcher = new TypeMatcher('Packagist\Api\Result\Package');
-        foreach ($packages->getWrappedSubject() as $package) {
-            if (!$matcher->match($package)) {
-                throw new MatcherException(sprintf('Package expected, got %s.', get_class($package)));
-            }
-        }
+        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
     }
 
     function it_creates_package_names()

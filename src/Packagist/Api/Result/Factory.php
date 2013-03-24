@@ -10,8 +10,8 @@ class Factory
     {
         if (isset($data['results'])) {
             return $this->createSearchResults($data['results']);
-        } elseif (isset($data['packages'])) {
-            return $this->createPackageResults(array_pop($data['packages']));
+        } elseif (isset($data['package'])) {
+            return $this->createPackageResults($data['package']);
         } elseif (isset($data['packageNames'])) {
             return $data['packageNames'];
         }
@@ -29,22 +29,32 @@ class Factory
         return $created;
     }
 
-    public function createPackageResults(array $packages)
+    public function createPackageResults(array $package)
     {
         $created = array();
-        foreach ($packages as $branch => $package) {
-            if (isset($package['authors'])) {
-                foreach ($package['authors'] as $key => $author) {
-                    $package['authors'][$key] = $this->createResult('Packagist\Api\Result\Package\Author', $author);
+
+        if (isset($package['maintainers'])) {
+            foreach ($package['maintainers'] as $key => $maintainer) {
+                $package['maintainers'][$key] = $this->createResult('Packagist\Api\Result\Package\Maintainer', $maintainer);
+            }
+        }
+
+        $package['downloads'] = $this->createResult('Packagist\Api\Result\Package\Downloads', $package['downloads']);
+
+        foreach ($package['versions'] as $branch => $version) {
+            if (isset($version['authors'])) {
+                foreach ($version['authors'] as $key => $author) {
+                    $version['authors'][$key] = $this->createResult('Packagist\Api\Result\Package\Author', $author);
                 }
             }
+            $version['source'] = $this->createResult('Packagist\Api\Result\Package\Source', $version['source']);
+            $version['dist'] = $this->createResult('Packagist\Api\Result\Package\Dist', $version['dist']);
 
-            $package['source'] = $this->createResult('Packagist\Api\Result\Package\Source', $package['source']);
-            $package['dist'] = $this->createResult('Packagist\Api\Result\Package\Dist', $package['dist']);
-
-            $created[$branch] = new Package();
-            $created[$branch]->fromArray($package);
+            $package['versions'][$branch] = $this->createResult('Packagist\Api\Result\Package\Version', $version);
         }
+
+        $created = new Package();
+        $created->fromArray($package);
 
         return $created;
     }

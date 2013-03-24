@@ -6,21 +6,13 @@ class Package extends AbstractResult
 {
     protected $name;
     protected $description;
-    protected $keywords;
-    protected $homepage;
-    protected $version;
-    protected $versionNormalized;
-    protected $license;
-    protected $authors;
-    protected $source;
-    protected $dist;
-    protected $type;
     protected $time;
-    protected $autoload;
-    protected $extra;
-    protected $require;
-    protected $requireDev;
-    protected $uid;
+    protected $maintainers;
+    protected $versions;
+    protected $type;
+    protected $repository;
+    protected $downloads;
+    protected $favers;
 
     public function getName()
     {
@@ -32,44 +24,19 @@ class Package extends AbstractResult
         return $this->description;
     }
 
-    public function getKeywords()
+    public function getTime()
     {
-        return $this->keywords;
+        return $this->time;
     }
 
-    public function getHomepage()
+    public function getMaintainers()
     {
-        return $this->homepage;
+        return $this->maintainers;
     }
 
-    public function getVersion()
+    public function getVersions()
     {
-        return $this->version;
-    }
-
-    public function getVersionNormalized()
-    {
-        return $this->versionNormalized;
-    }
-
-    public function getLicense()
-    {
-        return $this->license;
-    }
-
-    public function getAuthors()
-    {
-        return $this->authors;
-    }
-
-    public function getSource()
-    {
-        return $this->source;
-    }
-
-    public function getDist()
-    {
-        return $this->dist;
+        return $this->versions;
     }
 
     public function getType()
@@ -77,33 +44,18 @@ class Package extends AbstractResult
         return $this->type;
     }
 
-    public function getTime()
+    public function getRepository()
     {
-        return $this->time;
+        return $this->repository;
     }
 
-    public function getAutoload()
+    public function getDownloads()
     {
-        return $this->autoload;
+        return $this->downloads;
     }
 
-    public function getExtra()
+    public function getFavers()
     {
-        return $this->extra;
-    }
-
-    public function getRequire()
-    {
-        return $this->require;
-    }
-
-    public function getRequireDev()
-    {
-        return $this->requireDev;
-    }
-
-    public function getUid()
-    {
-        return $this->uid;
+        return $this->favers;
     }
 }
