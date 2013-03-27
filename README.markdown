@@ -52,8 +52,7 @@ sylius/promotions-bundle
 #### Get package details:
 
 ```php
-$packages = $client->get('sylius/sylius');
-$package  = $packages['dev-master'];
+$package = $client->get('sylius/sylius');
 
 printf(
     'Package %s. %s. Read more on %s.',
@@ -88,4 +87,4 @@ $client->all(array('vendor' => 'sylius'));
 
 ## License
 
-`packagist-api` is licensed under the MIT License - see the LICENSE file for details
+`packagist-api` is licensed under the MIT License - see the LICENSE file for details.
