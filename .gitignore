@@ -1,2 +1,3 @@
+bin/phpspec
 composer.lock
 vendor
