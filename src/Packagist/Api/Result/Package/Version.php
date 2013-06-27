@@ -21,6 +21,7 @@ class Version extends AbstractResult
     protected $extra;
     protected $require;
     protected $requireDev;
+    protected $bin;
 
     public function getName()
     {
@@ -100,5 +101,10 @@ class Version extends AbstractResult
     public function getRequireDev()
     {
         return $this->requireDev;
+    }
+
+    public function getBin()
+    {
+        return $this->bin;
     }
 }
