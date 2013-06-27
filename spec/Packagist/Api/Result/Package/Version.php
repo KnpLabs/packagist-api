@@ -31,6 +31,7 @@ class Version extends ObjectBehavior
             'extra'              => array('symfony-app-dir' => 'sylius'),
             'require'            => array('php' => '>=5.4'),
             'require-dev'        => array('phpspec/phpspec2' => 'dev-develop'),
+            'bin'                => array('bin/sylius'),
         ));
     }
 
@@ -122,5 +123,10 @@ class Version extends ObjectBehavior
     function it_gets_require_dev()
     {
         $this->getRequireDev()->shouldReturn(array('phpspec/phpspec2' => 'dev-develop'));
+    }
+
+    function it_gets_bin()
+    {
+        $this->getBin()->shouldReturn(array('bin/sylius'));
     }
 }
