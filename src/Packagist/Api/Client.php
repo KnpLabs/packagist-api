@@ -21,7 +21,7 @@ class Client
     {
         $results = $response = array();
         $filters['q'] = $query;
-        $url = '/search.json?' . http_build_query($filter);
+        $url = '/search.json?' . http_build_query($filters);
         $response['next'] = $this->url($url);
 
         do {
