@@ -39,7 +39,7 @@ class Client extends ObjectBehavior
 
     function it_searches_for_packages_with_filters($client, $factory, $request, $response)
     {
-        $client->get('https://packagist.org/search.json?q=sylius')->shouldBeCalled()->willReturn($request);
+        $client->get('https://packagist.org/search.json?q=sylius&vendor=sylius')->shouldBeCalled()->willReturn($request);
         $data = FixtureLoader::load('search.json');
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
         $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn(array());
