@@ -17,10 +17,12 @@ class Client
         $this->resultFactory = $resultFactory;
     }
 
-    public function search($query)
+    public function search($query, array $filters = array())
     {
         $results = $response = array();
-        $response['next'] = $this->url('/search.json?q='.$query);
+        $filters['q'] = $query;
+        $url = '/search.json?' . http_build_query($filters);
+        $response['next'] = $this->url($url);
 
         do {
             $response = $this->request($response['next']);
