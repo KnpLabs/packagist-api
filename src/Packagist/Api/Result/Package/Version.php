@@ -21,6 +21,9 @@ class Version extends AbstractResult
     protected $extra;
     protected $require;
     protected $requireDev;
+    protected $conflict;
+    protected $provide;
+    protected $replace;
     protected $bin;
 
     public function getName()
@@ -101,6 +104,21 @@ class Version extends AbstractResult
     public function getRequireDev()
     {
         return $this->requireDev;
+    }
+
+    public function getConflict()
+    {
+        return $this->conflict;
+    }
+
+    public function getProvide()
+    {
+        return $this->provide;
+    }
+
+    public function getReplace()
+    {
+        return $this->replace;
     }
 
     public function getBin()
