@@ -48,6 +48,13 @@ class Factory extends ObjectBehavior implements CustomMatchersProviderInterface
         ));
     }
 
+    function it_creates_packages_with_missing_optional_data()
+    {
+        $data = json_decode(FixtureLoader::load('get_nodist.json'), true);
+
+        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
+    }
+
     static public function getMatchers()
     {
         return array(

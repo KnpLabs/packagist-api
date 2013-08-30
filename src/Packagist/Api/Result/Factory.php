@@ -33,22 +33,26 @@ class Factory
     {
         $created = array();
 
-        if (isset($package['maintainers'])) {
+        if (isset($package['maintainers']) && $package['maintainers']) {
             foreach ($package['maintainers'] as $key => $maintainer) {
                 $package['maintainers'][$key] = $this->createResult('Packagist\Api\Result\Package\Maintainer', $maintainer);
             }
         }
 
-        $package['downloads'] = $this->createResult('Packagist\Api\Result\Package\Downloads', $package['downloads']);
+        if (isset($package['downloads']) && $package['downloads']) {
+            $package['downloads'] = $this->createResult('Packagist\Api\Result\Package\Downloads', $package['downloads']);
+        }
 
         foreach ($package['versions'] as $branch => $version) {
-            if (isset($version['authors'])) {
+            if (isset($version['authors']) && $version['authors']) {
                 foreach ($version['authors'] as $key => $author) {
                     $version['authors'][$key] = $this->createResult('Packagist\Api\Result\Package\Author', $author);
                 }
             }
             $version['source'] = $this->createResult('Packagist\Api\Result\Package\Source', $version['source']);
-            $version['dist'] = $this->createResult('Packagist\Api\Result\Package\Dist', $version['dist']);
+            if (isset($version['dist']) && $version['dist']) {
+                $version['dist'] = $this->createResult('Packagist\Api\Result\Package\Dist', $version['dist']);
+            }
 
             $package['versions'][$branch] = $this->createResult('Packagist\Api\Result\Package\Version', $version);
         }
