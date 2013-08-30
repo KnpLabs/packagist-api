@@ -1,4 +1,4 @@
-# Packagist API [![Build Status](https://travis-ci.org/KnpLabs/packagist-api.png)](https://travis-ci.org/KnpLabs/packagist-api)
+# Packagist API [![Build Status](https://travis-ci.org/KnpLabs/packagist-api.png)](https://travis-ci.org/KnpLabs/packagist-api) [![Latest Stable Version](https://poser.pugx.org/KnpLabs/packagist-api/v/stable.png)](https://packagist.org/packages/KnpLabs/packagist-api) [![Total Downloads](https://poser.pugx.org/KnpLabs/packagist-api/downloads.png)](https://packagist.org/packages/KnpLabs/packagist-api)
 
 Simple object oriented wrapper for Packagist API.
 
