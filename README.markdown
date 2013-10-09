@@ -85,6 +85,14 @@ $client->all(array('type' => 'library'));
 $client->all(array('vendor' => 'sylius'));
 ```
 
+#### Custom Packagist Repositories
+
+You can also set a custom Packagist Repository URL:
+
+```php
+$client->setPackagistUrl("https://custom.packagist.site.org");
+```
+
 ## License
 
 `packagist-api` is licensed under the MIT License - see the LICENSE file for details.
