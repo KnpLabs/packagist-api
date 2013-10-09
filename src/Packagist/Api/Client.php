@@ -105,6 +105,4 @@ class Client
     {
         return $this->packagistUrl;
     }
-
-
 }
