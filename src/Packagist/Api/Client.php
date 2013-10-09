@@ -10,11 +10,13 @@ class Client
 {
     protected $httpClient;
     protected $resultFactory;
+    protected $packagistUrl;
 
-    public function __construct(ClientInterface $httpClient = null, Factory $resultFactory = null)
+    public function __construct(ClientInterface $httpClient = null, Factory $resultFactory = null, $packagistUrl = "https://packagist.org")
     {
         $this->httpClient = $httpClient;
         $this->resultFactory = $resultFactory;
+        $this->packagistUrl = $packagistUrl;
     }
 
     public function search($query, array $filters = array())
@@ -50,7 +52,7 @@ class Client
 
     protected function url($url)
     {
-        return 'https://packagist.org'.$url;
+        return $this->packagistUrl.$url;
     }
 
     protected function respond($url)
@@ -87,4 +89,22 @@ class Client
 
         return $this->resultFactory->create($data);
     }
+
+    /**
+     * @param string $packagistUrl
+     */
+    public function setPackagistUrl($packagistUrl)
+    {
+        $this->packagistUrl = $packagistUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPackagistUrl()
+    {
+        return $this->packagistUrl;
+    }
+
+
 }
