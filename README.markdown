@@ -9,7 +9,7 @@ The recommended way to install Packagist API is through composer:
 ```json
 {
     "require": {
-        "knplabs/packagist-api": "0.1.*@dev"
+        "knplabs/packagist-api": "1.*@dev"
     }
 }
 ```
@@ -90,7 +90,7 @@ $client->all(array('vendor' => 'sylius'));
 You can also set a custom Packagist Repository URL:
 
 ```php
-$client->setPackagistUrl("https://custom.packagist.site.org");
+$client->setPackagistUrl('https://custom.packagist.site.org');
 ```
 
 ## License
