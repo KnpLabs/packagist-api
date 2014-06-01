@@ -7,77 +7,99 @@ class Package extends AbstractResult
     /**
      * @var string
      */
-    protected $name;
+    protected $name = null;
     /**
      * @var string
      */
-    protected $description;
+    protected $description = null;
     /**
-     * @var unknown
+     * @var string
      */
-    protected $time;
+    protected $time = null;
     /**
      * @var Maintainer
      */
-    protected $maintainers;
+    protected $maintainers = null;
     /**
      * @var Version
      */
-    protected $versions;
+    protected $versions = null;
     /**
-     * @var unknown
+     * @var string
      */
-    protected $type;
+    protected $type = null;
     /**
-     * @var unknown
+     * @var string
      */
-    protected $repository;
+    protected $repository = null;
     /**
      * @var Downloads
      */
-    protected $downloads;
-    protected $favers;
+    protected $downloads = null;
+    /**
+     * @var string
+     */
+    protected $favers = null;
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
-
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return $this->description;
     }
-
+    /**
+     * @return string
+     */
     public function getTime()
     {
         return $this->time;
     }
-
+    /**
+     * @return \Packagist\Api\Result\Maintainer
+     */
     public function getMaintainers()
     {
         return $this->maintainers;
     }
-
+    /**
+     * @return \Packagist\Api\Result\Version
+     */
     public function getVersions()
     {
         return $this->versions;
     }
-
+    /**
+     * @return string
+     */
     public function getType()
     {
         return $this->type;
     }
-
+    /**
+     * @return string
+     */
     public function getRepository()
     {
         return $this->repository;
     }
-
+    /**
+     * @return \Packagist\Api\Result\Downloads
+     */
     public function getDownloads()
     {
         return $this->downloads;
     }
-
+    /**
+     * @return string
+     */
     public function getFavers()
     {
         return $this->favers;
