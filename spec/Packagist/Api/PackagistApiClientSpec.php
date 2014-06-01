@@ -32,7 +32,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         return file_get_contents(__DIR__ . '/Fixture/' . $name);
     }
 
-    public function it_search_for_packages(Client $client, Factory $factory, Request $request, Response $response)
+    public function it_search_for_packages(Client $client, Factory $factory, Response $response)
     {
         $client->get('https://packagist.org/search.json?q=sylius')->shouldBeCalled()->willReturn($client);
         $client->send()->shouldBeCalled()->willReturn($response);
@@ -44,7 +44,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $this->search('sylius');
     }
 
-    function it_searches_for_packages_with_filters($client, $factory, $request, $response)
+    function it_searches_for_packages_with_filters(Client $client, Factory $factory, Request $request, Response $response)
     {
         $client->get('https://packagist.org/search.json?tag=storage&q=sylius')->shouldBeCalled()->willReturn($request);
         $data = self::load('search.json');
@@ -54,7 +54,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $this->search('sylius', array('tag' => 'storage'));
     }
 
-    function it_gets_package_details($client, $factory, $request, $response)
+    function it_gets_package_details(Client $client, Factory $factory, Request $request, Response $response)
     {
         $client->get('https://packagist.org/packages/sylius/sylius.json')->shouldBeCalled()->willReturn($request);
         $data = self::load('get.json');
@@ -64,7 +64,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $this->get('sylius/sylius');
     }
 
-    function it_lists_all_package_names($client, $factory, $request, $response)
+    function it_lists_all_package_names(Client $client, Factory $factory, Request $request, Response $response)
     {
         $client->get('https://packagist.org/packages/list.json')->shouldBeCalled()->willReturn($request);
         $data = self::load('all.json');
@@ -74,7 +74,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $this->all();
     }
 
-    function it_filters_package_names_by_type($client, $factory, $request, $response)
+    function it_filters_package_names_by_type(Client $client, Factory $factory, Request $request, Response $response)
     {
         $client->get('https://packagist.org/packages/list.json?type=library')->shouldBeCalled()->willReturn($request);
         $data = self::load('all.json');
@@ -84,7 +84,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $this->all(array('type' => 'library'));
     }
 
-    function it_filters_package_names_by_vendor($client, $factory, $request, $response)
+    function it_filters_package_names_by_vendor(Client $client, Factory $factory, Request $request, Response $response)
     {
         $client->get('https://packagist.org/packages/list.json?vendor=sylius')->shouldBeCalled()->willReturn($request);
         $data = self::load('all.json');
