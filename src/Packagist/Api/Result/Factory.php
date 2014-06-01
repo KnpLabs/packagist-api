@@ -2,7 +2,6 @@
 
 namespace Packagist\Api\Result;
 
-use InvalidArgumentException;
 use Packagist\Api\Result\Package\Source;
 use Packagist\Api\Result\Package\Dist;
 use Packagist\Api\Result\Package\Version;
