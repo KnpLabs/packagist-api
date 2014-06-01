@@ -16,6 +16,7 @@ class Version extends AbstractResult
     protected $authors;
     protected $source;
     protected $dist;
+    protected $type;
     protected $time;
     protected $autoload;
     protected $extra;

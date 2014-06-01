@@ -2,13 +2,13 @@
 
 namespace spec\Packagist\Api\Result\Package;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Author extends ObjectBehavior
+class AuthorSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->fromArray(array(
+        $this->beConstructedWith(array(
             'name'     => 'Saša Stamenković',
             'email'    => 'umpirsky@gmail.com',
             'homepage' => 'umpirsky.com',

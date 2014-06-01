@@ -15,8 +15,8 @@ class PackagistApiClientFactory
     public static function getInstance($packagistUrl = "https://packagist.org")
     {
         return new PackagistApiClient(
-            new Factory(),
             new Client(),
+            new Factory(),
             $packagistUrl
         );
     }

@@ -2,9 +2,9 @@
 
 namespace spec\Packagist\Api\Result;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Package extends ObjectBehavior
+class PackageSpec extends ObjectBehavior
 {
     /**
      * @param Packagist\Api\Result\Package\Maintainer $maintainer
@@ -16,7 +16,7 @@ class Package extends ObjectBehavior
      */
     function let($maintainer, $version, $source, $dist, $downloads, $time)
     {
-        $this->fromArray(array(
+        $this->beConstructedWith(array(
             'name'        => 'sylius/sylius',
             'description' => 'Modern ecommerce for Symfony2',
             'time'        => $time,

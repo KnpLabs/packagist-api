@@ -2,9 +2,9 @@
 
 namespace spec\Packagist\Api\Result\Package;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Version extends ObjectBehavior
+class VersionSpec extends ObjectBehavior
 {
     /**
      * @param Packagist\Api\Result\Package\Author $author
@@ -14,7 +14,7 @@ class Version extends ObjectBehavior
      */
     function let($author, $source, $dist, $time)
     {
-        $this->fromArray(array(
+        $this->beConstructedWith(array(
             'name'               => 'sylius/sylius',
             'description'        => 'Modern ecommerce for Symfony2',
             'keywords'           => array('sylius'),

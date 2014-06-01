@@ -2,13 +2,13 @@
 
 namespace spec\Packagist\Api\Result\Package;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Downloads extends ObjectBehavior
+class DownloadsSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->fromArray(array(
+        $this->beConstructedWith(array(
             'total'   => 9999999,
             'monthly' => 99999,
             'daily'   => 999,

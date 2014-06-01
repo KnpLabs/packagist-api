@@ -2,13 +2,13 @@
 
 namespace spec\Packagist\Api\Result\Package;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Source extends ObjectBehavior
+class SourceSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->fromArray(array(
+        $this->beConstructedWith(array(
             'type'      => 'zip',
             'url'       => 'https://api.github.com/repos/Sylius/Sylius/zipball/cb0a489db41707d5df078f1f35e028e04ffd9e8e',
             'reference' => 'cb0a489db41707d5df078f1f35e028e04ffd9e8e',

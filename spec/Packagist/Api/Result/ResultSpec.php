@@ -2,13 +2,13 @@
 
 namespace spec\Packagist\Api\Result;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Result extends ObjectBehavior
+class ResultSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->fromArray(array(
+        $this->beConstructedWith(array(
             'name'        => 'sylius/sylius',
             'description' => 'Modern ecommerce for Symfony2',
             'url'         => 'http://sylius.com',
