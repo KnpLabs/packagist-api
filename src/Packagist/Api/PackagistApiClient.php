@@ -4,6 +4,7 @@ namespace Packagist\Api;
 
 use Guzzle\Http\ClientInterface;
 use Packagist\Api\Result\Factory;
+use Packagist\Api\Result\ResultCollection;
 
 class PackagistApiClient
 {
@@ -39,17 +40,18 @@ class PackagistApiClient
      */
     public function search($query, array $filters = array())
     {
-        $results = $response = array();
-        $filters['q'] = $query;
-        $url = '/search.json?' . http_build_query($filters);
+        $filters['q']     = $query;
+        $url              = '/search.json?' . http_build_query($filters);
+        $response         = array();
         $response['next'] = $url;
+        $resultCollection = new ResultCollection();
 
         do {
             $response = $this->parseRequestResponse($this->request($response['next']));
-            $results = array_merge($results, $this->resultFactory->createSearchResults($response));
+            $resultCollection = $this->resultFactory->createSearchResults($resultCollection, $response);
         } while (isset($response['next']));
 
-        return $results;
+        return $resultCollection;
     }
 
     /**
@@ -89,7 +91,7 @@ class PackagistApiClient
      */
     private function request($url)
     {
-        return $this->httpClient->get($this->packagistUrl . $url)
+        return $this->httpClient->get((strpos($url, 'http') === false) ? $this->packagistUrl . $url : $url)
                                 ->send()
                                 ->getBody(true);
     }

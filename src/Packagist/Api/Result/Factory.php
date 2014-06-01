@@ -24,20 +24,21 @@ class Factory
     }
 
     /**
+     * @param ResultCollection $resultCollection
      * @param array $results
      * @return ResultCollection
      */
-    public function createSearchResults(array $results)
+    public function createSearchResults(ResultCollection $resultCollection, array $results)
     {
-        $created = new ResultCollection();
+        $resultCollection = clone $resultCollection;
 
         if (isset($results['results'])) {
             foreach ($results['results'] as $key => $result) {
-                $created->append(new Result($result));
+                $resultCollection->append(new Result($result));
             }
         }
 
-        return $created;
+        return $resultCollection;
     }
 
     /**
