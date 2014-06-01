@@ -16,20 +16,11 @@ class Factory
 {
     /**
      * @param array $data
-     * @throws InvalidArgumentException
-     * @return \Packagist\Api\Result\ResultCollection|\Packagist\Api\Result\Package|string
+     * @return array
      */
-    public function create(array $data)
+    public function createSimpleResults(array $data)
     {
-        if (isset($data['results'])) {
-            return $this->createSearchResults($data['results']);
-        } elseif (isset($data['package'])) {
-            return $this->createPackageResults($data['package']);
-        } elseif (isset($data['packageNames'])) {
-            return $data['packageNames'];
-        }
-
-        throw new InvalidArgumentException('Invalid input data.');
+        return (array) $data['packageNames'];
     }
 
     /**
@@ -40,8 +31,10 @@ class Factory
     {
         $created = new ResultCollection();
 
-        foreach ($results as $key => $result) {
-            $created->append(new Result($result));
+        if (isset($results['results'])) {
+            foreach ($results['results'] as $key => $result) {
+                $created->append(new Result($result));
+            }
         }
 
         return $created;
@@ -63,18 +56,20 @@ class Factory
             $package['downloads'] = new Downloads($package['downloads']);
         }
 
-        foreach ($package['versions'] as $branch => $version) {
-            if (isset($version['authors']) && $version['authors']) {
-                foreach ($version['authors'] as $key => $author) {
-                    $version['authors'][$key] = new Author($author);
+        if (isset($package['versions'])) {
+            foreach ($package['versions'] as $branch => $version) {
+                if (isset($version['authors']) && $version['authors']) {
+                    foreach ($version['authors'] as $key => $author) {
+                        $version['authors'][$key] = new Author($author);
+                    }
                 }
-            }
-            $version['source'] = new Source($version['source']);
-            if (isset($version['dist']) && $version['dist']) {
-                $version['dist'] = new Dist($version['dist']);
-            }
+                $version['source'] = new Source($version['source']);
+                if (isset($version['dist']) && $version['dist']) {
+                    $version['dist'] = new Dist($version['dist']);
+                }
 
-            $package['versions'][$branch] = new Version($version);
+                $package['versions'][$branch] = new Version($version);
+            }
         }
 
         return new Package($package);

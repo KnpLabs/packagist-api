@@ -35,29 +35,42 @@ class PackagistApiClient
     /**
      * @param string $query
      * @param array $filters
-     * @return array
+     * @return \Packagist\Api\Result\ResultCollection
      */
     public function search($query, array $filters = array())
     {
         $results = $response = array();
         $filters['q'] = $query;
         $url = '/search.json?' . http_build_query($filters);
-        $response['next'] = $this->url($url);
+        $response['next'] = $url;
 
         do {
-            $response = $this->request($response['next']);
-            $response = $this->parse($response);
-            $results = array_merge($results, $this->create($response));
+            $response = $this->parseRequestResponse($this->request($response['next']));
+            $results = array_merge($results, $this->resultFactory->createSearchResults($response));
         } while (isset($response['next']));
 
         return $results;
     }
 
+    /**
+     * @param string $package
+     * @return \Packagist\Api\Result\Package
+     */
     public function get($package)
     {
-        return $this->respond(sprintf($this->url('/packages/%s.json'), $package));
+        return $this->resultFactory->createPackageResults(
+            $this->parseRequestResponse(
+                $this->request(
+                    sprintf('/packages/%s.json', $package)
+                )
+            )
+        );
     }
 
+    /**
+     * @param array $filters
+     * @return array
+     */
     public function all(array $filters = array())
     {
         $url = '/packages/list.json';
@@ -65,28 +78,9 @@ class PackagistApiClient
             $url .= '?'.http_build_query($filters);
         }
 
-        return $this->respond($this->url($url));
-    }
-
-    /**
-     * @param string $url
-     * @return string
-     */
-    private function url($url)
-    {
-        return $this->packagistUrl . $url;
-    }
-
-    /**
-     * @param string $url
-     * @return \Packagist\Api\Result\ResultCollection, \Packagist\Api\Result\Package, string
-     */
-    private function respond($url)
-    {
-        $response = $this->request($url);
-        $response = $this->parse($response);
-
-        return $this->create($response);
+        return $this->resultFactory->createSimpleResults(
+            $this->parseRequestResponse($this->request($url))
+        );
     }
 
     /**
@@ -95,33 +89,17 @@ class PackagistApiClient
      */
     private function request($url)
     {
-        return $this->httpClient
-                    ->get($url)
-                    ->send()
-                    ->getBody(true);
+        return $this->httpClient->get($this->packagistUrl . $url)
+                                ->send()
+                                ->getBody(true);
     }
 
     /**
-     * @param string $data
+     * @param string $response
      * @return array
      */
-    private function parse($data)
+    private function parseRequestResponse($response)
     {
-        return json_decode($data, true);
-    }
-
-
-
-    private function create(array $data)
-    {
-        return $this->resultFactory->create($data);
-    }
-
-    /**
-     * @return string
-     */
-    public function getPackagistUrl()
-    {
-        return $this->packagistUrl;
+        return json_decode($response, true);
     }
 }

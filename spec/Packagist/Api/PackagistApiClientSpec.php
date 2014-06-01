@@ -29,19 +29,17 @@ class PackagistApiClientSpec extends ObjectBehavior
      */
     private static function load($name)
     {
-    	return file_get_contents(__DIR__ . '/Fixture/' . $name);
+        return file_get_contents(__DIR__ . '/Fixture/' . $name);
     }
 
     public function it_search_for_packages(Client $client, Factory $factory, Request $request, Response $response)
     {
-    	$client->get('https://packagist.org/search.json?q=sylius')->shouldBeCalled()->willReturn($client);
-    	$client->send()->shouldBeCalled()->willReturn($response);
-    	$data = self::load('search.json');
-    	$response->getBody(true)->shouldBeCalled()->willReturn($data);
-        //$this->get('https://packagist.org/search.json?q=sylius')->shouldBeCalled()->willReturn($request);
+        $client->get('https://packagist.org/search.json?q=sylius')->shouldBeCalled()->willReturn($client);
+        $client->send()->shouldBeCalled()->willReturn($response);
+        $data = self::load('search.json');
+        $response->getBody(true)->shouldBeCalled()->willReturn($data);
 
-
-        $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn(array());
+        $factory->createSearchResults(json_decode($data, true))->shouldBeCalled()->willReturn(array());
 
         $this->search('sylius');
     }
@@ -51,7 +49,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $client->get('https://packagist.org/search.json?tag=storage&q=sylius')->shouldBeCalled()->willReturn($request);
         $data = self::load('search.json');
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
-        $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn(array());
+        $factory->createSearchResults(json_decode($data, true))->shouldBeCalled()->willReturn(array());
 
         $this->search('sylius', array('tag' => 'storage'));
     }
@@ -61,7 +59,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $client->get('https://packagist.org/packages/sylius/sylius.json')->shouldBeCalled()->willReturn($request);
         $data = self::load('get.json');
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
-        $factory->create(json_decode($data, true))->shouldBeCalled();
+        $factory->createPackageResults(json_decode($data, true))->shouldBeCalled();
 
         $this->get('sylius/sylius');
     }
@@ -71,7 +69,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $client->get('https://packagist.org/packages/list.json')->shouldBeCalled()->willReturn($request);
         $data = self::load('all.json');
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
-        $factory->create(json_decode($data, true))->shouldBeCalled();
+        $factory->createSimpleResults(json_decode($data, true))->shouldBeCalled();
 
         $this->all();
     }
@@ -81,7 +79,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $client->get('https://packagist.org/packages/list.json?type=library')->shouldBeCalled()->willReturn($request);
         $data = self::load('all.json');
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
-        $factory->create(json_decode($data, true))->shouldBeCalled();
+        $factory->createSimpleResults(json_decode($data, true))->shouldBeCalled();
 
         $this->all(array('type' => 'library'));
     }
@@ -91,7 +89,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $client->get('https://packagist.org/packages/list.json?vendor=sylius')->shouldBeCalled()->willReturn($request);
         $data = self::load('all.json');
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
-        $factory->create(json_decode($data, true))->shouldBeCalled();
+        $factory->createSimpleResults(json_decode($data, true))->shouldBeCalled();
 
         $this->all(array('vendor' => 'sylius'));
     }

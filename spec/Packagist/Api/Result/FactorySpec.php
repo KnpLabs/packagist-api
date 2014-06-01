@@ -25,7 +25,7 @@ class FactorySpec extends ObjectBehavior
     {
         $data = json_decode(self::load('search.json'), true);
 
-        $results = $this->create($data);
+        $results = $this->createSearchResults($data);
         $results->shouldHaveCount(2);
         $results->shouldBeAnInstanceOf('Packagist\Api\Result\ResultCollection');
         foreach ($results as $result) {
@@ -37,14 +37,14 @@ class FactorySpec extends ObjectBehavior
     {
         $data = json_decode(self::load('get.json'), true);
 
-        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
+        $this->createPackageResults($data)->shouldHaveType('Packagist\Api\Result\Package');
     }
 
     function it_creates_package_names()
     {
         $data = json_decode(self::load('all.json'), true);
 
-        $this->create($data)->shouldReturn(array(
+        $this->createSimpleResults($data)->shouldReturn(array(
             'sylius/addressing-bundle',
             'sylius/assortment-bundle',
             'sylius/blogger-bundle'
@@ -55,7 +55,7 @@ class FactorySpec extends ObjectBehavior
     {
         $data = json_decode(self::load('get_nodist.json'), true);
 
-        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
+        $this->createPackageResults($data)->shouldHaveType('Packagist\Api\Result\Package');
     }
 
     public function getMatchers()
