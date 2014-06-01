@@ -78,7 +78,7 @@ class PackagistApiClient
     }
 
     /**
-     * @param unknown $url
+     * @param string $url
      * @return \Packagist\Api\Result\ResultCollection, \Packagist\Api\Result\Package, string
      */
     private function respond($url)
@@ -91,6 +91,7 @@ class PackagistApiClient
 
     /**
      * @param string $url
+     * @return string
      */
     private function request($url)
     {

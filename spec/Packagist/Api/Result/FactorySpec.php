@@ -3,11 +3,6 @@
 namespace spec\Packagist\Api\Result;
 
 use PhpSpec\ObjectBehavior;
-use PhpSpec\Matcher\TypeMatcher;
-use PhpSpec\Exception\Example\MatcherException;
-use PhpSpec\Formatter\Presenter\PresenterInterface;
-use PhpSpec\Formatter\Presenter\StringPresenter;
-use PhpSpec\Formatter\Presenter\Differ\Differ;
 //use spec\Packagist\Api\Fixture\FixtureLoader;
 
 class FactorySpec extends ObjectBehavior
