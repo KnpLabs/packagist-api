@@ -42,21 +42,21 @@ class Downloads extends AbstractResult
     }
 
     /**
-     * @return number
+     * @return integer
      */
     public function getTotal()
     {
     	return $this->total;
     }
     /**
-     * @return number
+     * @return integer
      */
     public function getMonthly()
     {
     	return $this->monthly;
     }
     /**
-     * @return number
+     * @return integer
      */
     public function getDaily()
     {
