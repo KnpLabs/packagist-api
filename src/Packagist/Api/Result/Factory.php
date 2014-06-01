@@ -3,9 +3,22 @@
 namespace Packagist\Api\Result;
 
 use InvalidArgumentException;
+use Packagist\Api\Result\Package\Source;
+use Packagist\Api\Result\Package\Dist;
+use Packagist\Api\Result\Package\Version;
+use Packagist\Api\Result\Package\Author;
+use Packagist\Api\Result\Package\Downloads;
+use Packagist\Api\Result\Package\Maintainer;
+use Packagist\Api\Result\Result;
+use Packagist\Api\Result\ResultCollection;
 
 class Factory
 {
+    /**
+     * @param array $data
+     * @throws InvalidArgumentException
+     * @return \Packagist\Api\Result\ResultCollection|\Packagist\Api\Result\Package|string
+     */
     public function create(array $data)
     {
         if (isset($data['results'])) {
@@ -19,55 +32,51 @@ class Factory
         throw new InvalidArgumentException('Invalid input data.');
     }
 
+    /**
+     * @param array $results
+     * @return ResultCollection
+     */
     public function createSearchResults(array $results)
     {
-        $created = array();
+        $created = new ResultCollection();
+
         foreach ($results as $key => $result) {
-            $created[$key] = $this->createResult('Packagist\Api\Result\Result', $result);
+            $created->append(new Result($result));
         }
 
         return $created;
     }
 
+    /**
+     * @param array $package
+     * @return Package
+     */
     public function createPackageResults(array $package)
     {
-        $created = array();
-
         if (isset($package['maintainers']) && $package['maintainers']) {
             foreach ($package['maintainers'] as $key => $maintainer) {
-                $package['maintainers'][$key] = $this->createResult('Packagist\Api\Result\Package\Maintainer', $maintainer);
+                $package['maintainers'][$key] = new Maintainer($maintainer);
             }
         }
 
         if (isset($package['downloads']) && $package['downloads']) {
-            $package['downloads'] = $this->createResult('Packagist\Api\Result\Package\Downloads', $package['downloads']);
+            $package['downloads'] = new Downloads($package['downloads']);
         }
 
         foreach ($package['versions'] as $branch => $version) {
             if (isset($version['authors']) && $version['authors']) {
                 foreach ($version['authors'] as $key => $author) {
-                    $version['authors'][$key] = $this->createResult('Packagist\Api\Result\Package\Author', $author);
+                    $version['authors'][$key] = new Author($author);
                 }
             }
-            $version['source'] = $this->createResult('Packagist\Api\Result\Package\Source', $version['source']);
+            $version['source'] = new Source($version['source']);
             if (isset($version['dist']) && $version['dist']) {
-                $version['dist'] = $this->createResult('Packagist\Api\Result\Package\Dist', $version['dist']);
+                $version['dist'] = new Dist($version['dist']);
             }
 
-            $package['versions'][$branch] = $this->createResult('Packagist\Api\Result\Package\Version', $version);
+            $package['versions'][$branch] = new Version($version);
         }
 
-        $created = new Package();
-        $created->fromArray($package);
-
-        return $created;
-    }
-
-    protected function createResult($class, $data)
-    {
-        $result = new $class();
-        $result->fromArray($data);
-
-        return $result;
+        return new Package($package);
     }
 }

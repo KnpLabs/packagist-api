@@ -4,13 +4,37 @@ namespace Packagist\Api\Result;
 
 class Package extends AbstractResult
 {
+    /**
+     * @var string
+     */
     protected $name;
+    /**
+     * @var string
+     */
     protected $description;
+    /**
+     * @var unknown
+     */
     protected $time;
+    /**
+     * @var Maintainer
+     */
     protected $maintainers;
+    /**
+     * @var Version
+     */
     protected $versions;
+    /**
+     * @var unknown
+     */
     protected $type;
+    /**
+     * @var unknown
+     */
     protected $repository;
+    /**
+     * @var Downloads
+     */
     protected $downloads;
     protected $favers;
 
