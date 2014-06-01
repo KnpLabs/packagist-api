@@ -8,6 +8,7 @@ use Packagist\Api\Result\Factory;
 use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Client;
+use Packagist\Api\Result\ResultCollection;
 
 class PackagistApiClientSpec extends ObjectBehavior
 {
@@ -39,7 +40,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $data = self::load('search.json');
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
 
-        $factory->createSearchResults(json_decode($data, true))->shouldBeCalled()->willReturn(array());
+        $factory->createSearchResults(new ResultCollection(), json_decode($data, true))->shouldBeCalled()->willReturn(array());
 
         $this->search('sylius');
     }
@@ -49,7 +50,7 @@ class PackagistApiClientSpec extends ObjectBehavior
         $client->get('https://packagist.org/search.json?tag=storage&q=sylius')->shouldBeCalled()->willReturn($request);
         $data = self::load('search.json');
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
-        $factory->createSearchResults(json_decode($data, true))->shouldBeCalled()->willReturn(array());
+        $factory->createSearchResults(new ResultCollection(), json_decode($data, true))->shouldBeCalled()->willReturn(array());
 
         $this->search('sylius', array('tag' => 'storage'));
     }

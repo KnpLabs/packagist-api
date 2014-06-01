@@ -3,6 +3,7 @@
 namespace spec\Packagist\Api\Result;
 
 use PhpSpec\ObjectBehavior;
+use Packagist\Api\Result\ResultCollection;
 //use spec\Packagist\Api\Fixture\FixtureLoader;
 
 class FactorySpec extends ObjectBehavior
@@ -25,7 +26,7 @@ class FactorySpec extends ObjectBehavior
     {
         $data = json_decode(self::load('search.json'), true);
 
-        $results = $this->createSearchResults($data);
+        $results = $this->createSearchResults(new ResultCollection(), $data);
         $results->shouldHaveCount(2);
         $results->shouldBeAnInstanceOf('Packagist\Api\Result\ResultCollection');
         foreach ($results as $result) {
