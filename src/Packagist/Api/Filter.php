@@ -75,6 +75,15 @@ class Filter
     {
         return $this->type;
     }
+    /**
+     * Reset tags
+     * @return \Packagist\Api\Filter
+     */
+    public function resetTags()
+    {
+        $this->tags = array();
+        return $this;
+    }
 
     /**
      * @return string
