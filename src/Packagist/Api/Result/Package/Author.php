@@ -6,11 +6,11 @@ use Packagist\Api\Result\AbstractResult;
 
 class Author extends Maintainer
 {
-	protected $role;
+    protected $role;
 
-	public function getRole()
+    public function getRole()
 	{
-		return $this->role;
-	}
+        return $this->role;
+    }
 
 }

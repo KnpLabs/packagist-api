@@ -36,8 +36,8 @@ class Author extends ObjectBehavior
         $this->getHomepage()->shouldReturn('umpirsky.com');
     }
 
-	function it_gets_role()
-	{
-		$this->getRole()->shouldReturn('lead');
-	}
+    function it_gets_role()
+    {
+        $this->getRole()->shouldReturn('lead');
+    }
 }

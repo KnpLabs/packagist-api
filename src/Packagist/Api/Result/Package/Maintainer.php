@@ -6,23 +6,23 @@ use Packagist\Api\Result\AbstractResult;
 
 class Maintainer extends AbstractResult
 {
-	protected $name;
-	protected $email;
-	protected $homepage;
+    protected $name;
+    protected $email;
+    protected $homepage;
 
 
-	public function getName()
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getHomepage()
 	{
-		return $this->name;
-	}
-
-	public function getEmail()
-	{
-		return $this->email;
-	}
-
-	public function getHomepage()
-	{
-		return $this->homepage;
-	}
+        return $this->homepage;
+    }
 }
