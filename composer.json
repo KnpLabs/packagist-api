@@ -21,7 +21,8 @@
     },
     "require-dev" : {
         "phpspec/phpspec" : "2.0.0",
-        "phpspec/php-diff" : "*@dev"
+        "phpspec/php-diff" : "*@dev",
+        "henrikbjorn/phpspec-code-coverage" : "0.1.*"
     },
     "config" : {
         "bin-dir" : "bin"
