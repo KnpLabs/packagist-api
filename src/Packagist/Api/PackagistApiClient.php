@@ -76,7 +76,7 @@ class PackagistApiClient
     public function all(array $filters = array())
     {
         $url = '/packages/list.json';
-        if (!empty($filters)) {
+        if (empty($filters) === false) {
             $url .= '?'.http_build_query($filters);
         }
 
