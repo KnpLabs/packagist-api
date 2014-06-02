@@ -12,7 +12,7 @@ class Author extends ObjectBehavior
             'name'     => 'Saša Stamenković',
             'email'    => 'umpirsky@gmail.com',
             'homepage' => 'umpirsky.com',
-			'role'	   => 'lead'
+            'role'	   => 'lead'
         ));
     }
 
