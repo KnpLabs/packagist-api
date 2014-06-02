@@ -9,12 +9,10 @@ class PackageSpec extends ObjectBehavior
     /**
      * @param Packagist\Api\Result\Package\Maintainer $maintainer
      * @param Packagist\Api\Result\Package\Version    $version
-     * @param Packagist\Api\Result\Package\Source     $source
-     * @param Packagist\Api\Result\Package\Dist       $dist
      * @param Packagist\Api\Result\Package\Downloads  $downloads
      * @param DateTime                                $time
      */
-    function let($maintainer, $version, $source, $dist, $downloads, $time)
+    function let($maintainer, $version, $downloads, $time)
     {
         $this->beConstructedWith(array(
             'name'        => 'sylius/sylius',
