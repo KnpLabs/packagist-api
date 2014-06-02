@@ -27,7 +27,7 @@ class Factory
     {
         $resultCollection = clone $resultCollection;
 
-        if (isset($results['results']) === true && is_array($results['results'])) {
+        if (isset($results['results']) === true && is_array($results['results']) === true) {
             foreach ($results['results'] as $key => $result) {
                 $resultCollection->append(new Result($result));
             }
@@ -46,7 +46,7 @@ class Factory
         $package = $this->hydrateCollection($package, 'mainteners', 'Packagist\Api\Result\Package\Maintainer');
         $package = $this->hydrateSimple($package, 'downloads', 'Packagist\Api\Result\Package\Downloads');
 
-        if (isset($package['versions']) === true && is_array($package['versions'])) {
+        if (isset($package['versions']) === true && is_array($package['versions']) === true) {
             foreach ($package['versions'] as $branch => $version) {
                 $version                      = $this->hydrateCollection($version, 'authors', 'Packagist\Api\Result\Package\Author');
                 $version                      = $this->hydrateSimple($version, 'dist', 'Packagist\Api\Result\Package\Dist');
@@ -66,7 +66,7 @@ class Factory
      */
     private function hydrateCollection(array $package, $arrayKey, $className)
     {
-        if (isset($package[$arrayKey]) === true && is_array($package[$arrayKey])) {
+        if (isset($package[$arrayKey]) === true && is_array($package[$arrayKey]) === true) {
             foreach ($package[$arrayKey] as $key => $maintainer) {
                 $package[$arrayKey][$key] = new $className($maintainer);
             }
@@ -83,7 +83,7 @@ class Factory
      */
     private function hydrateSimple(array $package, $arrayKey, $className)
     {
-        if (isset($package[$arrayKey]) === true && is_array($package[$arrayKey])) {
+        if (isset($package[$arrayKey]) === true && is_array($package[$arrayKey]) === true) {
             $package[$arrayKey] = new $className($package[$arrayKey]);
         }
 
