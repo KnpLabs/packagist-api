@@ -129,4 +129,19 @@ class VersionSpec extends ObjectBehavior
     {
         $this->getBin()->shouldReturn(array('bin/sylius'));
     }
+
+    function it_gets_conflict()
+    {
+        $this->getConflict()->shouldReturn(null);
+    }
+
+    function it_gets_provide()
+    {
+        $this->getProvide()->shouldReturn(null);
+    }
+
+    function it_gets_replace()
+    {
+        $this->getReplace()->shouldReturn(null);
+    }
 }
