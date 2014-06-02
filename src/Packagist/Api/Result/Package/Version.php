@@ -35,15 +35,15 @@ class Version extends AbstractResult
      */
     protected $license = null;
     /**
-     * @var string
+     * @var array
      */
     protected $authors = null;
     /**
-     * @var string
+     * @var Source
      */
     protected $source = null;
     /**
-     * @var string
+     * @var Dist
      */
     protected $dist = null;
     /**
@@ -55,19 +55,19 @@ class Version extends AbstractResult
      */
     protected $time = null;
     /**
-     * @var string
+     * @var array
      */
     protected $autoload = null;
     /**
-     * @var string
+     * @var array
      */
     protected $extra = null;
     /**
-     * @var string
+     * @var array
      */
     protected $require = null;
     /**
-     * @var string
+     * @var array
      */
     protected $requireDev = null;
     /**
@@ -137,21 +137,21 @@ class Version extends AbstractResult
         return $this->license;
     }
     /**
-     * @return string
+     * @return array
      */
     public function getAuthors()
     {
         return $this->authors;
     }
     /**
-     * @return string
+     * @return \Packagist\Api\Result\Package\Source
      */
     public function getSource()
     {
         return $this->source;
     }
     /**
-     * @return string
+     * @return \Packagist\Api\Result\Package\Dist
      */
     public function getDist()
     {
@@ -172,28 +172,28 @@ class Version extends AbstractResult
         return $this->time;
     }
     /**
-     * @return string
+     * @return array
      */
     public function getAutoload()
     {
         return $this->autoload;
     }
     /**
-     * @return string
+     * @return array
      */
     public function getExtra()
     {
         return $this->extra;
     }
     /**
-     * @return string
+     * @return array
      */
     public function getRequire()
     {
         return $this->require;
     }
     /**
-     * @return string
+     * @return array
      */
     public function getRequireDev()
     {

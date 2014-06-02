@@ -44,27 +44,29 @@ class Factory
      * @param array $package
      * @return Package
      */
-    public function createPackageResults(array $package)
+    public function createPackageResults(array $data)
     {
-        if (isset($package['maintainers']) && $package['maintainers']) {
+        $package = $data['package'];
+
+        if (isset($package['maintainers']) && is_array($package['maintainers'])) {
             foreach ($package['maintainers'] as $key => $maintainer) {
                 $package['maintainers'][$key] = new Maintainer($maintainer);
             }
         }
 
-        if (isset($package['downloads']) && $package['downloads']) {
+        if (isset($package['downloads']) && is_array($package['downloads'])) {
             $package['downloads'] = new Downloads($package['downloads']);
         }
 
-        if (isset($package['versions'])) {
+        if (isset($package['versions']) && is_array($package['versions'])) {
             foreach ($package['versions'] as $branch => $version) {
-                if (isset($version['authors']) && $version['authors']) {
+                if (isset($version['authors']) && is_array($version['authors'])) {
                     foreach ($version['authors'] as $key => $author) {
                         $version['authors'][$key] = new Author($author);
                     }
                 }
                 $version['source'] = new Source($version['source']);
-                if (isset($version['dist']) && $version['dist']) {
+                if (isset($version['dist']) && is_array($version['dist'])) {
                     $version['dist'] = new Dist($version['dist']);
                 }
 
