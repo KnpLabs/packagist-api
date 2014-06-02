@@ -10,6 +10,8 @@ use Packagist\Api\Result\ResultCollection;
 class Factory
 {
     /**
+     * Create a simple array of result
+     *
      * @param array $data
      * @return array
      */
@@ -19,6 +21,8 @@ class Factory
     }
 
     /**
+     * Create a ResultCollection by array
+     *
      * @param ResultCollection $resultCollection
      * @param array $results
      * @return ResultCollection
@@ -37,6 +41,8 @@ class Factory
     }
 
     /**
+     * Create a Package DTO by array
+     *
      * @param array $package
      * @return Package
      */
@@ -67,8 +73,8 @@ class Factory
     private function hydrateCollection(array $package, $arrayKey, $className)
     {
         if (isset($package[$arrayKey]) === true && is_array($package[$arrayKey]) === true) {
-            foreach ($package[$arrayKey] as $key => $maintainer) {
-                $package[$arrayKey][$key] = new $className($maintainer);
+            foreach ($package[$arrayKey] as $key => $values) {
+                $package[$arrayKey][$key] = new $className($values);
             }
         }
 

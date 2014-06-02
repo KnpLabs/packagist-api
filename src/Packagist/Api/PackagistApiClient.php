@@ -3,6 +3,7 @@
 namespace Packagist\Api;
 
 use Guzzle\Http\ClientInterface;
+use Guzzle\Http\Exception\ClientErrorResponseException;
 use Packagist\Api\Result\Factory;
 use Packagist\Api\Result\ResultCollection;
 
@@ -35,13 +36,12 @@ class PackagistApiClient
 
     /**
      * @param string $query
-     * @param array $filters
+     * @param Filter $filter
      * @return \Packagist\Api\Result\ResultCollection
      */
-    public function search($query, array $filters = array())
+    public function search($query, Filter $filter = null)
     {
-        $filters['q']     = $query;
-        $url              = '/search.json?' . http_build_query($filters);
+        $url              = '/search.json?q=' . urlencode($query) . (($filter === null) ? '' : '&' . $filter->getHttpQuery());
         $response         = array();
         $response['next'] = $url;
         $resultCollection = new ResultCollection();
@@ -54,31 +54,40 @@ class PackagistApiClient
         return $resultCollection;
     }
 
+
     /**
+     * Retrieve full package informations by full qualified name ex : myname/mypackage
+     *
      * @param string $package
+     * @throws PackageDoesNotExistException
      * @return \Packagist\Api\Result\Package
      */
-    public function get($package)
+    public function get($packageName)
     {
-        return $this->resultFactory->createPackageResults(
-            $this->parseRequestResponse(
+        try {
+            $response = $this->parseRequestResponse(
                 $this->request(
-                    sprintf('/packages/%s.json', $package)
+                        sprintf('/packages/%s.json', $packageName)
                 )
-            )
-        );
+            );
+        } catch (ClientErrorResponseException $e) {
+            throw PackagistApiResponseException::packageDoesNotExist($packageName);
+        }
+
+        if ($response === null) {
+            throw PackagistApiResponseException::packageDoesNotExist($packageName);
+        }
+
+        return $this->resultFactory->createPackageResults($response);
     }
 
     /**
-     * @param array $filters
+     * @param Filter $filter
      * @return array
      */
-    public function all(array $filters = array())
+    public function all(Filter $filter = null)
     {
-        $url = '/packages/list.json';
-        if (empty($filters) === false) {
-            $url .= '?'.http_build_query($filters);
-        }
+        $url = '/packages/list.json' . (($filter === null) ? '' : '?' . $filter->getHttpQuery());
 
         return $this->resultFactory->createSimpleResults(
             $this->parseRequestResponse($this->request($url))

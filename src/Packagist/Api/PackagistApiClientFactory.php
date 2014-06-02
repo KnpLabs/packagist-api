@@ -9,6 +9,8 @@ use Packagist\Api\Result\Factory;
 class PackagistApiClientFactory
 {
     /**
+     * Create instance of PackagistApiClient
+     *
      * @param string $packagistUrl
      * @return \Packagist\Api\PackagistApiClient
      */

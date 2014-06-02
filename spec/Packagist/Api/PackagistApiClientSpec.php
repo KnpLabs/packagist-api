@@ -9,6 +9,7 @@ use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Client;
 use Packagist\Api\Result\ResultCollection;
+use Packagist\Api\Filter;
 
 class PackagistApiClientSpec extends ObjectBehavior
 {
@@ -47,12 +48,14 @@ class PackagistApiClientSpec extends ObjectBehavior
 
     function it_searches_for_packages_with_filters(Client $client, Factory $factory, Request $request, Response $response)
     {
-        $client->get('https://packagist.org/search.json?tag=storage&q=sylius')->shouldBeCalled()->willReturn($request);
+        $client->get('https://packagist.org/search.json?q=sylius&tags[]=storage')->shouldBeCalled()->willReturn($request);
         $data = self::load('search.json');
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
         $factory->createSearchResults(new ResultCollection(), json_decode($data, true))->shouldBeCalled()->willReturn(array());
 
-        $this->search('sylius', array('tag' => 'storage'));
+        $filter = new Filter();
+        $filter->addTag('storage');
+        $this->search('sylius', $filter);
     }
 
     function it_gets_package_details(Client $client, Factory $factory, Request $request, Response $response)
@@ -82,7 +85,9 @@ class PackagistApiClientSpec extends ObjectBehavior
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
         $factory->createSimpleResults(json_decode($data, true))->shouldBeCalled();
 
-        $this->all(array('type' => 'library'));
+        $filter = new Filter();
+        $filter->setType('library');
+        $this->all($filter);
     }
 
     function it_filters_package_names_by_vendor(Client $client, Factory $factory, Request $request, Response $response)
@@ -92,6 +97,8 @@ class PackagistApiClientSpec extends ObjectBehavior
         $response->getBody(true)->shouldBeCalled()->willReturn($data);
         $factory->createSimpleResults(json_decode($data, true))->shouldBeCalled();
 
-        $this->all(array('vendor' => 'sylius'));
+        $filter = new Filter();
+        $filter->setVendor('sylius');
+        $this->all($filter);
     }
 }
