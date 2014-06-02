@@ -2,13 +2,13 @@
 
 namespace spec\Packagist\Api\Result\Package;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Dist extends ObjectBehavior
+class DistSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->fromArray(array(
+        $this->beConstructedWith(array(
             'type'      => 'git',
             'url'       => 'https://github.com/Sylius/Sylius.git',
             'reference' => 'cb0a489db41707d5df078f1f35e028e04ffd9e8e',

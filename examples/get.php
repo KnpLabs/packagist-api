@@ -2,7 +2,7 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-$client = new Packagist\Api\Client();
+$client = Packagist\Api\PackagistApiClientFactory::getInstance();
 $package = $client->get('sylius/sylius');
 
 var_export($package);
