@@ -12,6 +12,7 @@ class Author extends ObjectBehavior
             'name'     => 'Saša Stamenković',
             'email'    => 'umpirsky@gmail.com',
             'homepage' => 'umpirsky.com',
+			'role'	   => 'lead'
         ));
     }
 
@@ -34,4 +35,9 @@ class Author extends ObjectBehavior
     {
         $this->getHomepage()->shouldReturn('umpirsky.com');
     }
+
+	function it_gets_role()
+	{
+		$this->getRole()->shouldReturn('lead');
+	}
 }
