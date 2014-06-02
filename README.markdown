@@ -83,11 +83,37 @@ abmundi/database-commands-bundle
 ...
 ```
 
-#### They can be filtered by type or vendor:
+#### They can be filtered by type, vendor or tag:
 
 ```php
-$client->all(array('type' => 'library'));
-$client->all(array('vendor' => 'sylius'));
+$client = Packagist\Api\PackagistApiClientFactory::getInstance();
+
+$filter = new Packagist\Api\Filter();
+$filter->setType("library");
+
+$client->all($filter);
+
+$filter = new Packagist\Api\Filter();
+$filter->setVendor("sylius");
+$client->all($filter);
+
+
+$filter = new Packagist\Api\Filter();
+$filter->addTag("framework")
+       ->addTag("ORM");
+       
+$client->all($filter);
+
+// Filter can be combined !
+
+$filter = new Packagist\Api\Filter();
+$filter->addTag("framework")
+       ->addTag("ORM")
+       ->setVendor("sylius")
+       ->setType("library");
+       
+$client->all($filter);
+
 ```
 
 #### Custom Packagist Repositories
