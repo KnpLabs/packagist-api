@@ -6,7 +6,7 @@ class PackagistApiResponseException extends \Exception
 {
     /**
      * @param string $packageName
-     * @return \Packagist\Api\ResponseException
+     * @return \Packagist\Api\PackagistApiResponseException
      */
     public static function packageDoesNotExist($packageName)
     {

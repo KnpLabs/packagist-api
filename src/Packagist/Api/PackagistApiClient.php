@@ -36,7 +36,7 @@ class PackagistApiClient
 
     /**
      * @param string $query
-     * @param Filter $filter
+     * @param null|Filter $filter
      * @return \Packagist\Api\Result\ResultCollection
      */
     public function search($query, Filter $filter = null)
@@ -67,7 +67,7 @@ class PackagistApiClient
         try {
             $response = $this->parseRequestResponse(
                 $this->request(
-                        sprintf('/packages/%s.json', $packageName)
+                    sprintf('/packages/%s.json', $packageName)
                 )
             );
         } catch (ClientErrorResponseException $e) {
@@ -82,7 +82,7 @@ class PackagistApiClient
     }
 
     /**
-     * @param Filter $filter
+     * @param null|Filter $filter
      * @return array
      */
     public function all(Filter $filter = null)

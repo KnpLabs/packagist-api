@@ -68,6 +68,21 @@ class PackagistApiClientSpec extends ObjectBehavior
         $this->get('sylius/sylius');
     }
 
+    function it_throw_exception_on_respond_null(Client $client, Factory $factory, Request $request, Response $response)
+    {
+    	$client->get('https://packagist.org/packages/sylius/sylius.json')->shouldBeCalled()->willReturn($request);
+    	$response->getBody(true)->shouldBeCalled()->willReturn(null);
+
+    	$this->shouldThrow('Packagist\Api\PackagistApiResponseException')->duringGet('sylius/sylius');
+    }
+
+    function it_throw_exception_on_wrong_package(Client $client, Factory $factory, Request $request, Response $response)
+    {
+    	$client->get('https://packagist.org/packages/mywrongpackage.json')->willThrow('Guzzle\Http\Exception\ClientErrorResponseException');
+
+    	$this->shouldThrow('Packagist\Api\PackagistApiResponseException')->duringGet('mywrongpackage');
+    }
+
     function it_lists_all_package_names(Client $client, Factory $factory, Request $request, Response $response)
     {
         $client->get('https://packagist.org/packages/list.json')->shouldBeCalled()->willReturn($request);
