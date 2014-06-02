@@ -10,7 +10,6 @@ class Maintainer extends AbstractResult
     protected $email;
     protected $homepage;
 
-
     public function getName()
     {
         return $this->name;
@@ -22,7 +21,7 @@ class Maintainer extends AbstractResult
     }
 
     public function getHomepage()
-	{
+    {
         return $this->homepage;
     }
 }

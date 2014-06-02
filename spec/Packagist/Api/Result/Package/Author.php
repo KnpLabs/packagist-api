@@ -6,7 +6,7 @@ use PHPSpec2\ObjectBehavior;
 
 class Author extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
         $this->fromArray(array(
             'name'     => 'Saša Stamenković',
@@ -16,27 +16,27 @@ class Author extends ObjectBehavior
         ));
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Packagist\Api\Result\Package\Author');
     }
 
-    function it_gets_name()
+    public function it_gets_name()
     {
         $this->getName()->shouldReturn('Saša Stamenković');
     }
 
-    function it_gets_email()
+    public function it_gets_email()
     {
         $this->getEmail()->shouldReturn('umpirsky@gmail.com');
     }
 
-    function it_gets_homepage()
+    public function it_gets_homepage()
     {
         $this->getHomepage()->shouldReturn('umpirsky.com');
     }
 
-    function it_gets_role()
+    public function it_gets_role()
     {
         $this->getRole()->shouldReturn('lead');
     }
