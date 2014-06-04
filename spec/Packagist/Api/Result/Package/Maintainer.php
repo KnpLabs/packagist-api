@@ -4,21 +4,20 @@ namespace spec\Packagist\Api\Result\Package;
 
 use PHPSpec2\ObjectBehavior;
 
-class Author extends ObjectBehavior
+class Maintainer extends ObjectBehavior
 {
     function let()
     {
         $this->fromArray(array(
             'name'     => 'Saša Stamenković',
             'email'    => 'umpirsky@gmail.com',
-            'homepage' => 'umpirsky.com',
-            'role'     => 'lead'
+            'homepage' => 'umpirsky.com'
         ));
     }
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Api\Result\Package\Author');
+        $this->shouldHaveType('Packagist\Api\Result\Package\Maintainer');
     }
 
     function it_gets_name()
@@ -36,8 +35,4 @@ class Author extends ObjectBehavior
         $this->getHomepage()->shouldReturn('umpirsky.com');
     }
 
-    function it_gets_role()
-    {
-        $this->getRole()->shouldReturn('lead');
-    }
 }

@@ -2,26 +2,13 @@
 
 namespace Packagist\Api\Result\Package;
 
-use Packagist\Api\Result\AbstractResult;
-
-class Author extends AbstractResult
+class Author extends Maintainer
 {
-    protected $name;
-    protected $email;
-    protected $homepage;
+    protected $role;
 
-    public function getName()
+    public function getRole()
     {
-        return $this->name;
+        return $this->role;
     }
 
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function getHomepage()
-    {
-        return $this->homepage;
-    }
 }
