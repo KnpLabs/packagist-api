@@ -2,12 +2,13 @@
 
 namespace Packagist\Api;
 
+use Guzzle\Http\Client as HttpClient;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Exception\ClientErrorResponseException;
 use Packagist\Api\Result\Factory;
 use Packagist\Api\Result\ResultCollection;
 
-class PackagistApiClient
+class Client
 {
     /**
      * @var ClientInterface
@@ -24,24 +25,30 @@ class PackagistApiClient
 
     /**
      * @param ClientInterface $httpClient
-     * @param Factory $resultFactory
-     * @param string $packagistUrl
+     * @param Factory         $resultFactory
+     * @param string          $packagistUrl
      */
-    public function __construct(ClientInterface $httpClient, Factory $resultFactory, $packagistUrl)
+    public function __construct(
+        ClientInterface $httpClient = null,
+        Factory $resultFactory = null,
+        $packagistUrl = "https://packagist.org"
+    )
     {
-        $this->httpClient = $httpClient;
-        $this->resultFactory = $resultFactory;
+        $this->httpClient = ($httpClient === null) ? new HttpClient() : $httpClient;
+        $this->resultFactory = ($resultFactory === null) ? new Factory() : $resultFactory;
         $this->packagistUrl = $packagistUrl;
     }
 
     /**
-     * @param string $query
+     * @param string      $query
      * @param null|Filter $filter
+     *
      * @return \Packagist\Api\Result\ResultCollection
      */
     public function search($query, Filter $filter = null)
     {
-        $url              = '/search.json?q=' . urlencode($query) . (($filter === null) ? '' : '&' . $filter->getHttpQuery());
+        $filter           = (($filter === null) ? '' : '&' . $filter->getHttpQuery());
+        $url              = '/search.json?q=' . urlencode($query) . $filter;
         $response         = array();
         $response['next'] = $url;
         $resultCollection = new ResultCollection();
@@ -58,7 +65,8 @@ class PackagistApiClient
     /**
      * Retrieve full package informations by full qualified name ex : myname/mypackage
      *
-     * @param string $package
+     * @param string $packageName
+     *
      * @throws PackageDoesNotExistException
      * @return \Packagist\Api\Result\Package
      */
@@ -71,11 +79,11 @@ class PackagistApiClient
                 )
             );
         } catch (ClientErrorResponseException $e) {
-            throw PackagistApiResponseException::packageDoesNotExist($packageName);
+            throw ResponseException::packageDoesNotExist($packageName);
         }
 
         if ($response === null) {
-            throw PackagistApiResponseException::packageDoesNotExist($packageName);
+            throw ResponseException::packageDoesNotExist($packageName);
         }
 
         return $this->resultFactory->createPackageResults($response);
@@ -83,6 +91,7 @@ class PackagistApiClient
 
     /**
      * @param null|Filter $filter
+     *
      * @return array
      */
     public function all(Filter $filter = null)
@@ -96,6 +105,7 @@ class PackagistApiClient
 
     /**
      * @param string $url
+     *
      * @return string
      */
     private function request($url)
@@ -107,6 +117,7 @@ class PackagistApiClient
 
     /**
      * @param string $response
+     *
      * @return array
      */
     private function parseRequestResponse($response)

@@ -46,20 +46,20 @@ class Downloads extends AbstractResult
      */
     public function getTotal()
     {
-    	return $this->total;
+        return $this->total;
     }
     /**
      * @return integer
      */
     public function getMonthly()
     {
-    	return $this->monthly;
+        return $this->monthly;
     }
     /**
      * @return integer
      */
     public function getDaily()
     {
-    	return $this->daily;
+        return $this->daily;
     }
 }

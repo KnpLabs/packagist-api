@@ -2,10 +2,15 @@
 
 namespace Packagist\Api;
 
-class PackagistApiResponseException extends \Exception
+/**
+ * Response Exception
+ *
+ */
+class ResponseException extends \Exception
 {
     /**
      * @param string $packageName
+     *
      * @return \Packagist\Api\PackagistApiResponseException
      */
     public static function packageDoesNotExist($packageName)

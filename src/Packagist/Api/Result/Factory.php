@@ -13,6 +13,7 @@ class Factory
      * Create a simple array of result
      *
      * @param array $data
+     *
      * @return array
      */
     public function createSimpleResults(array $data)
@@ -24,7 +25,8 @@ class Factory
      * Create a ResultCollection by array
      *
      * @param ResultCollection $resultCollection
-     * @param array $results
+     * @param array            $results
+     *
      * @return ResultCollection
      */
     public function createSearchResults(ResultCollection $resultCollection, array $results)
@@ -43,7 +45,8 @@ class Factory
     /**
      * Create a Package DTO by array
      *
-     * @param array $package
+     * @param array $data
+     *
      * @return Package
      */
     public function createPackageResults(array $data)
@@ -54,8 +57,16 @@ class Factory
 
         if (isset($package['versions']) === true && is_array($package['versions']) === true) {
             foreach ($package['versions'] as $branch => $version) {
-                $version                      = $this->hydrateCollection($version, 'authors', 'Packagist\Api\Result\Package\Author');
-                $version                      = $this->hydrateSimple($version, 'dist', 'Packagist\Api\Result\Package\Dist');
+                $version = $this->hydrateCollection(
+                    $version,
+                    'authors',
+                    'Packagist\Api\Result\Package\Author'
+                );
+                $version = $this->hydrateSimple(
+                    $version,
+                    'dist',
+                    'Packagist\Api\Result\Package\Dist'
+                );
                 $version['source']            = new Source($version['source']);
                 $package['versions'][$branch] = new Version($version);
             }
@@ -65,9 +76,10 @@ class Factory
     }
 
     /**
-     * @param array $package
+     * @param array  $package
      * @param string $arrayKey
-     * @param string $classNAme
+     * @param string $className
+     *
      * @return array
      */
     private function hydrateCollection(array $package, $arrayKey, $className)
@@ -82,9 +94,10 @@ class Factory
     }
 
     /**
-     * @param array $package
+     * @param array  $package
      * @param string $arrayKey
-     * @param string $classNAme
+     * @param string $className
+     *
      * @return array
      */
     private function hydrateSimple(array $package, $arrayKey, $className)

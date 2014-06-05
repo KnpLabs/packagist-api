@@ -2,6 +2,10 @@
 
 namespace Packagist\Api;
 
+/**
+ * Filter DataObject
+ *
+ */
 class Filter
 {
     /**
@@ -26,31 +30,39 @@ class Filter
     /**
      * Add tag
      * @param string $tagName
+     *
      * @return \Packagist\Api\Filter
      */
     public function addTag($tagName)
     {
         $this->tags[] = $tagName;
+
         return $this;
     }
+
     /**
      * Set name of github account
      * @param string $vendorName
+     *
      * @return \Packagist\Api\Filter
      */
     public function setVendor($vendorName)
     {
         $this->vendor = $vendorName;
+
         return $this;
     }
+
     /**
      * Set type of package
      * @param string $type
+     *
      * @return \Packagist\Api\Filter
      */
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -61,6 +73,7 @@ class Filter
     {
         return $this->tags;
     }
+
     /**
      * @return string
      */
@@ -68,6 +81,7 @@ class Filter
     {
         return $this->vendor;
     }
+
     /**
      * @return string
      */
@@ -75,6 +89,7 @@ class Filter
     {
         return $this->type;
     }
+
     /**
      * Reset tags
      * @return \Packagist\Api\Filter
@@ -82,6 +97,7 @@ class Filter
     public function resetTags()
     {
         $this->tags = array();
+
         return $this;
     }
 

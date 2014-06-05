@@ -2,22 +2,22 @@
 
 namespace Packagist\Api;
 
-use Guzzle\Http\Client;
+use Guzzle\Http\Client as HttpClient;
 use Packagist\Api\Result\Factory;
 
-
-class PackagistApiClientFactory
+class ClientFactory
 {
     /**
      * Create instance of PackagistApiClient
      *
      * @param string $packagistUrl
-     * @return \Packagist\Api\PackagistApiClient
+     *
+     * @return \Packagist\Api\Client
      */
     public static function getInstance($packagistUrl = "https://packagist.org")
     {
-        return new PackagistApiClient(
-            new Client(),
+        return new Client(
+            new HttpClient(),
             new Factory(),
             $packagistUrl
         );

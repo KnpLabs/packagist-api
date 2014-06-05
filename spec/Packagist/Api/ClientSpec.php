@@ -11,7 +11,7 @@ use Guzzle\Http\Client;
 use Packagist\Api\Result\ResultCollection;
 use Packagist\Api\Filter;
 
-class PackagistApiClientSpec extends ObjectBehavior
+class ClientSpec extends ObjectBehavior
 {
     public function let(Client $client, Factory $factory, Request $request, Response $response)
     {
@@ -22,7 +22,7 @@ class PackagistApiClientSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Api\PackagistApiClient');
+        $this->shouldHaveType('Packagist\Api\Client');
     }
 
     /**
@@ -73,14 +73,14 @@ class PackagistApiClientSpec extends ObjectBehavior
     	$client->get('https://packagist.org/packages/sylius/sylius.json')->shouldBeCalled()->willReturn($request);
     	$response->getBody(true)->shouldBeCalled()->willReturn(null);
 
-    	$this->shouldThrow('Packagist\Api\PackagistApiResponseException')->duringGet('sylius/sylius');
+    	$this->shouldThrow('Packagist\Api\ResponseException')->duringGet('sylius/sylius');
     }
 
     function it_throw_exception_on_wrong_package(Client $client)
     {
     	$client->get('https://packagist.org/packages/mywrongpackage.json')->willThrow('Guzzle\Http\Exception\ClientErrorResponseException');
 
-    	$this->shouldThrow('Packagist\Api\PackagistApiResponseException')->duringGet('mywrongpackage');
+    	$this->shouldThrow('Packagist\Api\ResponseException')->duringGet('mywrongpackage');
     }
 
     function it_lists_all_package_names(Client $client, Factory $factory, Request $request, Response $response)
