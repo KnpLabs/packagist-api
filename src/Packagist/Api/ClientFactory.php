@@ -25,7 +25,7 @@ class ClientFactory
         }
 
         return new Client(
-            new HttpClient(),
+            $httpClient,
             new Factory(),
             $packagistUrl
         );
