@@ -27,7 +27,6 @@ require_once 'vendor/autoload.php';
 $client = Packagist\Api\PackagistApiClientFactory::getInstance();
 
 foreach ($client->search('sylius') as $result) {
-    /* @var $result Packagist\Api\Result\Result */
     echo $result->getName();
 }
 
