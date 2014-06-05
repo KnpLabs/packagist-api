@@ -14,12 +14,14 @@ class Filter
      * @var string
      */
     private $type = null;
+
     /**
      * The name of github account
      *
      * @var string
      */
     private $vendor = null;
+
     /**
      * Tags of packages
      *

@@ -8,18 +8,22 @@ class Result extends AbstractResult
      * @var string
      */
     protected $name = null;
+
     /**
      * @var string
      */
     protected $description = null;
+
     /**
      * @var string
      */
     protected $url = null;
+
     /**
      * @var string
      */
     protected $downloads = null;
+
     /**
      * @var string
      */

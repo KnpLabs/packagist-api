@@ -10,10 +10,12 @@ class Source extends AbstractResult
      * @var string
      */
     protected $type = null;
+
     /**
      * @var string
      */
     protected $url = null;
+
     /**
      * @var string
      */
@@ -26,6 +28,7 @@ class Source extends AbstractResult
     {
         return $this->type;
     }
+
     /**
      * @return string
      */
@@ -33,6 +36,7 @@ class Source extends AbstractResult
     {
         return $this->url;
     }
+
     /**
      * @return string
      */

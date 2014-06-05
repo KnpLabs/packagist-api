@@ -14,10 +14,12 @@ class Client
      * @var ClientInterface
      */
     private $httpClient = null;
+
     /**
      * @var Factory
      */
     private $resultFactory = null;
+
     /**
      * @var string
      */

@@ -3,12 +3,13 @@
 namespace Packagist\Api;
 
 use Guzzle\Http\Client as HttpClient;
+use Guzzle\Http\ClientInterface;
 use Packagist\Api\Result\Factory;
 
 class ClientFactory
 {
     /**
-     * Create instance of PackagistApiClient
+     * Create instance of Client
      *
      * @param null|ClientInterface $httpClient
      * @param string               $packagistUrl

@@ -8,34 +8,42 @@ class Package extends AbstractResult
      * @var string
      */
     protected $name = null;
+
     /**
      * @var string
      */
     protected $description = null;
+
     /**
      * @var string
      */
     protected $time = null;
+
     /**
      * @var Maintainer
      */
     protected $maintainers = null;
+
     /**
      * @var Version
      */
     protected $versions = null;
+
     /**
      * @var string
      */
     protected $type = null;
+
     /**
      * @var string
      */
     protected $repository = null;
+
     /**
      * @var Downloads
      */
     protected $downloads = null;
+
     /**
      * @var string
      */
@@ -48,6 +56,7 @@ class Package extends AbstractResult
     {
         return $this->name;
     }
+
     /**
      * @return string
      */
@@ -55,6 +64,7 @@ class Package extends AbstractResult
     {
         return $this->description;
     }
+
     /**
      * @return string
      */
@@ -62,6 +72,7 @@ class Package extends AbstractResult
     {
         return $this->time;
     }
+
     /**
      * @return \Packagist\Api\Result\Maintainer
      */
@@ -69,6 +80,7 @@ class Package extends AbstractResult
     {
         return $this->maintainers;
     }
+
     /**
      * @return \Packagist\Api\Result\Version
      */
@@ -76,6 +88,7 @@ class Package extends AbstractResult
     {
         return $this->versions;
     }
+
     /**
      * @return string
      */
@@ -83,6 +96,7 @@ class Package extends AbstractResult
     {
         return $this->type;
     }
+
     /**
      * @return string
      */
@@ -90,6 +104,7 @@ class Package extends AbstractResult
     {
         return $this->repository;
     }
+
     /**
      * @return \Packagist\Api\Result\Downloads
      */
@@ -97,6 +112,7 @@ class Package extends AbstractResult
     {
         return $this->downloads;
     }
+
     /**
      * @return string
      */

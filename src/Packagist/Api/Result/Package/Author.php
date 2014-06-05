@@ -10,10 +10,12 @@ class Author extends AbstractResult
      * @var string
      */
     protected $name = null;
+
     /**
      * @var string
      */
     protected $email = null;
+
     /**
      * @var string
      */
@@ -26,6 +28,7 @@ class Author extends AbstractResult
     {
         return $this->name;
     }
+
     /**
      * @return string
      */
@@ -33,6 +36,7 @@ class Author extends AbstractResult
     {
         return $this->email;
     }
+
     /**
      * @return string
      */

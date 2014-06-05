@@ -10,78 +10,97 @@ class Version extends AbstractResult
      * @var string
      */
     protected $name = null;
+
     /**
      * @var string
      */
     protected $description = null;
+
     /**
      * @var string
      */
     protected $keywords = null;
+
     /**
      * @var string
      */
     protected $homepage = null;
+
     /**
      * @var string
      */
     protected $version = null;
+
     /**
      * @var string
      */
     protected $versionNormalized = null;
+
     /**
      * @var string
      */
     protected $license = null;
+
     /**
      * @var array
      */
     protected $authors = null;
+
     /**
      * @var Source
      */
     protected $source = null;
+
     /**
      * @var Dist
      */
     protected $dist = null;
+
     /**
      * @var string
      */
     protected $type = null;
+
     /**
      * @var string
      */
     protected $time = null;
+
     /**
      * @var array
      */
     protected $autoload = null;
+
     /**
      * @var array
      */
     protected $extra = null;
+
     /**
      * @var array
      */
     protected $require = null;
+
     /**
      * @var array
      */
     protected $requireDev = null;
+
     /**
      * @var string
      */
     protected $conflict = null;
+
     /**
      * @var string
      */
     protected $provide = null;
+
     /**
      * @var string
      */
     protected $replace = null;
+
     /**
      * @var string
      */
@@ -94,6 +113,7 @@ class Version extends AbstractResult
     {
         return $this->name;
     }
+
     /**
      * @return string
      */
@@ -101,6 +121,7 @@ class Version extends AbstractResult
     {
         return $this->description;
     }
+
     /**
      * @return string
      */
@@ -108,6 +129,7 @@ class Version extends AbstractResult
     {
         return $this->keywords;
     }
+
     /**
      * @return string
      */
@@ -115,6 +137,7 @@ class Version extends AbstractResult
     {
         return $this->homepage;
     }
+
     /**
      * @return string
      */
@@ -122,6 +145,7 @@ class Version extends AbstractResult
     {
         return $this->version;
     }
+
     /**
      * @return string
      */
@@ -129,6 +153,7 @@ class Version extends AbstractResult
     {
         return $this->versionNormalized;
     }
+
     /**
      * @return string
      */
@@ -136,6 +161,7 @@ class Version extends AbstractResult
     {
         return $this->license;
     }
+
     /**
      * @return array
      */
@@ -143,6 +169,7 @@ class Version extends AbstractResult
     {
         return $this->authors;
     }
+
     /**
      * @return \Packagist\Api\Result\Package\Source
      */
@@ -150,6 +177,7 @@ class Version extends AbstractResult
     {
         return $this->source;
     }
+
     /**
      * @return \Packagist\Api\Result\Package\Dist
      */
@@ -157,6 +185,7 @@ class Version extends AbstractResult
     {
         return $this->dist;
     }
+
     /**
      * @return string
      */
@@ -164,6 +193,7 @@ class Version extends AbstractResult
     {
         return $this->type;
     }
+
     /**
      * @return string
      */
@@ -171,6 +201,7 @@ class Version extends AbstractResult
     {
         return $this->time;
     }
+
     /**
      * @return array
      */
@@ -178,6 +209,7 @@ class Version extends AbstractResult
     {
         return $this->autoload;
     }
+
     /**
      * @return array
      */
@@ -185,6 +217,7 @@ class Version extends AbstractResult
     {
         return $this->extra;
     }
+
     /**
      * @return array
      */
@@ -192,6 +225,7 @@ class Version extends AbstractResult
     {
         return $this->require;
     }
+
     /**
      * @return array
      */
@@ -199,6 +233,7 @@ class Version extends AbstractResult
     {
         return $this->requireDev;
     }
+
     /**
      * @return string
      */
@@ -206,6 +241,7 @@ class Version extends AbstractResult
     {
         return $this->conflict;
     }
+
     /**
      * @return string
      */
@@ -213,18 +249,18 @@ class Version extends AbstractResult
     {
         return $this->provide;
     }
+
     /**
      * @return string
      */
-
     public function getReplace()
     {
         return $this->replace;
     }
+
     /**
      * @return string
      */
-
     public function getBin()
     {
         return $this->bin;

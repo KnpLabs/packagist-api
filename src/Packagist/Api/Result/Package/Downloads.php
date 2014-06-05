@@ -10,10 +10,12 @@ class Downloads extends AbstractResult
      * @var integer
      */
     protected $total = null;
+
     /**
      * @var integer
      */
     protected $monthly = null;
+
     /**
      * @var integer
      */
@@ -26,6 +28,7 @@ class Downloads extends AbstractResult
     {
         $this->total = $total;
     }
+
     /**
      * @param integer $monthly
      */
@@ -33,6 +36,7 @@ class Downloads extends AbstractResult
     {
         $this->monthly = $monthly;
     }
+
     /**
      * @param integer $daily
      */
@@ -48,6 +52,7 @@ class Downloads extends AbstractResult
     {
         return $this->total;
     }
+
     /**
      * @return integer
      */
@@ -55,6 +60,7 @@ class Downloads extends AbstractResult
     {
         return $this->monthly;
     }
+
     /**
      * @return integer
      */
