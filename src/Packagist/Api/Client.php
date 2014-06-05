@@ -24,9 +24,9 @@ class Client
     private $packagistUrl = null;
 
     /**
-     * @param ClientInterface $httpClient
-     * @param Factory         $resultFactory
-     * @param string          $packagistUrl
+     * @param null|ClientInterface $httpClient
+     * @param null|Factory         $resultFactory
+     * @param null|string          $packagistUrl
      */
     public function __construct(
         ClientInterface $httpClient = null,

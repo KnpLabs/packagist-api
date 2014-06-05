@@ -11,7 +11,7 @@ class ResponseException extends \Exception
     /**
      * @param string $packageName
      *
-     * @return \Packagist\Api\PackagistApiResponseException
+     * @return \Packagist\Api\ResponseException
      */
     public static function packageDoesNotExist($packageName)
     {
