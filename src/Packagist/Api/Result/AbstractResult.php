@@ -6,6 +6,9 @@ use Doctrine\Common\Inflector\Inflector;
 
 abstract class AbstractResult
 {
+    /**
+     * @param array $data
+     */
     public function fromArray(array $data)
     {
         foreach ($data as $key => $value) {
