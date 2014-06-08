@@ -2,9 +2,9 @@
 
 namespace spec\Packagist\Api\Result;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Result extends ObjectBehavior
+class ResultSpec extends ObjectBehavior
 {
     function let()
     {

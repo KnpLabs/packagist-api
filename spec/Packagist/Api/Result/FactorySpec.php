@@ -2,14 +2,13 @@
 
 namespace spec\Packagist\Api\Result;
 
-use PHPSpec2\ObjectBehavior;
-use PHPSpec2\Matcher\CustomMatchersProviderInterface;
-use PHPSpec2\Matcher\InlineMatcher;
-use PHPSpec2\Exception\Example\MatcherException;
-use Mockery\Matcher\Type as TypeMatcher;
+use PhpSpec\ObjectBehavior;
 use spec\Packagist\Api\Fixture\FixtureLoader;
 
-class Factory extends ObjectBehavior implements CustomMatchersProviderInterface
+// Unable to autload this class with PHPSpec version 2
+require_once 'spec/Packagist/Api/Fixture/FixtureLoader.php';
+
+class FactorySpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
@@ -22,11 +21,9 @@ class Factory extends ObjectBehavior implements CustomMatchersProviderInterface
 
         $results = $this->create($data);
         $results->shouldHaveCount(2);
-        $matcher = new TypeMatcher('Packagist\Api\Result\Result');
-        foreach ($results->getWrappedSubject() as $result) {
-            if (!$matcher->match($result)) {
-                throw new MatcherException(sprintf('Result expected, got %s.', get_class($result)));
-            }
+        $results->shouldBeArray();
+        foreach ($results as $result) {
+            $result->shouldBeAnInstanceOf('Packagist\Api\Result\Result');
         }
     }
 
@@ -55,12 +52,12 @@ class Factory extends ObjectBehavior implements CustomMatchersProviderInterface
         $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
     }
 
-    static public function getMatchers()
+    public function getMatchers()
     {
         return array(
-            new InlineMatcher('haveBranch', function($subject, $key) {
+            'haveBranch'  => function($subject, $key) {
                 return array_key_exists($key, $subject);
-            })
+            }
         );
     }
 }

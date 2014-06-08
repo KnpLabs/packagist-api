@@ -2,9 +2,9 @@
 
 namespace spec\Packagist\Api\Result\Package;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Dist extends ObjectBehavior
+class DistSpec extends ObjectBehavior
 {
     function let()
     {

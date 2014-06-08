@@ -2,9 +2,9 @@
 
 namespace spec\Packagist\Api\Result\Package;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Maintainer extends ObjectBehavior
+class MaintainerSpec extends ObjectBehavior
 {
     function let()
     {
