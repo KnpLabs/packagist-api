@@ -8,7 +8,7 @@ class Result extends AbstractResult
     protected $description;
     protected $url;
     protected $downloads;
-    protected $faves;
+    protected $favers;
 
     public function getName()
     {
@@ -32,6 +32,6 @@ class Result extends AbstractResult
 
     public function getFavers()
     {
-        return $this->faves;
+        return $this->favers;
     }
 }
