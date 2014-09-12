@@ -2,9 +2,9 @@
 
 namespace spec\Packagist\Api\Result\Package;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Downloads extends ObjectBehavior
+class DownloadsSpec extends ObjectBehavior
 {
     function let()
     {

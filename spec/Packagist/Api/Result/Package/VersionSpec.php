@@ -2,9 +2,9 @@
 
 namespace spec\Packagist\Api\Result\Package;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Version extends ObjectBehavior
+class VersionSpec extends ObjectBehavior
 {
     /**
      * @param Packagist\Api\Result\Package\Author $author

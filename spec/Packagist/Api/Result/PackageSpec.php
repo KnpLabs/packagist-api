@@ -2,9 +2,9 @@
 
 namespace spec\Packagist\Api\Result;
 
-use PHPSpec2\ObjectBehavior;
+use PhpSpec\ObjectBehavior;
 
-class Package extends ObjectBehavior
+class PackageSpec extends ObjectBehavior
 {
     /**
      * @param Packagist\Api\Result\Package\Maintainer $maintainer
