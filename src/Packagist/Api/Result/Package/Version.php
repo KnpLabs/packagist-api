@@ -171,7 +171,7 @@ class Version extends AbstractResult
     }
 
     /**
-     * @return \Packagist\Api\Result\Package\Source
+     * @return Source
      */
     public function getSource()
     {
@@ -179,7 +179,7 @@ class Version extends AbstractResult
     }
 
     /**
-     * @return \Packagist\Api\Result\Package\Dist
+     * @return Dist
      */
     public function getDist()
     {

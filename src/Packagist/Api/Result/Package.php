@@ -74,7 +74,7 @@ class Package extends AbstractResult
     }
 
     /**
-     * @return \Packagist\Api\Result\Maintainer
+     * @return Maintainer
      */
     public function getMaintainers()
     {
@@ -82,7 +82,7 @@ class Package extends AbstractResult
     }
 
     /**
-     * @return \Packagist\Api\Result\Version
+     * @return Version
      */
     public function getVersions()
     {
@@ -106,7 +106,7 @@ class Package extends AbstractResult
     }
 
     /**
-     * @return \Packagist\Api\Result\Downloads
+     * @return Downloads
      */
     public function getDownloads()
     {
