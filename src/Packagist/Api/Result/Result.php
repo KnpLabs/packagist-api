@@ -7,27 +7,27 @@ class Result extends AbstractResult
     /**
      * @var string
      */
-    protected $name = null;
+    protected $name;
 
     /**
      * @var string
      */
-    protected $description = null;
+    protected $description;
 
     /**
      * @var string
      */
-    protected $url = null;
+    protected $url;
 
     /**
      * @var string
      */
-    protected $downloads = null;
+    protected $downloads;
 
     /**
      * @var string
      */
-    protected $faves = null;
+    protected $faves;
 
     /**
      * @return string

@@ -9,17 +9,17 @@ class Downloads extends AbstractResult
     /**
      * @var integer
      */
-    protected $total = null;
+    protected $total;
 
     /**
      * @var integer
      */
-    protected $monthly = null;
+    protected $monthly;
 
     /**
      * @var integer
      */
-    protected $daily = null;
+    protected $daily;
 
     /**
      * @param integer $total

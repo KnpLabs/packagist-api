@@ -9,102 +9,102 @@ class Version extends AbstractResult
     /**
      * @var string
      */
-    protected $name = null;
+    protected $name;
 
     /**
      * @var string
      */
-    protected $description = null;
+    protected $description;
 
     /**
      * @var string
      */
-    protected $keywords = null;
+    protected $keywords;
 
     /**
      * @var string
      */
-    protected $homepage = null;
+    protected $homepage;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     /**
      * @var string
      */
-    protected $versionNormalized = null;
+    protected $versionNormalized;
 
     /**
      * @var string
      */
-    protected $license = null;
+    protected $license;
 
     /**
      * @var array
      */
-    protected $authors = null;
+    protected $authors;
 
     /**
      * @var Source
      */
-    protected $source = null;
+    protected $source;
 
     /**
      * @var Dist
      */
-    protected $dist = null;
+    protected $dist;
 
     /**
      * @var string
      */
-    protected $type = null;
+    protected $type;
 
     /**
      * @var string
      */
-    protected $time = null;
+    protected $time;
 
     /**
      * @var array
      */
-    protected $autoload = null;
+    protected $autoload;
 
     /**
      * @var array
      */
-    protected $extra = null;
+    protected $extra;
 
     /**
      * @var array
      */
-    protected $require = null;
+    protected $require;
 
     /**
      * @var array
      */
-    protected $requireDev = null;
+    protected $requireDev;
 
     /**
      * @var string
      */
-    protected $conflict = null;
+    protected $conflict;
 
     /**
      * @var string
      */
-    protected $provide = null;
+    protected $provide;
 
     /**
      * @var string
      */
-    protected $replace = null;
+    protected $replace;
 
     /**
      * @var string
      */
-    protected $bin = null;
+    protected $bin;
 
     /**
      * @return string

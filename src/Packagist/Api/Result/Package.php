@@ -7,47 +7,47 @@ class Package extends AbstractResult
     /**
      * @var string
      */
-    protected $name = null;
+    protected $name;
 
     /**
      * @var string
      */
-    protected $description = null;
+    protected $description;
 
     /**
      * @var string
      */
-    protected $time = null;
+    protected $time;
 
     /**
      * @var Maintainer
      */
-    protected $maintainers = null;
+    protected $maintainers;
 
     /**
      * @var Version
      */
-    protected $versions = null;
+    protected $versions;
 
     /**
      * @var string
      */
-    protected $type = null;
+    protected $type;
 
     /**
      * @var string
      */
-    protected $repository = null;
+    protected $repository;
 
     /**
      * @var Downloads
      */
-    protected $downloads = null;
+    protected $downloads;
 
     /**
      * @var string
      */
-    protected $favers = null;
+    protected $favers;
 
     /**
      * @return string

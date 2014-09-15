@@ -9,17 +9,17 @@ class Source extends AbstractResult
     /**
      * @var string
      */
-    protected $type = null;
+    protected $type;
 
     /**
      * @var string
      */
-    protected $url = null;
+    protected $url;
 
     /**
      * @var string
      */
-    protected $reference = null;
+    protected $reference;
 
     /**
      * @return string
