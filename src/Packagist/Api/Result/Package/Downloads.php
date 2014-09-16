@@ -6,37 +6,66 @@ use Packagist\Api\Result\AbstractResult;
 
 class Downloads extends AbstractResult
 {
+    /**
+     * @var integer
+     */
     protected $total;
+
+    /**
+     * @var integer
+     */
     protected $monthly;
+
+    /**
+     * @var integer
+     */
     protected $daily;
 
-    public function getTotal()
-    {
-        return $this->total;
-    }
-
+    /**
+     * @param integer $total
+     */
     public function setTotal($total)
     {
         $this->total = $total;
     }
 
-    public function getMonthly()
-    {
-        return $this->monthly;
-    }
-
+    /**
+     * @param integer $monthly
+     */
     public function setMonthly($monthly)
     {
         $this->monthly = $monthly;
     }
 
-    public function getDaily()
-    {
-        return $this->daily;
-    }
-
+    /**
+     * @param integer $daily
+     */
     public function setDaily($daily)
     {
         $this->daily = $daily;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getMonthly()
+    {
+        return $this->monthly;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getDaily()
+    {
+        return $this->daily;
     }
 }

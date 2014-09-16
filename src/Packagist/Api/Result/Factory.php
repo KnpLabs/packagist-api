@@ -4,8 +4,21 @@ namespace Packagist\Api\Result;
 
 use InvalidArgumentException;
 
+/**
+ * Map raw data from website api to has a know type
+ *
+ * @since 1.0
+ */
 class Factory
 {
+    /**
+     * Analyse the data and transform to a known type
+     *
+     * @param array $data
+     * @throws InvalidArgumentException
+     *
+     * @return array|Package
+     */
     public function create(array $data)
     {
         if (isset($data['results'])) {
@@ -19,6 +32,13 @@ class Factory
         throw new InvalidArgumentException('Invalid input data.');
     }
 
+    /**
+     * Create a collection of \Packagist\Api\Result\Result
+
+     * @param array $results
+     *
+     * @return array
+     */
     public function createSearchResults(array $results)
     {
         $created = array();
@@ -29,6 +49,13 @@ class Factory
         return $created;
     }
 
+    /**
+     * Parse array to \Packagist\Api\Result\Result
+
+     * @param array $package
+     *
+     * @return Package
+     */
     public function createPackageResults(array $package)
     {
         $created = array();
@@ -63,7 +90,15 @@ class Factory
         return $created;
     }
 
-    protected function createResult($class, $data)
+    /**
+     * Dynamically create DataObject of type $class and hydrate
+     *
+     * @param string $class DataObject class
+     * @param array  $data Array of data
+     *
+     * @return mixed DataObject $class hydrated
+     */
+    protected function createResult($class, array $data)
     {
         $result = new $class();
         $result->fromArray($data);
