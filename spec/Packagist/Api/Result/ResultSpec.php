@@ -13,7 +13,7 @@ class ResultSpec extends ObjectBehavior
             'description' => 'Modern ecommerce for Symfony2',
             'url'         => 'http://sylius.com',
             'downloads'   => 999999999,
-            'faves'       => 999999999,
+            'favers'      => 999999999,
             'repository'  => 'https://github.com/Sylius/SyliusCartBundle'
         ));
     }
