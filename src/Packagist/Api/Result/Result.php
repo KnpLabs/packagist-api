@@ -27,7 +27,12 @@ class Result extends AbstractResult
     /**
      * @var string
      */
-    protected $faves;
+    protected $favers;
+
+    /**
+     * @var string
+     */
+    protected $repository;
 
     /**
      * @return string
@@ -66,6 +71,14 @@ class Result extends AbstractResult
      */
     public function getFavers()
     {
-        return $this->faves;
+        return $this->favers;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRepository()
+    {
+        return $this->repository;
     }
 }

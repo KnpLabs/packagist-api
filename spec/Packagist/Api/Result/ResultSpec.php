@@ -14,6 +14,7 @@ class ResultSpec extends ObjectBehavior
             'url'         => 'http://sylius.com',
             'downloads'   => 999999999,
             'faves'       => 999999999,
+            'repository'  => 'https://github.com/Sylius/SyliusCartBundle'
         ));
     }
 
@@ -50,5 +51,10 @@ class ResultSpec extends ObjectBehavior
     function it_gets_favers()
     {
         $this->getFavers()->shouldReturn(999999999);
+    }
+
+    function it_gets_repository()
+    {
+    	$this->getRepository()->shouldReturn('https://github.com/Sylius/SyliusCartBundle');
     }
 }
