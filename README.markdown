@@ -54,7 +54,7 @@ sylius/promotions-bundle
 $package = $client->get('sylius/sylius');
 
 printf(
-    'Package %s. %s. Read more on %s.',
+    'Package %s. %s.',
     $package->getName(),
     $package->getDescription()
 );
