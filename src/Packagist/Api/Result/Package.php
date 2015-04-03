@@ -25,7 +25,7 @@ class Package extends AbstractResult
     protected $maintainers;
 
     /**
-     * @var Version
+     * @var Version[]
      */
     protected $versions;
 
