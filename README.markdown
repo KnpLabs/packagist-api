@@ -1,4 +1,6 @@
 # Packagist API [![Build Status](https://travis-ci.org/KnpLabs/packagist-api.svg)](https://travis-ci.org/KnpLabs/packagist-api) [![HHVM Status](http://hhvm.h4cc.de/badge/knplabs/packagist-api.svg)](http://hhvm.h4cc.de/package/knplabs/packagist-api) [![Latest Stable Version](https://poser.pugx.org/KnpLabs/packagist-api/v/stable.png)](https://packagist.org/packages/KnpLabs/packagist-api) [![Total Downloads](https://poser.pugx.org/KnpLabs/packagist-api/downloads.png)](https://packagist.org/packages/KnpLabs/packagist-api)
+[![Dependency Status](https://www.versioneye.com/php/knplabs:packagist-api/badge.svg)](https://www.versioneye.com/php/knplabs:packagist-api)
+[![Reference Status](https://www.versioneye.com/php/knplabs:packagist-api/reference_badge.svg?style=flat)](https://www.versioneye.com/php/knplabs:packagist-api/references)
 
 Simple object oriented wrapper for Packagist API.
 
