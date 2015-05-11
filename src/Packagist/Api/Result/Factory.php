@@ -43,7 +43,7 @@ class Factory
      */
     public function createSearchResults(array $results)
     {
-        $created = [];
+        $created = array();
         foreach ($results as $key => $result) {
             $created[$key] = $this->createResult('Packagist\Api\Result\Result', $result);
         }
@@ -60,7 +60,7 @@ class Factory
      */
     public function createPackageResults(array $package)
     {
-        $created = [];
+        $created = array();
 
         if (isset($package['maintainers']) && $package['maintainers']) {
             foreach ($package['maintainers'] as $key => $maintainer) {
