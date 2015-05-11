@@ -124,6 +124,31 @@ class Client
     }
 
     /**
+     * Popular packages
+     *
+     * @since 1.3
+     *
+     * @param array  $filters An array of filters
+     *
+     * @return array The results
+     */
+    public function popular($pages = 1, $startPage = 1)
+    {
+        $results = $response = array();
+        $url = '/explore/popular.json?' . http_build_query(['page' => $startPage]);
+        $response['next'] = $this->url($url);
+
+        do {
+            $response = $this->request($response['next']);
+            $response = $this->parse($response);
+            $results = array_merge($results, $this->create($response));
+            $pages--;
+        } while ($pages > 0 && isset($response['next']));
+
+        return $results;
+    }
+
+    /**
      * Assemble the packagist URL with the route
      *
      * @param string $route API Route that we want to achieve

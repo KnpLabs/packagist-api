@@ -22,7 +22,9 @@ class Factory
     public function create(array $data)
     {
         if (isset($data['results'])) {
-            return $this->createSearchResults($data['results']);
+			return $this->createSearchResults($data['results']);
+		} elseif (isset($data['packages'])) {
+			return $this->createSearchResults($data['packages']);
         } elseif (isset($data['package'])) {
             return $this->createPackageResults($data['package']);
         } elseif (isset($data['packageNames'])) {
@@ -41,7 +43,7 @@ class Factory
      */
     public function createSearchResults(array $results)
     {
-        $created = array();
+        $created = [];
         foreach ($results as $key => $result) {
             $created[$key] = $this->createResult('Packagist\Api\Result\Result', $result);
         }
@@ -58,7 +60,7 @@ class Factory
      */
     public function createPackageResults(array $package)
     {
-        $created = array();
+        $created = [];
 
         if (isset($package['maintainers']) && $package['maintainers']) {
             foreach ($package['maintainers'] as $key => $maintainer) {
