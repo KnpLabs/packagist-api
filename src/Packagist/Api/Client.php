@@ -135,7 +135,7 @@ class Client
     public function popular($pages = 1, $startPage = 1)
     {
         $results = $response = array();
-        $url = '/explore/popular.json?' . http_build_query(['page' => $startPage]);
+        $url = '/explore/popular.json?' . http_build_query(array('page' => $startPage));
         $response['next'] = $this->url($url);
 
         do {
