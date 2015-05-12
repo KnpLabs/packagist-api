@@ -45,15 +45,15 @@ class ClientSpec extends ObjectBehavior
         $this->search('sylius', array('tag' => 'storage'));
     }
 
-	function it_gets_popular_packages(HttpClient $client, Factory $factory, Request $request, Response $response)
-	{
-		$client->get('https://packagist.org/explore/popular.json?page=2')->shouldBeCalled()->willReturn($request);
-		$data = file_get_contents('spec/Packagist/Api/Fixture/popular.json');
-		$response->getBody(true)->shouldBeCalled()->willReturn($data);
-		$factory->create(json_decode($data, true))->shouldBeCalled()->willReturn(array());
+    function it_gets_popular_packages(HttpClient $client, Factory $factory, Request $request, Response $response)
+    {
+        $client->get('https://packagist.org/explore/popular.json?page=2')->shouldBeCalled()->willReturn($request);
+        $data = file_get_contents('spec/Packagist/Api/Fixture/popular.json');
+        $response->getBody(true)->shouldBeCalled()->willReturn($data);
+        $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn(array());
 
-		$this->popular(1, 2);
-	}
+        $this->popular(1, 2);
+    }
 
     function it_gets_package_details(HttpClient $client, Factory $factory, Request $request, Response $response)
     {
