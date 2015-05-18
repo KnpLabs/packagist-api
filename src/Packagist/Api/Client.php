@@ -128,24 +128,22 @@ class Client
      *
      * @since 1.3
      *
-     * @param array  $filters An array of filters
-     *
+     * @param $total
      * @return array The results
      */
-    public function popular($pages = 1, $startPage = 1)
+    public function popular($total)
     {
         $results = $response = array();
-        $url = '/explore/popular.json?' . http_build_query(array('page' => $startPage));
+        $url = '/explore/popular.json?' . http_build_query(array('page' => 1));
         $response['next'] = $this->url($url);
 
         do {
             $response = $this->request($response['next']);
             $response = $this->parse($response);
             $results = array_merge($results, $this->create($response));
-            $pages--;
-        } while ($pages > 0 && isset($response['next']));
+        } while (count($results) < $total && isset($response['next']));
 
-        return $results;
+        return array_slice($results, 0, $total);
     }
 
     /**
