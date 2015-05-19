@@ -23,6 +23,8 @@ class Factory
     {
         if (isset($data['results'])) {
             return $this->createSearchResults($data['results']);
+        } elseif (isset($data['packages'])) {
+            return $this->createSearchResults($data['packages']);
         } elseif (isset($data['package'])) {
             return $this->createPackageResults($data['package']);
         } elseif (isset($data['packageNames'])) {

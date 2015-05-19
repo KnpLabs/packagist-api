@@ -23,6 +23,18 @@ class FactorySpec extends ObjectBehavior
         }
     }
 
+    function it_creates_popular_results()
+    {
+        $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/popular.json'), true);
+
+        $results = $this->create($data);
+        $results->shouldHaveCount(2);
+        $results->shouldBeArray();
+        foreach ($results as $result) {
+            $result->shouldBeAnInstanceOf('Packagist\Api\Result\Result');
+        }
+    }
+
     function it_creates_packages()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get.json'), true);
