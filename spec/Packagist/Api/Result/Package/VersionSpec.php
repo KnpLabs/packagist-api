@@ -31,6 +31,7 @@ class VersionSpec extends ObjectBehavior
             'extra'              => array('symfony-app-dir' => 'sylius'),
             'require'            => array('php' => '>=5.4'),
             'require-dev'        => array('phpspec/phpspec2' => 'dev-develop'),
+            'suggest'            => array('illuminate/events' => 'Required to use the observers with Eloquent (5.1.*).'),
             'bin'                => array('bin/sylius'),
         ));
     }
@@ -128,5 +129,10 @@ class VersionSpec extends ObjectBehavior
     function it_gets_bin()
     {
         $this->getBin()->shouldReturn(array('bin/sylius'));
+    }
+
+    function it_gets_suggest()
+    {
+        $this->getSuggest()->shouldReturn(array('illuminate/events' => 'Required to use the observers with Eloquent (5.1.*).'));
     }
 }

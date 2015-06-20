@@ -265,4 +265,12 @@ class Version extends AbstractResult
     {
         return $this->bin;
     }
+
+    /**
+     * @return array
+     */
+    public function getSuggest()
+    {
+        return $this->suggest;
+    }
 }
