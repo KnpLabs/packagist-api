@@ -107,6 +107,11 @@ class Version extends AbstractResult
     protected $bin;
 
     /**
+     * @var array
+     */
+    protected $suggest;
+
+    /**
      * @return string
      */
     public function getName()
@@ -264,5 +269,13 @@ class Version extends AbstractResult
     public function getBin()
     {
         return $this->bin;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSuggest()
+    {
+        return $this->suggest;
     }
 }
