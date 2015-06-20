@@ -107,6 +107,11 @@ class Version extends AbstractResult
     protected $bin;
 
     /**
+     * @var array
+     */
+    protected $suggest;
+
+    /**
      * @return string
      */
     public function getName()
