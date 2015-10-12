@@ -10,12 +10,8 @@ Simple object oriented wrapper for Packagist API.
 
 The recommended way to install Packagist API is through composer:
 
-```json
-{
-    "require": {
-        "knplabs/packagist-api": "1.*@dev"
-    }
-}
+```bash
+$ composer require knplabs/packagist-api
 ```
 
 ## Usage
