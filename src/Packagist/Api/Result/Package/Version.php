@@ -112,6 +112,11 @@ class Version extends AbstractResult
     protected $suggest;
 
     /**
+     * @var bool
+     */
+    protected $abandoned = false;
+
+    /**
      * @return string
      */
     public function getName()
@@ -277,5 +282,13 @@ class Version extends AbstractResult
     public function getSuggest()
     {
         return $this->suggest;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAbandoned()
+    {
+        return $this->abandoned;
     }
 }

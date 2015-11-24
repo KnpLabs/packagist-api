@@ -60,6 +60,13 @@ class FactorySpec extends ObjectBehavior
         $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
     }
 
+    function it_creates_abandoned_packages()
+    {
+        $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_abandoned.json'), true);
+
+        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
+    }
+
     public function getMatchers()
     {
         return array(

@@ -135,4 +135,9 @@ class VersionSpec extends ObjectBehavior
     {
         $this->getSuggest()->shouldReturn(array('illuminate/events' => 'Required to use the observers with Eloquent (5.1.*).'));
     }
+
+    function it_gets_abandoned()
+    {
+        $this->isAbandoned()->shouldReturn(false);
+    }
 }
