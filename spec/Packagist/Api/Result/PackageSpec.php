@@ -83,4 +83,9 @@ class PackageSpec extends ObjectBehavior
     {
         $this->getFavers()->shouldReturn(9999999999);
     }
+
+    function it_gets_abandoned()
+    {
+        $this->isAbandoned()->shouldReturn(false);
+    }
 }

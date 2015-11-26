@@ -50,6 +50,11 @@ class Package extends AbstractResult
     protected $favers;
 
     /**
+     * @var bool
+     */
+    protected $abandoned = false;
+
+    /**
      * @return string
      */
     public function getName()
@@ -119,5 +124,13 @@ class Package extends AbstractResult
     public function getFavers()
     {
         return $this->favers;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAbandoned()
+    {
+        return $this->abandoned;
     }
 }
