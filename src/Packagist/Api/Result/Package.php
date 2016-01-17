@@ -20,7 +20,7 @@ class Package extends AbstractResult
     protected $time;
 
     /**
-     * @var Package\Maintainer
+     * @var Package\Maintainer[]
      */
     protected $maintainers;
 
@@ -79,7 +79,7 @@ class Package extends AbstractResult
     }
 
     /**
-     * @return Package\Maintainer
+     * @return Package\Maintainer[]
      */
     public function getMaintainers()
     {
@@ -87,7 +87,7 @@ class Package extends AbstractResult
     }
 
     /**
-     * @return Package\Version
+     * @return Package\Version[]
      */
     public function getVersions()
     {
