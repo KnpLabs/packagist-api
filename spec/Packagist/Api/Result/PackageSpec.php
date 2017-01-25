@@ -26,6 +26,7 @@ class PackageSpec extends ObjectBehavior
             'repository'  => 'https://github.com/Sylius/Sylius.git',
             'downloads'   => $downloads,
             'favers'      => 9999999999,
+            'suggesters'  => 21,
         ));
     }
 
@@ -87,5 +88,10 @@ class PackageSpec extends ObjectBehavior
     function it_gets_abandoned()
     {
         $this->isAbandoned()->shouldReturn(false);
+    }
+
+    function it_gets_suggesters()
+    {
+        $this->getSuggesters()->shouldReturn(21);
     }
 }
