@@ -2,8 +2,8 @@
 
 namespace Packagist\Api;
 
-use Guzzle\Http\Client as HttpClient;
-use Guzzle\Http\ClientInterface;
+use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\ClientInterface;
 use Packagist\Api\Result\Factory;
 
 /**
@@ -186,11 +186,7 @@ class Client
             $this->httpClient = new HttpClient();
         }
 
-        return $this->httpClient
-            ->get($url)
-            ->send()
-            ->getBody(true)
-        ;
+        return (string)$this->httpClient->request('GET', $url)->getBody();
     }
 
     /**
