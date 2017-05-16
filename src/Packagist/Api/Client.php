@@ -2,9 +2,9 @@
 
 namespace Packagist\Api;
 
-use Guzzle\Http\Client as HttpClient;
-use Guzzle\Http\ClientInterface;
 use Packagist\Api\Result\Factory;
+use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\ClientInterface;
 
 /**
  * Packagist Api
@@ -178,7 +178,7 @@ class Client
      *
      * @param string $url
      *
-     * @return \Guzzle\Http\EntityBodyInterface|string
+     * @return \Psr\Http\Message\StreamInterface
      */
     protected function request($url)
     {
@@ -188,9 +188,7 @@ class Client
 
         return $this->httpClient
             ->get($url)
-            ->send()
-            ->getBody(true)
-        ;
+            ->getBody();
     }
 
     /**
@@ -210,7 +208,7 @@ class Client
      *
      * @param array $data
      *
-     * @return array|Packagist\Api\Result\Package
+     * @return array|\Packagist\Api\Result\Package
      */
     protected function create(array $data)
     {
