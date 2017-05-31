@@ -55,6 +55,11 @@ class Package extends AbstractResult
     protected $abandoned = false;
 
     /**
+     * @var integer
+     */
+    protected $suggesters = 0;
+
+    /**
      * @return string
      */
     public function getName()
@@ -132,5 +137,13 @@ class Package extends AbstractResult
     public function isAbandoned()
     {
         return $this->abandoned;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getSuggesters()
+    {
+        return $this->suggesters;
     }
 }
