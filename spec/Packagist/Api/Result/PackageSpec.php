@@ -27,6 +27,7 @@ class PackageSpec extends ObjectBehavior
             'downloads'   => $downloads,
             'favers'      => 9999999999,
             'suggesters'  => 21,
+            'dependents'  => 42,
         ));
     }
 
@@ -93,5 +94,10 @@ class PackageSpec extends ObjectBehavior
     function it_gets_suggesters()
     {
         $this->getSuggesters()->shouldReturn(21);
+    }
+
+    function it_gets_dependents()
+    {
+        $this->getDependents()->shouldReturn(42);
     }
 }

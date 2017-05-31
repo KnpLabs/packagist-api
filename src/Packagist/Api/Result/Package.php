@@ -60,6 +60,11 @@ class Package extends AbstractResult
     protected $suggesters = 0;
 
     /**
+     * @var integer
+     */
+    protected $dependents = 0;
+
+    /**
      * @return string
      */
     public function getName()
@@ -145,5 +150,13 @@ class Package extends AbstractResult
     public function getSuggesters()
     {
         return $this->suggesters;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getDependents()
+    {
+        return $this->dependents;
     }
 }
