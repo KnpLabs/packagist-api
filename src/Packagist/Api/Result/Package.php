@@ -65,6 +65,16 @@ class Package extends AbstractResult
     protected $dependents = 0;
 
     /**
+     * @var integer
+     */
+    protected $githubStars = 0;
+
+    /**
+     * @var integer
+     */
+    protected $githubForks = 0;
+
+    /**
      * @return string
      */
     public function getName()
@@ -158,5 +168,21 @@ class Package extends AbstractResult
     public function getDependents()
     {
         return $this->dependents;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getGithubStars()
+    {
+        return $this->githubStars;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getGithubForks()
+    {
+        return $this->githubForks;
     }
 }

@@ -28,6 +28,8 @@ class PackageSpec extends ObjectBehavior
             'favers'      => 9999999999,
             'suggesters'  => 21,
             'dependents'  => 42,
+            'github_stars' => 3086,
+            'github_forks' => 1124
         ));
     }
 
@@ -99,5 +101,15 @@ class PackageSpec extends ObjectBehavior
     function it_gets_dependents()
     {
         $this->getDependents()->shouldReturn(42);
+    }
+
+    function it_gets_github_stars()
+    {
+        $this->getGithubStars()->shouldReturn(3086);
+    }
+
+    function it_gets_github_forks()
+    {
+        $this->getGithubForks()->shouldReturn(1124);
     }
 }
