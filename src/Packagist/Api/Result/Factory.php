@@ -78,7 +78,9 @@ class Factory
                     $version['authors'][$key] = $this->createResult('Packagist\Api\Result\Package\Author', $author);
                 }
             }
-            $version['source'] = $this->createResult('Packagist\Api\Result\Package\Source', $version['source']);
+            if (isset($version['source']) && $version['source']) {
+                $version['source'] = $this->createResult('Packagist\Api\Result\Package\Source', $version['source']);
+            }
             if (isset($version['dist']) && $version['dist']) {
                 $version['dist'] = $this->createResult('Packagist\Api\Result\Package\Dist', $version['dist']);
             }
