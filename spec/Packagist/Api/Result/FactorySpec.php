@@ -79,6 +79,13 @@ class FactorySpec extends ObjectBehavior
         $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
     }
 
+    function it_creates_packages_with_null_source()
+    {
+        $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_null_source.json'), true);
+
+        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
+    }
+
     public function getMatchers()
     {
         return array(
