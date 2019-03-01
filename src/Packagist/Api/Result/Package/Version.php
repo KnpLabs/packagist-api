@@ -112,7 +112,7 @@ class Version extends AbstractResult
     protected $suggest;
 
     /**
-     * @var bool
+     * @var bool|string
      */
     protected $abandoned = false;
 
@@ -289,6 +289,24 @@ class Version extends AbstractResult
      */
     public function isAbandoned()
     {
-        return $this->abandoned;
+        return (bool) $this->abandoned;
+    }
+
+    /**
+     * Gets the package name to use as a replacement if this package is abandoned
+     *
+     * @return string|null
+     */
+    public function getReplacementPackage(): ?string
+    {
+        // The Packagist API will either return a boolean, or a string value for `abandoned`. It will be a boolean
+        // if no replacement package was provided when the package was marked as abandoned in Packagist, or it will be
+        // a string containing the replacement package name to use if one was provided.
+        // @see https://github.com/KnpLabs/packagist-api/pull/56#discussion_r306426997
+        if (is_string($this->abandoned)) {
+            return $this->abandoned;
+        }
+
+        return null;
     }
 }

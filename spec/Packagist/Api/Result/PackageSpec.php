@@ -7,12 +7,12 @@ use PhpSpec\ObjectBehavior;
 class PackageSpec extends ObjectBehavior
 {
     /**
-     * @param Packagist\Api\Result\Package\Maintainer $maintainer
-     * @param Packagist\Api\Result\Package\Version    $version
-     * @param Packagist\Api\Result\Package\Source     $source
-     * @param Packagist\Api\Result\Package\Dist       $dist
-     * @param Packagist\Api\Result\Package\Downloads  $downloads
-     * @param DateTime                                $time
+     * @param \Packagist\Api\Result\Package\Maintainer $maintainer
+     * @param \Packagist\Api\Result\Package\Version    $version
+     * @param \Packagist\Api\Result\Package\Source     $source
+     * @param \Packagist\Api\Result\Package\Dist       $dist
+     * @param \Packagist\Api\Result\Package\Downloads  $downloads
+     * @param \DateTime                                $time
      */
     function let($maintainer, $version, $source, $dist, $downloads, $time)
     {
@@ -91,6 +91,36 @@ class PackageSpec extends ObjectBehavior
     function it_gets_abandoned()
     {
         $this->isAbandoned()->shouldReturn(false);
+    }
+
+    function it_gets_abandoned_returning_true()
+    {
+        $this->fromArray([
+            'name'        => 'typo3/ldap',
+            'abandoned'   => true,
+        ]);
+
+        $this->isAbandoned()->shouldReturn(true);
+    }
+
+    function it_gets_replacement_package()
+    {
+        $this->fromArray([
+            'name'        => 'typo3/ldap',
+            'abandoned'   => 'neos/ldap',
+        ]);
+
+        $this->getReplacementPackage()->shouldReturn('neos/ldap');
+    }
+
+    function it_gets_replacement_package_returning_null()
+    {
+        $this->fromArray([
+            'name'        => 'typo3/ldap',
+            'abandoned'   => false,
+        ]);
+
+        $this->getReplacementPackage()->shouldReturn(null);
     }
 
     function it_gets_suggesters()

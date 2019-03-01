@@ -7,10 +7,10 @@ use PhpSpec\ObjectBehavior;
 class VersionSpec extends ObjectBehavior
 {
     /**
-     * @param Packagist\Api\Result\Package\Author $author
-     * @param Packagist\Api\Result\Package\Source $source
-     * @param Packagist\Api\Result\Package\Dist   $dist
-     * @param DateTime                            $time
+     * @param \Packagist\Api\Result\Package\Author $author
+     * @param \Packagist\Api\Result\Package\Source $source
+     * @param \Packagist\Api\Result\Package\Dist   $dist
+     * @param \DateTime                            $time
      */
     function let($author, $source, $dist, $time)
     {
@@ -139,5 +139,35 @@ class VersionSpec extends ObjectBehavior
     function it_gets_abandoned()
     {
         $this->isAbandoned()->shouldReturn(false);
+    }
+
+    function it_gets_abandoned_returning_true()
+    {
+        $this->fromArray([
+            'name'        => 'typo3/ldap',
+            'abandoned'   => true,
+        ]);
+
+        $this->isAbandoned()->shouldReturn(true);
+    }
+
+    function it_gets_replacement_package()
+    {
+        $this->fromArray([
+            'name'        => 'typo3/ldap',
+            'abandoned'   => 'neos/ldap',
+        ]);
+
+        $this->getReplacementPackage()->shouldReturn('neos/ldap');
+    }
+
+    function it_gets_replacement_package_returning_null()
+    {
+        $this->fromArray([
+            'name'        => 'typo3/ldap',
+            'abandoned'   => false,
+        ]);
+
+        $this->getReplacementPackage()->shouldReturn(null);
     }
 }
