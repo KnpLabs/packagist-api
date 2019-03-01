@@ -50,7 +50,7 @@ class Package extends AbstractResult
     protected $favers;
 
     /**
-     * @var bool
+     * @var bool|string
      */
     protected $abandoned = false;
 
@@ -147,9 +147,18 @@ class Package extends AbstractResult
     }
 
     /**
+     * @deprecated 1.6.0 Use getAbandoned() instead
      * @return bool
      */
     public function isAbandoned()
+    {
+        return (bool) $this->abandoned;
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getAbandoned()
     {
         return $this->abandoned;
     }

@@ -7,12 +7,12 @@ use PhpSpec\ObjectBehavior;
 class PackageSpec extends ObjectBehavior
 {
     /**
-     * @param Packagist\Api\Result\Package\Maintainer $maintainer
-     * @param Packagist\Api\Result\Package\Version    $version
-     * @param Packagist\Api\Result\Package\Source     $source
-     * @param Packagist\Api\Result\Package\Dist       $dist
-     * @param Packagist\Api\Result\Package\Downloads  $downloads
-     * @param DateTime                                $time
+     * @param \Packagist\Api\Result\Package\Maintainer $maintainer
+     * @param \Packagist\Api\Result\Package\Version    $version
+     * @param \Packagist\Api\Result\Package\Source     $source
+     * @param \Packagist\Api\Result\Package\Dist       $dist
+     * @param \Packagist\Api\Result\Package\Downloads  $downloads
+     * @param \DateTime                                $time
      */
     function let($maintainer, $version, $source, $dist, $downloads, $time)
     {
@@ -88,9 +88,23 @@ class PackageSpec extends ObjectBehavior
         $this->getFavers()->shouldReturn(9999999999);
     }
 
-    function it_gets_abandoned()
+    function it_gets_abandoned_bool()
     {
         $this->isAbandoned()->shouldReturn(false);
+    }
+
+    function it_gets_abandoned_package_replacement()
+    {
+        $this->fromArray(array(
+            'name'        => 'typo3/ldap',
+            'description' => 'Ldap Authentication for Flow',
+            'type'        => 'library',
+            'abandoned'   => 'neos/ldap',
+        ));
+
+        $this->getAbandoned()->shouldReturn('neos/ldap');
+        // Deprecated/legacy flag
+        $this->isAbandoned()->shouldReturn(true);
     }
 
     function it_gets_suggesters()

@@ -7,10 +7,10 @@ use PhpSpec\ObjectBehavior;
 class VersionSpec extends ObjectBehavior
 {
     /**
-     * @param Packagist\Api\Result\Package\Author $author
-     * @param Packagist\Api\Result\Package\Source $source
-     * @param Packagist\Api\Result\Package\Dist   $dist
-     * @param DateTime                            $time
+     * @param \Packagist\Api\Result\Package\Author $author
+     * @param \Packagist\Api\Result\Package\Source $source
+     * @param \Packagist\Api\Result\Package\Dist   $dist
+     * @param \DateTime                            $time
      */
     function let($author, $source, $dist, $time)
     {
@@ -136,8 +136,24 @@ class VersionSpec extends ObjectBehavior
         $this->getSuggest()->shouldReturn(array('illuminate/events' => 'Required to use the observers with Eloquent (5.1.*).'));
     }
 
-    function it_gets_abandoned()
+    function it_gets_abandoned_bool()
     {
         $this->isAbandoned()->shouldReturn(false);
+    }
+
+    function it_gets_abandoned_package_replacement()
+    {
+        $this->fromArray(array(
+            'name'               => 'typo3/ldap',
+            'description'        => 'Ldap Authentication for Flow',
+            'version'            => 'dev-checkout',
+            'version_normalized' => 'dev-checkout',
+            'type'               => 'library',
+            'abandoned'          => 'neos/ldap',
+        ));
+
+        $this->getAbandoned()->shouldReturn('neos/ldap');
+        // Deprecated/legacy flag
+        $this->isAbandoned()->shouldReturn(true);
     }
 }
