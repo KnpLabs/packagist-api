@@ -1,4 +1,4 @@
-# Packagist API 
+# Packagist API
 
 [![Build Status](https://travis-ci.org/KnpLabs/packagist-api.svg)](https://travis-ci.org/KnpLabs/packagist-api) [![HHVM Status](http://hhvm.h4cc.de/badge/knplabs/packagist-api.svg)](http://hhvm.h4cc.de/package/knplabs/packagist-api) [![Latest Stable Version](https://poser.pugx.org/KnpLabs/packagist-api/v/stable.png)](https://packagist.org/packages/KnpLabs/packagist-api) [![Total Downloads](https://poser.pugx.org/KnpLabs/packagist-api/downloads.png)](https://packagist.org/packages/KnpLabs/packagist-api)
 [![Dependency Status](https://www.versioneye.com/php/knplabs:packagist-api/badge.svg)](https://www.versioneye.com/php/knplabs:packagist-api)
@@ -101,3 +101,14 @@ $client->setPackagistUrl('https://custom.packagist.site.org');
 ## License
 
 `packagist-api` is licensed under the MIT License - see the LICENSE file for details.
+
+## Maintainers
+
+KNPLabs is looking for maintainers ([see why](https://knplabs.com/en/blog/news-for-our-foss-projects-maintenance)).
+
+If you are interested, feel free to open a PR to ask to be added as a maintainer.
+
+We’ll be glad to hear from you :)
+
+This library is maintained by the following people (alphabetically sorted) :
+- @robbieaverill
