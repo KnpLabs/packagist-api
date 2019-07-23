@@ -17,7 +17,7 @@
         "doctrine/inflector": "~1.0"
     },
     "require-dev": {
-        "phpspec/phpspec": "~2.0",
+        "phpspec/phpspec": "~5.1",
         "squizlabs/php_codesniffer": "^3.0"
     },
     "config": {
