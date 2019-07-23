@@ -23,11 +23,14 @@ class Factory
     {
         if (isset($data['results'])) {
             return $this->createSearchResults($data['results']);
-        } elseif (isset($data['packages'])) {
+        }
+        if (isset($data['packages'])) {
             return $this->createSearchResults($data['packages']);
-        } elseif (isset($data['package'])) {
+        }
+        if (isset($data['package'])) {
             return $this->createPackageResults($data['package']);
-        } elseif (isset($data['packageNames'])) {
+        }
+        if (isset($data['packageNames'])) {
             return $data['packageNames'];
         }
 

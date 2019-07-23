@@ -28,7 +28,7 @@ class ClientSpec extends ObjectBehavior
         $data = file_get_contents('spec/Packagist/Api/Fixture/search.json');
         $response->getBody()->shouldBeCalled()->willReturn($data);
 
-        $client->get('https://packagist.org/search.json?q=sylius')->shouldBeCalled()->willReturn($response);
+        $client->request('get', 'https://packagist.org/search.json?q=sylius')->shouldBeCalled()->willReturn($response);
         $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn(array());
 
         $this->search('sylius');
@@ -39,7 +39,7 @@ class ClientSpec extends ObjectBehavior
         $data = file_get_contents('spec/Packagist/Api/Fixture/search.json');
         $response->getBody()->shouldBeCalled()->willReturn($data);
 
-        $client->get('https://packagist.org/search.json?tag=storage&q=sylius')->shouldBeCalled()->willReturn($response);
+        $client->request('get', 'https://packagist.org/search.json?tag=storage&q=sylius')->shouldBeCalled()->willReturn($response);
 
         $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn(array());
 
@@ -51,7 +51,7 @@ class ClientSpec extends ObjectBehavior
         $data = file_get_contents('spec/Packagist/Api/Fixture/popular.json');
         $response->getBody()->shouldBeCalled()->willReturn($data);
 
-        $client->get('https://packagist.org/explore/popular.json?page=1')->shouldBeCalled()->willReturn($response);
+        $client->request('get', 'https://packagist.org/explore/popular.json?page=1')->shouldBeCalled()->willReturn($response);
 
         $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn(array_pad(array(), 5, null));
 
@@ -63,7 +63,7 @@ class ClientSpec extends ObjectBehavior
         $data = file_get_contents('spec/Packagist/Api/Fixture/get.json');
         $response->getBody()->shouldBeCalled()->willReturn($data);
 
-        $client->get('https://packagist.org/packages/sylius/sylius.json')->shouldBeCalled()->willReturn($response);
+        $client->request('get', 'https://packagist.org/packages/sylius/sylius.json')->shouldBeCalled()->willReturn($response);
 
         $factory->create(json_decode($data, true))->shouldBeCalled();
 
@@ -75,7 +75,7 @@ class ClientSpec extends ObjectBehavior
         $data = file_get_contents('spec/Packagist/Api/Fixture/all.json');
         $response->getBody()->shouldBeCalled()->willReturn($data);
 
-        $client->get('https://packagist.org/packages/list.json')->shouldBeCalled()->willReturn($response);
+        $client->request('get', 'https://packagist.org/packages/list.json')->shouldBeCalled()->willReturn($response);
 
         $factory->create(json_decode($data, true))->shouldBeCalled();
 
@@ -87,7 +87,7 @@ class ClientSpec extends ObjectBehavior
         $data = file_get_contents('spec/Packagist/Api/Fixture/all.json');
         $response->getBody()->shouldBeCalled()->willReturn($data);
 
-        $client->get('https://packagist.org/packages/list.json?type=library')->shouldBeCalled()->willReturn($response);
+        $client->request('get', 'https://packagist.org/packages/list.json?type=library')->shouldBeCalled()->willReturn($response);
 
         $factory->create(json_decode($data, true))->shouldBeCalled();
 
@@ -99,7 +99,7 @@ class ClientSpec extends ObjectBehavior
         $data = file_get_contents('spec/Packagist/Api/Fixture/all.json');
         $response->getBody()->shouldBeCalled()->willReturn($data);
 
-        $client->get('https://packagist.org/packages/list.json?vendor=sylius')->shouldBeCalled()->willReturn($response);
+        $client->request('get', 'https://packagist.org/packages/list.json?vendor=sylius')->shouldBeCalled()->willReturn($response);
 
         $factory->create(json_decode($data, true))->shouldBeCalled();
 

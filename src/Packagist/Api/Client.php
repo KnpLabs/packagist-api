@@ -17,21 +17,21 @@ class Client
     /**
      * HTTP client
      *
-     * @var ClientInterface
+     * @var ClientInterface|null
      */
     protected $httpClient;
 
     /**
      * DataObject Factory
      *
-     * @var Factory
+     * @var Factory|null
      */
     protected $resultFactory;
 
     /**
      * Packagist url
      *
-     * @var string
+     * @var string|null
      */
     protected $packagistUrl;
 
@@ -81,20 +81,24 @@ class Client
         do {
             $response = $this->request($response['next']);
             $response = $this->parse($response);
-            $results = array_merge($results, $this->create($response));
+            $createResult = $this->create($response);
+            if (!is_array($createResult)) {
+                $createResult = [$createResult];
+            }
+            $results = array_merge($results, $createResult);
         } while (isset($response['next']));
 
         return $results;
     }
 
     /**
-     * Retrieve full package informations
+     * Retrieve full package information
      *
      * @since 1.0
      *
      * @param string $package Full qualified name ex : myname/mypackage
      *
-     * @return \Packagist\Api\Result\Package A package instance
+     * @return array|\Packagist\Api\Result\Package A package instance or array of packages
      */
     public function get($package)
     {
@@ -114,7 +118,7 @@ class Client
      *
      * @param array  $filters An array of filters
      *
-     * @return array The results
+     * @return array|\Packagist\Api\Result\Package The results, or single result
      */
     public function all(array $filters = array())
     {
@@ -131,7 +135,7 @@ class Client
      *
      * @since 1.3
      *
-     * @param $total
+     * @param int $total
      * @return array The results
      */
     public function popular($total)
@@ -143,7 +147,11 @@ class Client
         do {
             $response = $this->request($response['next']);
             $response = $this->parse($response);
-            $results = array_merge($results, $this->create($response));
+            $createResult = $this->create($response);
+            if (!is_array($createResult)) {
+                $createResult = [$createResult];
+            }
+            $results = array_merge($results, $createResult);
         } while (count($results) < $total && isset($response['next']));
 
         return array_slice($results, 0, $total);
@@ -190,7 +198,7 @@ class Client
         }
 
         return $this->httpClient
-            ->get($url)
+            ->request('get', $url)
             ->getBody();
     }
 
@@ -239,7 +247,7 @@ class Client
      *
      * @since 1.1
      *
-     * @return string URL
+     * @return string|null URL
      */
     public function getPackagistUrl()
     {
