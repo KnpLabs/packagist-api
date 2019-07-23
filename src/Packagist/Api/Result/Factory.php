@@ -64,12 +64,18 @@ class Factory
 
         if (isset($package['maintainers']) && $package['maintainers']) {
             foreach ($package['maintainers'] as $key => $maintainer) {
-                $package['maintainers'][$key] = $this->createResult('Packagist\Api\Result\Package\Maintainer', $maintainer);
+                $package['maintainers'][$key] = $this->createResult(
+                    'Packagist\Api\Result\Package\Maintainer',
+                    $maintainer
+                );
             }
         }
 
         if (isset($package['downloads']) && $package['downloads']) {
-            $package['downloads'] = $this->createResult('Packagist\Api\Result\Package\Downloads', $package['downloads']);
+            $package['downloads'] = $this->createResult(
+                'Packagist\Api\Result\Package\Downloads',
+                $package['downloads']
+            );
         }
 
         foreach ($package['versions'] as $branch => $version) {

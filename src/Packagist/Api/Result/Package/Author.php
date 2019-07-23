@@ -16,5 +16,4 @@ class Author extends Maintainer
     {
         return $this->role;
     }
-
 }
