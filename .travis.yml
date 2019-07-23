@@ -11,3 +11,4 @@ before_script:
 
 script:
   - php bin/phpspec run -f pretty
+  - vendor/bin/phpcs --standard=PSR2 src/

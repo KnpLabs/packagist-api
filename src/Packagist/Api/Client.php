@@ -2,9 +2,9 @@
 
 namespace Packagist\Api;
 
-use Packagist\Api\Result\Factory;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface;
+use Packagist\Api\Result\Factory;
 
 /**
  * Packagist Api
@@ -45,8 +45,11 @@ class Client
      * @param Factory|null         $resultFactory DataObject Factory
      * @param string|null          $packagistUrl  Packagist url
      */
-    public function __construct(ClientInterface $httpClient = null, Factory $resultFactory = null, $packagistUrl = "https://packagist.org")
-    {
+    public function __construct(
+        ClientInterface $httpClient = null,
+        Factory $resultFactory = null,
+        $packagistUrl = "https://packagist.org"
+    ) {
         $this->httpClient = $httpClient;
         $this->resultFactory = $resultFactory;
         $this->packagistUrl = $packagistUrl;
