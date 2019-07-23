@@ -294,6 +294,12 @@ class Version extends AbstractResult
     }
 
     /**
+     * The Packagist API will either return a boolean, or a string value for `abandoned`. It will be a boolean
+     * if no replacement package was provided when the package was marked as abandoned in Packagist, or it will be
+     * a string containing the replacement package name to use if one was provided.
+     *
+     * @see https://github.com/KnpLabs/packagist-api/pull/56#discussion_r306426997
+     *
      * @return bool|string
      */
     public function getAbandoned()
