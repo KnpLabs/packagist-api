@@ -86,7 +86,7 @@ class FactorySpec extends ObjectBehavior
         $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
     }
 
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return array(
             'haveBranch'  => function($subject, $key) {
