@@ -17,7 +17,7 @@ class Version extends AbstractResult
     protected $description;
 
     /**
-     * @var string
+     * @var array
      */
     protected $keywords;
 
@@ -133,7 +133,7 @@ class Version extends AbstractResult
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getKeywords()
     {
