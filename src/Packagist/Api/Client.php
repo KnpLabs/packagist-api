@@ -1,56 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Packagist\Api;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface;
 use Packagist\Api\Result\Factory;
+use Packagist\Api\Result\Package;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Packagist Api
  *
- * @since 1.0
  * @api
  */
 class Client
 {
-    /**
-     * HTTP client
-     *
-     * @var ClientInterface|null
-     */
-    protected $httpClient;
+    protected ClientInterface $httpClient;
+
+    protected Factory $resultFactory;
+
+    protected string $packagistUrl;
 
     /**
-     * DataObject Factory
-     *
-     * @var Factory|null
-     */
-    protected $resultFactory;
-
-    /**
-     * Packagist url
-     *
-     * @var string|null
-     */
-    protected $packagistUrl;
-
-    /**
-     * Constructor.
-     *
-     * @since 1.1 Added the $packagistUrl argument
-     * @since 1.0
-     *
      * @param ClientInterface|null $httpClient    HTTP client
      * @param Factory|null         $resultFactory DataObject Factory
-     * @param string|null          $packagistUrl  Packagist url
+     * @param string               $packagistUrl  Packagist URL
      */
     public function __construct(
         ClientInterface $httpClient = null,
         Factory $resultFactory = null,
-        $packagistUrl = "https://packagist.org"
+        string $packagistUrl = 'https://packagist.org'
     ) {
-        $this->httpClient = $httpClient;
+		if (null === $httpClient) {
+			$httpClient = new HttpClient();
+		}
+
+		if (null === $resultFactory) {
+			$resultFactory = new Factory();
+		}
+
+		$this->httpClient = $httpClient;
         $this->resultFactory = $resultFactory;
         $this->packagistUrl = $packagistUrl;
     }
@@ -58,29 +49,27 @@ class Client
     /**
      * Search packages
      *
-     * Available filters :
+     * Available filters:
      *
      *    * vendor: vendor of package (require or require-dev in composer.json)
      *    * type:   type of package (type in composer.json)
      *    * tags:   tags of package (keywords in composer.json)
-     *
-     * @since 1.0
      *
      * @param string $query   Name of package
      * @param array  $filters An array of filters
      *
      * @return array The results
      */
-    public function search($query, array $filters = array())
+    public function search(string $query, array $filters = []): array
     {
-        $results = $response = array();
+        $results = $response = [];
         $filters['q'] = $query;
         $url = '/search.json?' . http_build_query($filters);
         $response['next'] = $this->url($url);
 
         do {
             $response = $this->request($response['next']);
-            $response = $this->parse($response);
+            $response = $this->parse((string) $response);
             $createResult = $this->create($response);
             if (!is_array($createResult)) {
                 $createResult = [$createResult];
@@ -94,13 +83,10 @@ class Client
     /**
      * Retrieve full package information
      *
-     * @since 1.0
-     *
      * @param string $package Full qualified name ex : myname/mypackage
-     *
-     * @return array|\Packagist\Api\Result\Package A package instance or array of packages
+     * @return array|Package A package instance or array of packages
      */
-    public function get($package)
+    public function get(string $package)
     {
         return $this->respond(sprintf($this->url('/packages/%s.json'), $package));
     }
@@ -108,19 +94,16 @@ class Client
     /**
      * Search packages
      *
-     * Available filters :
+     * Available filters:
      *
      *    * vendor: vendor of package (require or require-dev in composer.json)
      *    * type:   type of package (type in composer.json)
      *    * tags:   tags of package (keywords in composer.json)
      *
-     * @since 1.0
-     *
      * @param array  $filters An array of filters
-     *
-     * @return array|\Packagist\Api\Result\Package The results, or single result
+     * @return array|Package The results, or single result
      */
-    public function all(array $filters = array())
+    public function all(array $filters = [])
     {
         $url = '/packages/list.json';
         if ($filters) {
@@ -133,12 +116,10 @@ class Client
     /**
      * Popular packages
      *
-     * @since 1.3
-     *
      * @param int $total
      * @return array The results
      */
-    public function popular($total)
+    public function popular(int $total): array
     {
         $results = $response = array();
         $url = '/explore/popular.json?' . http_build_query(array('page' => 1));
@@ -146,7 +127,7 @@ class Client
 
         do {
             $response = $this->request($response['next']);
-            $response = $this->parse($response);
+            $response = $this->parse((string) $response);
             $createResult = $this->create($response);
             if (!is_array($createResult)) {
                 $createResult = [$createResult];
@@ -161,95 +142,81 @@ class Client
      * Assemble the packagist URL with the route
      *
      * @param string $route API Route that we want to achieve
-     *
      * @return string Fully qualified URL
      */
-    protected function url($route)
+    protected function url(string $route): string
     {
-        return $this->packagistUrl.$route;
+        return $this->packagistUrl . $route;
     }
 
     /**
      * Execute the url request and parse the response
      *
      * @param string $url
-     *
-     * @return array|\Packagist\Api\Result\Package
+     * @return array|Package
      */
-    protected function respond($url)
+    protected function respond(string $url)
     {
         $response = $this->request($url);
-        $response = $this->parse($response);
+        $response = $this->parse((string) $response);
 
         return $this->create($response);
     }
 
-    /**
-     * Execute the url request
-     *
-     * @param string $url
-     *
-     * @return \Psr\Http\Message\StreamInterface
-     */
-    protected function request($url)
+	/**
+	 * Execute the request URL
+	 *
+	 * @param string $url
+	 * @return StreamInterface
+	 */
+    protected function request(string $url): StreamInterface
     {
-        if (null === $this->httpClient) {
-            $this->httpClient = new HttpClient();
-        }
-
         return $this->httpClient
             ->request('get', $url)
             ->getBody();
     }
 
     /**
-     * Decode json
+     * Decode JSON
      *
-     * @param string $data Json string
+     * @param string $data JSON string
      *
-     * @return array Json decode
+     * @return array JSON decode
      */
-    protected function parse($data)
+    protected function parse(string $data): array
     {
-        return json_decode($data, true);
+        return json_decode($data, true) ?? [];
     }
 
     /**
      * Hydrate the knowing type depending on passed data
      *
      * @param array $data
-     *
-     * @return array|\Packagist\Api\Result\Package
+     * @return array|Package
      */
     protected function create(array $data)
     {
-        if (null === $this->resultFactory) {
-            $this->resultFactory = new Factory();
-        }
-
         return $this->resultFactory->create($data);
     }
 
     /**
      * Change the packagist URL
      *
-     * @since 1.1
-     *
      * @param string $packagistUrl URL
+	 * @return $this
      */
-    public function setPackagistUrl($packagistUrl)
+    public function setPackagistUrl(string $packagistUrl): self
     {
         $this->packagistUrl = $packagistUrl;
+        return $this;
     }
 
     /**
      * Return the actual packagist URL
      *
-     * @since 1.1
-     *
-     * @return string|null URL
+     * @return string URL
      */
-    public function getPackagistUrl()
+    public function getPackagistUrl(): string
     {
         return $this->packagistUrl;
     }
