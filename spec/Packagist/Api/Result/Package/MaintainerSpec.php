@@ -1,36 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Packagist\Api\Result\Package;
 
+use Packagist\Api\Result\Package\Maintainer;
 use PhpSpec\ObjectBehavior;
 
 class MaintainerSpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
-        $this->fromArray(array(
+        $this->fromArray([
             'name'     => 'Saša Stamenković',
             'email'    => 'umpirsky@gmail.com',
-            'homepage' => 'umpirsky.com'
-        ));
+            'homepage' => 'umpirsky.com',
+        ]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Api\Result\Package\Maintainer');
+        $this->shouldHaveType(Maintainer::class);
     }
 
-    function it_gets_name()
+    public function it_gets_name()
     {
         $this->getName()->shouldReturn('Saša Stamenković');
     }
 
-    function it_gets_email()
+    public function it_gets_email()
     {
         $this->getEmail()->shouldReturn('umpirsky@gmail.com');
     }
 
-    function it_gets_homepage()
+    public function it_gets_homepage()
     {
         $this->getHomepage()->shouldReturn('umpirsky.com');
     }
