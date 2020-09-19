@@ -1,83 +1,49 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Packagist\Api\Result;
 
 class Result extends AbstractResult
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var string
-     */
-    protected $description;
+    protected string $description;
 
-    /**
-     * @var string
-     */
-    protected $url;
+    protected string $url;
 
-    /**
-     * @var string
-     */
-    protected $downloads;
+    protected int $downloads;
 
-    /**
-     * @var string
-     */
-    protected $favers;
+    protected int $favers;
 
-    /**
-     * @var string
-     */
-    protected $repository;
+    protected string $repository;
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @return string
-     */
-    public function getDownloads()
+    public function getDownloads(): int
     {
         return $this->downloads;
     }
 
-    /**
-     * @return string
-     */
-    public function getFavers()
+    public function getFavers(): int
     {
         return $this->favers;
     }
 
-    /**
-     * @return string
-     */
-    public function getRepository()
+    public function getRepository(): string
     {
         return $this->repository;
     }

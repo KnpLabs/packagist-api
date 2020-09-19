@@ -1,18 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Packagist\Api\Result\Package;
 
 class Author extends Maintainer
 {
-    /**
-     * @var string
-     */
-    protected $role;
+    protected string $role;
 
-    /**
-     * @return string
-     */
-    public function getRole()
+    public function getRole(): string
     {
         return $this->role;
     }
