@@ -47,7 +47,7 @@ class Factory
 
     /**
      * Create a collection of \Packagist\Api\Result\Result
-	 *
+     *
      * @param array $results
      * @return array
      */
@@ -62,7 +62,7 @@ class Factory
 
     /**
      * Parse array to \Packagist\Api\Result\Result
-	 *
+     *
      * @param array $package
      * @return Package
      */
@@ -108,11 +108,11 @@ class Factory
      * @return AbstractResult $class hydrated
      */
     protected function createResult(string $class, array $data): AbstractResult
-	{
+    {
         $result = new $class();
         if (!$result instanceof AbstractResult) {
-        	throw new InvalidArgumentException('Class must extend AbstractResult');
-		}
+            throw new InvalidArgumentException('Class must extend AbstractResult');
+        }
         $result->fromArray($data);
 
         return $result;

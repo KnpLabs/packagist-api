@@ -33,15 +33,15 @@ class Client
         Factory $resultFactory = null,
         string $packagistUrl = 'https://packagist.org'
     ) {
-		if (null === $httpClient) {
-			$httpClient = new HttpClient();
-		}
+        if (null === $httpClient) {
+            $httpClient = new HttpClient();
+        }
 
-		if (null === $resultFactory) {
-			$resultFactory = new Factory();
-		}
+        if (null === $resultFactory) {
+            $resultFactory = new Factory();
+        }
 
-		$this->httpClient = $httpClient;
+        $this->httpClient = $httpClient;
         $this->resultFactory = $resultFactory;
         $this->packagistUrl = $packagistUrl;
     }
@@ -108,7 +108,7 @@ class Client
     {
         $url = '/packages/list.json';
         if ($filters) {
-            $url .= '?'.http_build_query($filters);
+            $url .= '?' . http_build_query($filters);
         }
 
         return $this->respond($this->url($url));
@@ -164,12 +164,12 @@ class Client
         return $this->create($response);
     }
 
-	/**
-	 * Execute the request URL
-	 *
-	 * @param string $url
-	 * @return StreamInterface
-	 */
+    /**
+     * Execute the request URL
+     *
+     * @param string $url
+     * @return StreamInterface
+     */
     protected function request(string $url): StreamInterface
     {
         return $this->httpClient
@@ -204,7 +204,7 @@ class Client
      * Change the packagist URL
      *
      * @param string $packagistUrl URL
-	 * @return $this
+     * @return $this
      */
     public function setPackagistUrl(string $packagistUrl): self
     {

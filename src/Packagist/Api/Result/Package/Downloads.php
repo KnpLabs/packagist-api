@@ -29,7 +29,7 @@ class Downloads extends AbstractResult
     public function setDaily(int $daily): self
     {
         $this->daily = $daily;
-		return $this;
+        return $this;
     }
 
     public function getTotal(): int
