@@ -1,17 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Packagist\Api\Result;
 
+use Packagist\Api\Result\Factory;
+use Packagist\Api\Result\Package;
+use Packagist\Api\Result\Result;
 use PhpSpec\ObjectBehavior;
 
 class FactorySpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Api\Result\Factory');
+        $this->shouldHaveType(Factory::class);
     }
 
-    function it_creates_search_results()
+    public function it_creates_search_results()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/search.json'), true);
 
@@ -19,11 +24,11 @@ class FactorySpec extends ObjectBehavior
         $results->shouldHaveCount(2);
         $results->shouldBeArray();
         foreach ($results as $result) {
-            $result->shouldBeAnInstanceOf('Packagist\Api\Result\Result');
+            $result->shouldBeAnInstanceOf(Result::class);
         }
     }
 
-    function it_creates_popular_results()
+    public function it_creates_popular_results()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/popular.json'), true);
 
@@ -31,59 +36,59 @@ class FactorySpec extends ObjectBehavior
         $results->shouldHaveCount(2);
         $results->shouldBeArray();
         foreach ($results as $result) {
-            $result->shouldBeAnInstanceOf('Packagist\Api\Result\Result');
+            $result->shouldBeAnInstanceOf(Result::class);
         }
     }
 
-    function it_creates_packages()
+    public function it_creates_packages()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get.json'), true);
 
-        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
+        $this->create($data)->shouldHaveType(Package::class);
     }
 
-    function it_creates_package_names()
+    public function it_creates_package_names()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/all.json'), true);
 
-        $this->create($data)->shouldReturn(array(
+        $this->create($data)->shouldReturn([
             'sylius/addressing-bundle',
             'sylius/assortment-bundle',
-            'sylius/blogger-bundle'
-        ));
+            'sylius/blogger-bundle',
+        ]);
     }
 
-    function it_creates_packages_with_missing_optional_data()
+    public function it_creates_packages_with_missing_optional_data()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_nodist.json'), true);
 
-        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
+        $this->create($data)->shouldHaveType(Package::class);
     }
 
-    function it_creates_abandoned_packages()
+    public function it_creates_abandoned_packages()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_abandoned.json'), true);
 
-        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
+        $this->create($data)->shouldHaveType(Package::class);
     }
 
-    function it_creates_packages_with_suggesters()
+    public function it_creates_packages_with_suggesters()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_suggesters.json'), true);
-        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
+        $this->create($data)->shouldHaveType(Package::class);
     }
 
-    function it_creates_packages_with_dependents()
+    public function it_creates_packages_with_dependents()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_dependents.json'), true);
-        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
+        $this->create($data)->shouldHaveType(Package::class);
     }
 
-    function it_creates_packages_with_null_source()
+    public function it_creates_packages_with_null_source()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_null_source.json'), true);
 
-        $this->create($data)->shouldHaveType('Packagist\Api\Result\Package');
+        $this->create($data)->shouldHaveType(Package::class);
     }
 
     public function getMatchers(): array
