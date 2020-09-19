@@ -3,14 +3,11 @@ sudo: false
 language: php
 
 php:
-  - '7.1'
-  - '7.2'
-  - '7.3'
   - '7.4'
 
 before_script:
   - composer install --dev
 
 script:
-  - php bin/phpspec run -f pretty
-  - php bin/phpcs --standard=PSR2 src/
+  - php vendor/bin/phpspec run -f pretty
+  - php vendor/bin/phpcs --standard=PSR12 src/
