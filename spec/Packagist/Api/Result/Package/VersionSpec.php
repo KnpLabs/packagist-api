@@ -13,7 +13,7 @@ use PhpSpec\ObjectBehavior;
 
 class VersionSpec extends ObjectBehavior
 {
-    public function let(Author $author, Source $source, Dist $dist, \DateTime $time)
+    public function let(Author $author, Source $source, Dist $dist)
     {
         $this->fromArray([
             'name'               => 'sylius/sylius',
@@ -22,12 +22,12 @@ class VersionSpec extends ObjectBehavior
             'homepage'           => 'http://sylius.com',
             'version'            => 'dev-checkout',
             'version_normalized' => 'dev-checkout',
-            'license'            => 'MIT',
+            'licenses'           => ['MIT'],
             'authors'            => [$author],
             'source'             => $source,
             'dist'               => $dist,
             'type'               => 'library',
-            'time'               => $time,
+            'time'               => '2020-01-25T15:11:19+00:00',
             'autoload'           => ['psr-0' => ['Context' => 'features/']],
             'extra'              => ['symfony-app-dir' => 'sylius'],
             'require'            => ['php' => '>=5.4'],
@@ -77,9 +77,9 @@ class VersionSpec extends ObjectBehavior
         $this->getVersionNormalized()->shouldReturn('dev-checkout');
     }
 
-    public function it_gets_license()
+    public function it_gets_licenses()
     {
-        $this->getLicense()->shouldReturn('MIT');
+        $this->getLicenses()->shouldReturn(['MIT']);
     }
 
     public function it_has_authors($author)
@@ -102,9 +102,9 @@ class VersionSpec extends ObjectBehavior
         $this->getType()->shouldReturn('library');
     }
 
-    public function it_gets_time($time)
+    public function it_gets_time()
     {
-        $this->getTime()->shouldReturn($time);
+        $this->getTime()->shouldReturn('2020-01-25T15:11:19+00:00');
     }
 
     public function it_gets_autoload()

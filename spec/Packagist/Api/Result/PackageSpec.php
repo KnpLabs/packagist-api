@@ -6,21 +6,19 @@ namespace spec\Packagist\Api\Result;
 
 use Packagist\Api\Result\AbstractResult;
 use Packagist\Api\Result\Package;
-use Packagist\Api\Result\Package\Dist;
 use Packagist\Api\Result\Package\Downloads;
 use Packagist\Api\Result\Package\Maintainer;
-use Packagist\Api\Result\Package\Source;
 use Packagist\Api\Result\Package\Version;
 use PhpSpec\ObjectBehavior;
 
 class PackageSpec extends ObjectBehavior
 {
-    public function let(Maintainer $maintainer, Version $version, Source $source, Dist $dist, Downloads $downloads, \DateTime $time)
+    public function let(Maintainer $maintainer, Version $version, Downloads $downloads)
     {
         $this->fromArray([
             'name'        => 'sylius/sylius',
             'description' => 'Modern ecommerce for Symfony2',
-            'time'        => $time,
+            'time'        => '2020-01-25T15:11:19+00:00',
             'maintainers' => [$maintainer],
             'versions'    => [$version],
             'type'        => 'library',
@@ -54,9 +52,9 @@ class PackageSpec extends ObjectBehavior
         $this->getDescription()->shouldReturn('Modern ecommerce for Symfony2');
     }
 
-    public function it_gets_time($time)
+    public function it_gets_time()
     {
-        $this->getTime()->shouldReturn($time);
+        $this->getTime()->shouldReturn('2020-01-25T15:11:19+00:00');
     }
 
     public function it_gets_maintainers($maintainer)

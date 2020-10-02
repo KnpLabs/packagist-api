@@ -8,47 +8,47 @@ use Packagist\Api\Result\AbstractResult;
 
 class Version extends AbstractResult
 {
-    protected string $name;
+    protected string $name = '';
 
-    protected string $description;
+    protected string $description = '';
 
-    protected array $keywords;
+    protected array $keywords = [];
 
-    protected string $homepage;
+    protected string $homepage = '';
 
-    protected string $version;
+    protected string $version = '';
 
-    protected string $versionNormalized;
+    protected string $versionNormalized = '';
 
-    protected string $license;
+    protected array $licenses = [];
 
-    protected array $authors;
+    protected array $authors = [];
 
-    protected Source $source;
+    protected ?Source $source;
 
-    protected Dist $dist;
+    protected ?Dist $dist;
 
-    protected string $type;
+    protected string $type = '';
 
-    protected string $time;
+    protected string $time = '';
 
-    protected array $autoload;
+    protected array $autoload = [];
 
-    protected array $extra;
+    protected array $extra = [];
 
-    protected array $require;
+    protected array $require = [];
 
-    protected array $requireDev;
+    protected array $requireDev = [];
 
-    protected string $conflict;
+    protected array $conflict = [];
 
-    protected string $provide;
+    protected array $provide = [];
 
-    protected string $replace;
+    protected array $replace = [];
 
-    protected string $bin;
+    protected array $bin = [];
 
-    protected array $suggest;
+    protected array $suggest = [];
 
     /**
      * @var bool|string
@@ -85,9 +85,9 @@ class Version extends AbstractResult
         return $this->versionNormalized;
     }
 
-    public function getLicense(): string
+    public function getLicenses(): array
     {
-        return $this->license;
+        return $this->licenses;
     }
 
     public function getAuthors(): array
@@ -95,12 +95,12 @@ class Version extends AbstractResult
         return $this->authors;
     }
 
-    public function getSource(): Source
+    public function getSource(): ?Source
     {
         return $this->source;
     }
 
-    public function getDist(): Dist
+    public function getDist(): ?Dist
     {
         return $this->dist;
     }
@@ -135,22 +135,22 @@ class Version extends AbstractResult
         return $this->requireDev;
     }
 
-    public function getConflict(): string
+    public function getConflict(): array
     {
         return $this->conflict;
     }
 
-    public function getProvide(): string
+    public function getProvide(): array
     {
         return $this->provide;
     }
 
-    public function getReplace(): string
+    public function getReplace(): array
     {
         return $this->replace;
     }
 
-    public function getBin(): string
+    public function getBin(): array
     {
         return $this->bin;
     }
