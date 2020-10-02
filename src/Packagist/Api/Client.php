@@ -168,11 +168,11 @@ class Client
      * Execute the request URL
      *
      * @param string $url
-     * @return StreamInterface
+     * @return string
      */
-    protected function request(string $url): StreamInterface
+    protected function request(string $url): string
     {
-        return $this->httpClient
+        return (string) $this->httpClient
             ->request('GET', $url)
             ->getBody();
     }

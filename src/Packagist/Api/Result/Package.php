@@ -8,23 +8,23 @@ use Packagist\Api\Result\Package\Downloads;
 
 class Package extends AbstractResult
 {
-    protected string $name;
+    protected string $name = '';
 
-    protected string $description;
+    protected string $description = '';
 
-    protected string $time;
+    protected string $time = '';
 
-    protected array $maintainers;
+    protected array $maintainers = [];
 
-    protected array $versions;
+    protected array $versions = [];
 
-    protected string $type;
+    protected string $type = '';
 
-    protected string $repository;
+    protected string $repository = '';
 
     protected Downloads $downloads;
 
-    protected string $favers;
+    protected int $favers = 0;
 
     /**
      * @var bool|string
@@ -85,7 +85,7 @@ class Package extends AbstractResult
         return $this->downloads;
     }
 
-    public function getFavers(): string
+    public function getFavers(): int
     {
         return $this->favers;
     }

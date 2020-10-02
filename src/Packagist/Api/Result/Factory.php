@@ -79,14 +79,29 @@ class Factory
         }
 
         foreach ($package['versions'] as $branch => $version) {
+            if (empty($version['name']) && !empty($package['name'])) {
+                $version['name'] = $package['name'];
+            }
+
+            if (isset($version['license'])) {
+                $version['licenses'] = is_array($version['license']) ? $version['license'] : [$version['license']];
+                unset($version['license']);
+            }
+
+            // Cast some potentially null properties to empty strings
+            $version['name'] ??= '';
+            $version['type'] ??= '';
+
             if (isset($version['authors']) && $version['authors']) {
                 foreach ($version['authors'] as $key => $author) {
                     $version['authors'][$key] = $this->createResult(Author::class, $author);
                 }
             }
+
             if ($version['source']) {
                 $version['source'] = $this->createResult(Source::class, $version['source']);
             }
+
             if (isset($version['dist']) && $version['dist']) {
                 $version['dist'] = $this->createResult(Dist::class, $version['dist']);
             }
