@@ -48,6 +48,14 @@ sylius/promotions-bundle
 ...
 ```
 
+#### You can limit results to a desired amount of pages:
+
+```php
+<?php
+
+$client->search('sylius', [], 2)  // get first 2 pages
+```
+
 #### Get package details:
 
 ```php
