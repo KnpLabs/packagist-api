@@ -68,10 +68,11 @@ class Client
      *
      * @param string $query   Name of package
      * @param array  $filters An array of filters
+     * @param int    $limit   Pages to limit results (0 = all pages)
      *
      * @return array The results
      */
-    public function search($query, array $filters = array())
+    public function search($query, array $filters = array(), int $limit = 0)
     {
         $results = $response = array();
         $filters['q'] = $query;
@@ -86,7 +87,7 @@ class Client
                 $createResult = [$createResult];
             }
             $results = array_merge($results, $createResult);
-        } while (isset($response['next']));
+        } while (isset($response['next']) && (0 === $limit || $response['next'] <= $limit));
 
         return $results;
     }

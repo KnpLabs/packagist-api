@@ -34,6 +34,17 @@ class ClientSpec extends ObjectBehavior
         $this->search('sylius');
     }
 
+    function it_search_for_packages_with_limit(HttpClient $client, Factory $factory, Response $response)
+    {
+        $data = file_get_contents('spec/Packagist/Api/Fixture/search.json');
+        $response->getBody()->shouldBeCalled()->willReturn($data);
+
+        $client->request('get', 'https://packagist.org/search.json?q=sylius')->shouldBeCalled()->willReturn($response);
+        $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn(array());
+
+        $this->search('sylius', [], 2);
+    }
+
     function it_searches_for_packages_with_filters(HttpClient $client, Factory $factory, Response $response)
     {
         $data = file_get_contents('spec/Packagist/Api/Fixture/search.json');
