@@ -68,7 +68,7 @@ class Client
      *
      * @param string $query   Name of package
      * @param array  $filters An array of filters
-     * @param int    $limit   Pages tolimit results (0 = all pages)
+     * @param int    $limit   Pages to limit results (0 = all pages)
      *
      * @return array The results
      */
