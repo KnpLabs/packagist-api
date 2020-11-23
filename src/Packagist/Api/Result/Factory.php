@@ -37,10 +37,9 @@ class Factory
             if (isset($packageOrResult['name'])) {
                 // Used for /explore/popular.json
                 return $this->createSearchResults($data['packages']);
-            } else {
-                // Used for /p/<package>.json
-                return $this->createComposerPackagesResults($data['packages']);
             }
+            // Used for /p/<package>.json
+            return $this->createComposerPackagesResults($data['packages']);
         }
         if (isset($data['package'])) {
             return $this->createPackageResults($data['package']);
