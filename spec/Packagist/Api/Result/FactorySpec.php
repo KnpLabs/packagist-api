@@ -47,6 +47,22 @@ class FactorySpec extends ObjectBehavior
         $this->create($data)->shouldHaveType(Package::class);
     }
 
+    public function it_creates_composer_packages()
+    {
+        $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_composer.json'), true);
+
+        $results = $this->create($data);
+        $results->shouldHaveCount(1);
+        $results->shouldBeArray();
+        foreach ($results as $result) {
+            $result->shouldBeAnInstanceOf('Packagist\Api\Result\Package');
+
+            foreach ($result->getVersions() as $version) {
+                $version->shouldBeAnInstanceOf('Packagist\Api\Result\Version');
+            }
+        }
+    }
+
     public function it_creates_package_names()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/all.json'), true);

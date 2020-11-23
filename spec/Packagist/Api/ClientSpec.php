@@ -79,6 +79,18 @@ class ClientSpec extends ObjectBehavior
         $this->get('sylius/sylius');
     }
 
+    public function it_gets_composer_package_details(HttpClient $client, Factory $factory, Response $response)
+    {
+        $data = file_get_contents('spec/Packagist/Api/Fixture/get_composer.json');
+        $response->getBody()->shouldBeCalled()->willReturn($data);
+
+        $client->request('get', 'https://packagist.org/p/sylius/sylius.json')->shouldBeCalled()->willReturn($response);
+
+        $factory->create(json_decode($data, true))->shouldBeCalled();
+
+        $this->getComposer('sylius/sylius');
+    }
+
     public function it_lists_all_package_names(HttpClient $client, Factory $factory, Response $response)
     {
         $data = file_get_contents('spec/Packagist/Api/Fixture/all.json');

@@ -50,6 +50,11 @@ sylius/promotions-bundle
 
 #### Get package details:
 
+Gets full package details, generated dynamically by the Packagist API.
+Consider using [getComposer()](#get-composer-details)
+instead to use the Packagist API more efficiently if you don't need all
+the full metadata for a package.
+
 ```php
 <?php
 
@@ -59,6 +64,32 @@ printf(
     'Package %s. %s.',
     $package->getName(),
     $package->getDescription()
+);
+
+// Outputs:
+Package sylius/sylius. Modern ecommerce for Symfony2.
+```
+
+#### Get composer details: {#get-composer-details}
+
+Similar to `get()`, but uses composer metadata which is Packagist's preferred
+way of retrieving details, since responses are cached efficiently as static files
+by the Packagist service. The response lacks some metadata that is provided
+by `get()`, see [Packagist API documentation](https://packagist.org/apidoc)
+for details. Returns multiple packages, you need to select the requested
+one from the indexed array.
+
+```php
+<?php
+
+$packages = $client->getComposer('sylius/sylius');
+$package = $packages['sylius/sylius'];
+$versions = $package->getVersions();
+
+printf(
+    'Package %s. %s.',
+    $versions[0]->getName(),
+    $versions[0]->getDescription()
 );
 
 // Outputs:

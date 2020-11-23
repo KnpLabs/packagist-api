@@ -25,7 +25,7 @@ class Factory
      * @param array $data
      * @throws InvalidArgumentException
      *
-     * @return array|Package
+     * @return array|Package|Package[]|Result[]
      */
     public function create(array $data)
     {
@@ -33,7 +33,14 @@ class Factory
             return $this->createSearchResults($data['results']);
         }
         if (isset($data['packages'])) {
-            return $this->createSearchResults($data['packages']);
+            $packageOrResult = $data['packages'][array_key_first($data['packages'])];
+            if (isset($packageOrResult['name'])) {
+                // Used for /explore/popular.json
+                return $this->createSearchResults($data['packages']);
+            } else {
+                // Used for /p/<package>.json
+                return $this->createComposerPackagesResults($data['packages']);
+            }
         }
         if (isset($data['package'])) {
             return $this->createPackageResults($data['package']);
@@ -49,7 +56,8 @@ class Factory
      * Create a collection of \Packagist\Api\Result\Result
      *
      * @param array $results
-     * @return array
+     *
+     * @return Result[]
      */
     public function createSearchResults(array $results): array
     {
@@ -61,8 +69,29 @@ class Factory
     }
 
     /**
-     * Parse array to \Packagist\Api\Result\Result
-     *
+     * @param array $packages
+     * @return Package[]
+     */
+    public function createComposerPackagesResults(array $packages)
+    {
+        $created = array();
+
+        foreach ($packages as $name => $package) {
+            // Create an empty package, only contains versions
+            $createdPackage = array(
+                'versions' => [],
+            );
+            foreach ($package as $branch => $version) {
+                $createdPackage['versions'][$branch] = $version;
+            }
+
+            $created[$name] = $this->createPackageResults($createdPackage);
+        }
+
+        return $created;
+    }
+
+    /**
      * @param array $package
      * @return Package
      */

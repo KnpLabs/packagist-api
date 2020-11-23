@@ -81,7 +81,9 @@ class Client
     }
 
     /**
-     * Retrieve full package information
+     * Retrieves full package details, generated dynamically by the Packagist API.
+     * Consider using {@link getComposer()} instead to use the Packagist API
+     * more efficiently if you don't need all the full metadata for a package.
      *
      * @param string $package Full qualified name ex : myname/mypackage
      * @return array|Package A package instance or array of packages
@@ -89,6 +91,26 @@ class Client
     public function get(string $package)
     {
         return $this->respond(sprintf($this->url('/packages/%s.json'), $package));
+    }
+
+    /**
+     * Similar to {@link get()}, but uses composer metadata which is Packagist's preferred
+     * way of retrieving details, since responses are cached efficiently as static files
+     * by the Packagist service. The response lacks some metadata that is provided
+     * by {@link get()}, see https://packagist.org/apidoc for details.
+     *
+     * Caution: Returns an array of packages, you need to select the correct one
+     * from the indexed array.
+     *
+     * @since 1.6
+     *
+     * @param string $package Full qualified name ex : myname/mypackage
+     *
+     * @return \Packagist\Api\Result\Package[] An array of packages, including the requested one.
+     */
+    public function getComposer($package)
+    {
+        return $this->respond(sprintf($this->url('/p/%s.json'), $package));
     }
 
     /**
