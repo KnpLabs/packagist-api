@@ -80,7 +80,7 @@ Package sylius/sylius. Modern ecommerce for Symfony2.
 
 #### Get composer details: {#get-composer-details}
 
-Similar to `get()`, but uses composer metadata which is Packagist's preferred
+Similar to `get()`, but uses Composer metadata which is Packagist's preferred
 way of retrieving details, since responses are cached efficiently as static files
 by the Packagist service. The response lacks some metadata that is provided
 by `get()`, see [Packagist API documentation](https://packagist.org/apidoc)
