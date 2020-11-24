@@ -96,6 +96,13 @@ class Factory
      */
     public function createPackageResults(array $package): Package
     {
+        $package['github_stars'] ??= 0;
+        $package['github_watchers'] ??= 0;
+        $package['github_forks'] ??= 0;
+        $package['suggesters'] ??= 0;
+        $package['dependents'] ??= 0;
+        $package['favers'] ??= 0;
+
         if (isset($package['maintainers']) && $package['maintainers']) {
             foreach ($package['maintainers'] as $key => $maintainer) {
                 $package['maintainers'][$key] = $this->createResult(Maintainer::class, $maintainer);
@@ -122,6 +129,10 @@ class Factory
 
             if (isset($version['authors']) && $version['authors']) {
                 foreach ($version['authors'] as $key => $author) {
+                    // Cast some potentially null properties to empty strings
+                    $author['name'] ??= '';
+                    $author['email'] ??= '';
+                    $author['homepage'] ??= '';
                     $version['authors'][$key] = $this->createResult(Author::class, $author);
                 }
             }
