@@ -199,7 +199,7 @@ class Client
         }
 
         return $this->httpClient
-            ->request('get', $url)
+            ->request('GET', $url)
             ->getBody();
     }
 
