@@ -1,5 +1,5 @@
-dist: trusty
-sudo: false
+dist: bionic
+
 language: php
 
 php:
@@ -7,9 +7,10 @@ php:
   - '7.2'
   - '7.3'
   - '7.4'
+  - '8.0snapshot'
 
 before_script:
-  - composer install --dev
+  - composer update --no-interaction --no-progress
 
 script:
   - php bin/phpspec run -f pretty
