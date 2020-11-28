@@ -6,7 +6,7 @@ Simple object oriented wrapper for Packagist API.
 
 ## Requirements
 
-* PHP ^7.1
+* PHP `^7.1 || ^8.0`
 
 ## Installation
 
