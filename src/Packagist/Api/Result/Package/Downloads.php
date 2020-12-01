@@ -1,70 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Packagist\Api\Result\Package;
 
 use Packagist\Api\Result\AbstractResult;
 
 class Downloads extends AbstractResult
 {
-    /**
-     * @var integer
-     */
-    protected $total;
+    protected int $total;
 
-    /**
-     * @var integer
-     */
-    protected $monthly;
+    protected int $monthly;
 
-    /**
-     * @var integer
-     */
-    protected $daily;
+    protected int $daily;
 
-    /**
-     * @param integer $total
-     */
-    public function setTotal($total)
+    public function setTotal(int $total): self
     {
         $this->total = $total;
+        return $this;
     }
 
-    /**
-     * @param integer $monthly
-     */
-    public function setMonthly($monthly)
+    public function setMonthly(int $monthly): self
     {
         $this->monthly = $monthly;
+        return $this;
     }
 
-    /**
-     * @param integer $daily
-     */
-    public function setDaily($daily)
+    public function setDaily(int $daily): self
     {
         $this->daily = $daily;
+        return $this;
     }
 
-    /**
-     * @return integer
-     */
-    public function getTotal()
+    public function getTotal(): int
     {
         return $this->total;
     }
 
-    /**
-     * @return integer
-     */
-    public function getMonthly()
+    public function getMonthly(): int
     {
         return $this->monthly;
     }
 
-    /**
-     * @return integer
-     */
-    public function getDaily()
+    public function getDaily(): int
     {
         return $this->daily;
     }

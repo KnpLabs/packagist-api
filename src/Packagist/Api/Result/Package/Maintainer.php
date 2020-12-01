@@ -1,46 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Packagist\Api\Result\Package;
 
 use Packagist\Api\Result\AbstractResult;
 
 class Maintainer extends AbstractResult
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var string
-     */
-    protected $email;
+    protected string $email;
 
-    /**
-     * @var string
-     */
-    protected $homepage;
+    protected string $homepage;
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
-    public function getHomepage()
+    public function getHomepage(): string
     {
         return $this->homepage;
     }

@@ -1,293 +1,166 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Packagist\Api\Result\Package;
 
 use Packagist\Api\Result\AbstractResult;
 
 class Version extends AbstractResult
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name = '';
 
-    /**
-     * @var string
-     */
-    protected $description;
+    protected string $description = '';
 
-    /**
-     * @var array
-     */
-    protected $keywords;
+    protected array $keywords = [];
 
-    /**
-     * @var string
-     */
-    protected $homepage;
+    protected string $homepage = '';
 
-    /**
-     * @var string
-     */
-    protected $version;
+    protected string $version = '';
 
-    /**
-     * @var string
-     */
-    protected $versionNormalized;
+    protected string $versionNormalized = '';
 
-    /**
-     * @var string
-     */
-    protected $license;
+    protected array $licenses = [];
 
-    /**
-     * @var array
-     */
-    protected $authors;
+    protected array $authors = [];
 
-    /**
-     * @var Source
-     */
-    protected $source;
+    protected ?Source $source;
 
-    /**
-     * @var Dist
-     */
-    protected $dist;
+    protected ?Dist $dist;
 
-    /**
-     * @var string
-     */
-    protected $type;
+    protected string $type = '';
 
-    /**
-     * @var string
-     */
-    protected $time;
+    protected string $time = '';
 
-    /**
-     * @var array
-     */
-    protected $autoload;
+    protected array $autoload = [];
 
-    /**
-     * @var array
-     */
-    protected $extra;
+    protected array $extra = [];
 
-    /**
-     * @var array
-     */
-    protected $require;
+    protected array $require = [];
 
-    /**
-     * @var array
-     */
-    protected $requireDev;
+    protected array $requireDev = [];
 
-    /**
-     * @var string
-     */
-    protected $conflict;
+    protected array $conflict = [];
 
-    /**
-     * @var string
-     */
-    protected $provide;
+    protected array $provide = [];
 
-    /**
-     * @var string
-     */
-    protected $replace;
+    protected array $replace = [];
 
-    /**
-     * @var string
-     */
-    protected $bin;
+    protected array $bin = [];
 
-    /**
-     * @var array
-     */
-    protected $suggest;
+    protected array $suggest = [];
 
     /**
      * @var bool|string
      */
     protected $abandoned = false;
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return array
-     */
-    public function getKeywords()
+    public function getKeywords(): array
     {
         return $this->keywords;
     }
 
-    /**
-     * @return string
-     */
-    public function getHomepage()
+    public function getHomepage(): string
     {
         return $this->homepage;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersionNormalized()
+    public function getVersionNormalized(): string
     {
         return $this->versionNormalized;
     }
 
-    /**
-     * @return string
-     */
-    public function getLicense()
+    public function getLicenses(): array
     {
-        return $this->license;
+        return $this->licenses;
     }
 
-    /**
-     * @return array
-     */
-    public function getAuthors()
+    public function getAuthors(): array
     {
         return $this->authors;
     }
 
-    /**
-     * @return Source
-     */
-    public function getSource()
+    public function getSource(): ?Source
     {
         return $this->source;
     }
 
-    /**
-     * @return Dist
-     */
-    public function getDist()
+    public function getDist(): ?Dist
     {
         return $this->dist;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
-    public function getTime()
+    public function getTime(): string
     {
         return $this->time;
     }
 
-    /**
-     * @return array
-     */
-    public function getAutoload()
+    public function getAutoload(): array
     {
         return $this->autoload;
     }
 
-    /**
-     * @return array
-     */
-    public function getExtra()
+    public function getExtra(): array
     {
         return $this->extra;
     }
 
-    /**
-     * @return array
-     */
-    public function getRequire()
+    public function getRequire(): array
     {
         return $this->require;
     }
 
-    /**
-     * @return array
-     */
-    public function getRequireDev()
+    public function getRequireDev(): array
     {
         return $this->requireDev;
     }
 
-    /**
-     * @return string
-     */
-    public function getConflict()
+    public function getConflict(): array
     {
         return $this->conflict;
     }
 
-    /**
-     * @return string
-     */
-    public function getProvide()
+    public function getProvide(): array
     {
         return $this->provide;
     }
 
-    /**
-     * @return string
-     */
-    public function getReplace()
+    public function getReplace(): array
     {
         return $this->replace;
     }
 
-    /**
-     * @return string
-     */
-    public function getBin()
+    public function getBin(): array
     {
         return $this->bin;
     }
 
-    /**
-     * @return array
-     */
-    public function getSuggest()
+    public function getSuggest(): array
     {
         return $this->suggest;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAbandoned()
+    public function isAbandoned(): bool
     {
         return (bool) $this->abandoned;
     }

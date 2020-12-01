@@ -1,99 +1,55 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Packagist\Api\Result;
+
+use Packagist\Api\Result\Package\Downloads;
 
 class Package extends AbstractResult
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name = '';
 
-    /**
-     * @var string
-     */
-    protected $description;
+    protected string $description = '';
 
-    /**
-     * @var string
-     */
-    protected $time;
+    protected string $time = '';
 
-    /**
-     * @var Package\Maintainer[]
-     */
-    protected $maintainers;
+    protected array $maintainers = [];
 
-    /**
-     * @var Package\Version[]
-     */
-    protected $versions;
+    protected array $versions = [];
 
-    /**
-     * @var string
-     */
-    protected $type;
+    protected string $type = '';
 
-    /**
-     * @var string
-     */
-    protected $repository;
+    protected string $repository = '';
 
-    /**
-     * @var Package\Downloads
-     */
-    protected $downloads;
+    protected Downloads $downloads;
 
-    /**
-     * @var string
-     */
-    protected $favers;
+    protected int $favers = 0;
 
     /**
      * @var bool|string
      */
     protected $abandoned = false;
 
-    /**
-     * @var integer
-     */
-    protected $suggesters = 0;
+    protected int $suggesters = 0;
 
-    /**
-     * @var integer
-     */
-    protected $dependents = 0;
+    protected int $dependents = 0;
 
-    /**
-     * @var integer
-     */
-    protected $githubStars = 0;
+    protected int $githubStars = 0;
 
-    /**
-     * @var integer
-     */
-    protected $githubForks = 0;
+    protected int $githubForks = 0;
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
-    public function getTime()
+    public function getTime(): string
     {
         return $this->time;
     }
@@ -101,7 +57,7 @@ class Package extends AbstractResult
     /**
      * @return Package\Maintainer[]
      */
-    public function getMaintainers()
+    public function getMaintainers(): array
     {
         return $this->maintainers;
     }
@@ -109,47 +65,32 @@ class Package extends AbstractResult
     /**
      * @return Package\Version[]
      */
-    public function getVersions()
+    public function getVersions(): array
     {
         return $this->versions;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
-    public function getRepository()
+    public function getRepository(): string
     {
         return $this->repository;
     }
 
-    /**
-     * @return Package\Downloads
-     */
-    public function getDownloads()
+    public function getDownloads(): Downloads
     {
         return $this->downloads;
     }
 
-    /**
-     * @return string
-     */
-    public function getFavers()
+    public function getFavers(): int
     {
         return $this->favers;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAbandoned()
+    public function isAbandoned(): bool
     {
         return (bool) $this->abandoned;
     }
@@ -172,34 +113,22 @@ class Package extends AbstractResult
         return null;
     }
 
-    /**
-     * @return integer
-     */
-    public function getSuggesters()
+    public function getSuggesters(): int
     {
         return $this->suggesters;
     }
 
-    /**
-     * @return integer
-     */
-    public function getDependents()
+    public function getDependents(): int
     {
         return $this->dependents;
     }
 
-    /**
-     * @return integer
-     */
-    public function getGithubStars()
+    public function getGithubStars(): int
     {
         return $this->githubStars;
     }
 
-    /**
-     * @return integer
-     */
-    public function getGithubForks()
+    public function getGithubForks(): int
     {
         return $this->githubForks;
     }

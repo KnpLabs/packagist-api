@@ -3,9 +3,6 @@ dist: bionic
 language: php
 
 php:
-  - '7.1'
-  - '7.2'
-  - '7.3'
   - '7.4'
   - '8.0snapshot'
 
@@ -13,5 +10,5 @@ before_script:
   - composer update --no-interaction --no-progress
 
 script:
-  - php bin/phpspec run -f pretty
-  - php bin/phpcs --standard=PSR2 src/
+  - php vendor/bin/phpspec run -f pretty
+  - php vendor/bin/phpcs --standard=PSR12 src/

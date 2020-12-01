@@ -1,59 +1,63 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Packagist\Api\Result;
 
+use Packagist\Api\Result\AbstractResult;
+use Packagist\Api\Result\Result;
 use PhpSpec\ObjectBehavior;
 
 class ResultSpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
-        $this->fromArray(array(
+        $this->fromArray([
             'name'        => 'sylius/sylius',
             'description' => 'Modern ecommerce for Symfony2',
             'url'         => 'http://sylius.com',
             'downloads'   => 999999999,
             'favers'      => 999999999,
-            'repository'  => 'https://github.com/Sylius/SyliusCartBundle'
-        ));
+            'repository'  => 'https://github.com/Sylius/SyliusCartBundle',
+        ]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Api\Result\Result');
+        $this->shouldHaveType(Result::class);
     }
 
-    function it_is_a_packagist_result()
+    public function it_is_a_packagist_result()
     {
-        $this->shouldHaveType('Packagist\Api\Result\AbstractResult');
+        $this->shouldHaveType(AbstractResult::class);
     }
 
-    function it_gets_name()
+    public function it_gets_name()
     {
         $this->getName()->shouldReturn('sylius/sylius');
     }
 
-    function it_gets_description()
+    public function it_gets_description()
     {
         $this->getDescription()->shouldReturn('Modern ecommerce for Symfony2');
     }
 
-    function it_gets_url()
+    public function it_gets_url()
     {
         $this->getUrl()->shouldReturn('http://sylius.com');
     }
 
-    function it_gets_downloads()
+    public function it_gets_downloads()
     {
         $this->getDownloads()->shouldReturn(999999999);
     }
 
-    function it_gets_favers()
+    public function it_gets_favers()
     {
         $this->getFavers()->shouldReturn(999999999);
     }
 
-    function it_gets_repository()
+    public function it_gets_repository()
     {
     	$this->getRepository()->shouldReturn('https://github.com/Sylius/SyliusCartBundle');
     }

@@ -1,147 +1,150 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Packagist\Api\Result\Package;
 
+use Packagist\Api\Result\AbstractResult;
+use Packagist\Api\Result\Package\Author;
+use Packagist\Api\Result\Package\Dist;
+use Packagist\Api\Result\Package\Source;
+use Packagist\Api\Result\Package\Version;
 use PhpSpec\ObjectBehavior;
 
 class VersionSpec extends ObjectBehavior
 {
-    /**
-     * @param \Packagist\Api\Result\Package\Author $author
-     * @param \Packagist\Api\Result\Package\Source $source
-     * @param \Packagist\Api\Result\Package\Dist   $dist
-     * @param \DateTime                            $time
-     */
-    function let($author, $source, $dist, $time)
+    public function let(Author $author, Source $source, Dist $dist)
     {
-        $this->fromArray(array(
+        $this->fromArray([
             'name'               => 'sylius/sylius',
             'description'        => 'Modern ecommerce for Symfony2',
-            'keywords'           => array('sylius'),
+            'keywords'           => ['sylius'],
             'homepage'           => 'http://sylius.com',
             'version'            => 'dev-checkout',
             'version_normalized' => 'dev-checkout',
-            'license'            => 'MIT',
-            'authors'            => array($author),
+            'licenses'           => ['MIT'],
+            'authors'            => [$author],
             'source'             => $source,
             'dist'               => $dist,
             'type'               => 'library',
-            'time'               => $time,
-            'autoload'           => array('psr-0' => array('Context' => 'features/')),
-            'extra'              => array('symfony-app-dir' => 'sylius'),
-            'require'            => array('php' => '>=5.4'),
-            'require-dev'        => array('phpspec/phpspec2' => 'dev-develop'),
-            'suggest'            => array('illuminate/events' => 'Required to use the observers with Eloquent (5.1.*).'),
-            'bin'                => array('bin/sylius'),
-        ));
+            'time'               => '2020-01-25T15:11:19+00:00',
+            'autoload'           => ['psr-0' => ['Context' => 'features/']],
+            'extra'              => ['symfony-app-dir' => 'sylius'],
+            'require'            => ['php' => '>=5.4'],
+            'require-dev'        => ['phpspec/phpspec2' => 'dev-develop'],
+            'suggest'            => ['illuminate/events' => 'Required to use the observers with Eloquent (5.1.*).'],
+            'bin'                => ['bin/sylius'],
+        ]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Api\Result\Package\Version');
+        $this->shouldHaveType(Version::class);
     }
 
-    function it_is_a_packagist_result()
+    public function it_is_a_packagist_result()
     {
-        $this->shouldHaveType('Packagist\Api\Result\AbstractResult');
+        $this->shouldHaveType(AbstractResult::class);
     }
 
-    function it_gets_name()
+    public function it_gets_name()
     {
         $this->getName()->shouldReturn('sylius/sylius');
     }
 
-    function it_gets_description()
+    public function it_gets_description()
     {
         $this->getDescription()->shouldReturn('Modern ecommerce for Symfony2');
     }
 
-    function it_gets_keywords()
+    public function it_gets_keywords()
     {
-        $this->getKeywords()->shouldReturn(array('sylius'));
+        $this->getKeywords()->shouldReturn(['sylius']);
     }
 
-    function it_gets_homepage()
+    public function it_gets_homepage()
     {
         $this->getHomepage()->shouldReturn('http://sylius.com');
     }
 
-    function it_gets_version()
+    public function it_gets_version()
     {
         $this->getVersion()->shouldReturn('dev-checkout');
     }
 
-    function it_gets_normalized_version()
+    public function it_gets_normalized_version()
     {
         $this->getVersionNormalized()->shouldReturn('dev-checkout');
     }
 
-    function it_gets_license()
+    public function it_gets_licenses()
     {
-        $this->getLicense()->shouldReturn('MIT');
+        $this->getLicenses()->shouldReturn(['MIT']);
     }
 
-    function it_has_authors($author)
+    public function it_has_authors($author)
     {
-        $this->getAuthors()->shouldReturn(array($author));
+        $this->getAuthors()->shouldReturn([$author]);
     }
 
-    function it_gets_source($source)
+    public function it_gets_source($source)
     {
         $this->getSource()->shouldReturn($source);
     }
 
-    function it_gets_dist($dist)
+    public function it_gets_dist($dist)
     {
         $this->getDist()->shouldReturn($dist);
     }
 
-    function it_gets_type()
+    public function it_gets_type()
     {
         $this->getType()->shouldReturn('library');
     }
 
-    function it_gets_time($time)
+    public function it_gets_time()
     {
-        $this->getTime()->shouldReturn($time);
+        $this->getTime()->shouldReturn('2020-01-25T15:11:19+00:00');
     }
 
-    function it_gets_autoload()
+    public function it_gets_autoload()
     {
-        $this->getAutoload()->shouldReturn(array('psr-0' => array('Context' => 'features/')));
+        $this->getAutoload()->shouldReturn(['psr-0' => ['Context' => 'features/']]);
     }
 
-    function it_gets_extra()
+    public function it_gets_extra()
     {
-        $this->getExtra()->shouldReturn(array('symfony-app-dir' => 'sylius'));
+        $this->getExtra()->shouldReturn(['symfony-app-dir' => 'sylius']);
     }
 
-    function it_gets_require()
+    public function it_gets_require()
     {
-        $this->getRequire()->shouldReturn(array('php' => '>=5.4'));
+        $this->getRequire()->shouldReturn(['php' => '>=5.4']);
     }
 
-    function it_gets_require_dev()
+    public function it_gets_require_dev()
     {
-        $this->getRequireDev()->shouldReturn(array('phpspec/phpspec2' => 'dev-develop'));
+        $this->getRequireDev()->shouldReturn(['phpspec/phpspec2' => 'dev-develop']);
     }
 
-    function it_gets_bin()
+    public function it_gets_bin()
     {
-        $this->getBin()->shouldReturn(array('bin/sylius'));
+        $this->getBin()->shouldReturn(['bin/sylius']);
     }
 
-    function it_gets_suggest()
+    public function it_gets_suggest()
     {
-        $this->getSuggest()->shouldReturn(array('illuminate/events' => 'Required to use the observers with Eloquent (5.1.*).'));
+        $this->getSuggest()->shouldReturn([
+        	'illuminate/events' => 'Required to use the observers with Eloquent (5.1.*).',
+		]);
     }
 
-    function it_gets_abandoned()
+    public function it_gets_abandoned()
     {
         $this->isAbandoned()->shouldReturn(false);
     }
 
-    function it_gets_abandoned_returning_true()
+    public function it_gets_abandoned_returning_true()
     {
         $this->fromArray([
             'name'        => 'typo3/ldap',
@@ -151,7 +154,7 @@ class VersionSpec extends ObjectBehavior
         $this->isAbandoned()->shouldReturn(true);
     }
 
-    function it_gets_replacement_package()
+    public function it_gets_replacement_package()
     {
         $this->fromArray([
             'name'        => 'typo3/ldap',
@@ -161,7 +164,7 @@ class VersionSpec extends ObjectBehavior
         $this->getReplacementPackage()->shouldReturn('neos/ldap');
     }
 
-    function it_gets_replacement_package_returning_null()
+    public function it_gets_replacement_package_returning_null()
     {
         $this->fromArray([
             'name'        => 'typo3/ldap',

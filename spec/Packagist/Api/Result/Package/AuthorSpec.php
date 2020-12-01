@@ -1,42 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Packagist\Api\Result\Package;
 
+use Packagist\Api\Result\Package\Author;
 use PhpSpec\ObjectBehavior;
 
 class AuthorSpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
-        $this->fromArray(array(
+        $this->fromArray([
             'name'     => 'Saša Stamenković',
             'email'    => 'umpirsky@gmail.com',
             'homepage' => 'umpirsky.com',
-            'role'     => 'lead'
-        ));
+            'role'     => 'lead',
+        ]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Api\Result\Package\Author');
+        $this->shouldHaveType(Author::class);
     }
 
-    function it_gets_name()
+    public function it_gets_name()
     {
         $this->getName()->shouldReturn('Saša Stamenković');
     }
 
-    function it_gets_email()
+    public function it_gets_email()
     {
         $this->getEmail()->shouldReturn('umpirsky@gmail.com');
     }
 
-    function it_gets_homepage()
+    public function it_gets_homepage()
     {
         $this->getHomepage()->shouldReturn('umpirsky.com');
     }
 
-    function it_gets_role()
+    public function it_gets_role()
     {
         $this->getRole()->shouldReturn('lead');
     }

@@ -1,27 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Packagist\Api\Result;
 
+use Packagist\Api\Result\AbstractResult;
+use Packagist\Api\Result\Package;
+use Packagist\Api\Result\Package\Downloads;
+use Packagist\Api\Result\Package\Maintainer;
+use Packagist\Api\Result\Package\Version;
 use PhpSpec\ObjectBehavior;
 
 class PackageSpec extends ObjectBehavior
 {
-    /**
-     * @param \Packagist\Api\Result\Package\Maintainer $maintainer
-     * @param \Packagist\Api\Result\Package\Version    $version
-     * @param \Packagist\Api\Result\Package\Source     $source
-     * @param \Packagist\Api\Result\Package\Dist       $dist
-     * @param \Packagist\Api\Result\Package\Downloads  $downloads
-     * @param \DateTime                                $time
-     */
-    function let($maintainer, $version, $source, $dist, $downloads, $time)
+    public function let(Maintainer $maintainer, Version $version, Downloads $downloads)
     {
-        $this->fromArray(array(
+        $this->fromArray([
             'name'        => 'sylius/sylius',
             'description' => 'Modern ecommerce for Symfony2',
-            'time'        => $time,
-            'maintainers' => array($maintainer),
-            'versions'    => array($version),
+            'time'        => '2020-01-25T15:11:19+00:00',
+            'maintainers' => [$maintainer],
+            'versions'    => [$version],
             'type'        => 'library',
             'repository'  => 'https://github.com/Sylius/Sylius.git',
             'downloads'   => $downloads,
@@ -29,71 +28,71 @@ class PackageSpec extends ObjectBehavior
             'suggesters'  => 21,
             'dependents'  => 42,
             'github_stars' => 3086,
-            'github_forks' => 1124
-        ));
+            'github_forks' => 1124,
+        ]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->shouldHaveType('Packagist\Api\Result\Package');
+        $this->shouldHaveType(Package::class);
     }
 
-    function it_is_a_packagist_result()
+    public function it_is_a_packagist_result()
     {
-        $this->shouldHaveType('Packagist\Api\Result\AbstractResult');
+        $this->shouldHaveType(AbstractResult::class);
     }
 
-    function it_gets_name()
+    public function it_gets_name()
     {
         $this->getName()->shouldReturn('sylius/sylius');
     }
 
-    function it_gets_description()
+    public function it_gets_description()
     {
         $this->getDescription()->shouldReturn('Modern ecommerce for Symfony2');
     }
 
-    function it_gets_time($time)
+    public function it_gets_time()
     {
-        $this->getTime()->shouldReturn($time);
+        $this->getTime()->shouldReturn('2020-01-25T15:11:19+00:00');
     }
 
-    function it_gets_maintainers($maintainer)
+    public function it_gets_maintainers($maintainer)
     {
-        $this->getMaintainers()->shouldReturn(array($maintainer));
+        $this->getMaintainers()->shouldReturn([$maintainer]);
     }
 
-    function it_gets_versions($version)
+    public function it_gets_versions($version)
     {
-        $this->getVersions()->shouldReturn(array($version));
+        $this->getVersions()->shouldReturn([$version]);
     }
 
-    function it_gets_type()
+    public function it_gets_type()
     {
         $this->getType()->shouldReturn('library');
     }
 
-    function it_gets_repository()
+    public function it_gets_repository()
     {
         $this->getRepository()->shouldReturn('https://github.com/Sylius/Sylius.git');
     }
 
-    function it_gets_downloads($downloads)
+    public function it_gets_downloads($downloads)
     {
         $this->getDownloads()->shouldReturn($downloads);
     }
 
-    function it_gets_favers()
+    public function it_gets_favers()
     {
         $this->getFavers()->shouldReturn(9999999999);
     }
 
-    function it_gets_abandoned()
+    public function it_gets_abandoned()
     {
         $this->isAbandoned()->shouldReturn(false);
     }
 
-    function it_gets_abandoned_returning_true()
+    public function it_gets_abandoned_returning_true()
     {
         $this->fromArray([
             'name'        => 'typo3/ldap',
@@ -103,7 +102,7 @@ class PackageSpec extends ObjectBehavior
         $this->isAbandoned()->shouldReturn(true);
     }
 
-    function it_gets_replacement_package()
+    public function it_gets_replacement_package()
     {
         $this->fromArray([
             'name'        => 'typo3/ldap',
@@ -113,7 +112,7 @@ class PackageSpec extends ObjectBehavior
         $this->getReplacementPackage()->shouldReturn('neos/ldap');
     }
 
-    function it_gets_replacement_package_returning_null()
+    public function it_gets_replacement_package_returning_null()
     {
         $this->fromArray([
             'name'        => 'typo3/ldap',
@@ -123,22 +122,22 @@ class PackageSpec extends ObjectBehavior
         $this->getReplacementPackage()->shouldReturn(null);
     }
 
-    function it_gets_suggesters()
+    public function it_gets_suggesters()
     {
         $this->getSuggesters()->shouldReturn(21);
     }
 
-    function it_gets_dependents()
+    public function it_gets_dependents()
     {
         $this->getDependents()->shouldReturn(42);
     }
 
-    function it_gets_github_stars()
+    public function it_gets_github_stars()
     {
         $this->getGithubStars()->shouldReturn(3086);
     }
 
-    function it_gets_github_forks()
+    public function it_gets_github_forks()
     {
         $this->getGithubForks()->shouldReturn(1124);
     }
