@@ -76,7 +76,10 @@ class Client
                 $createResult = [$createResult];
             }
             $results = array_merge($results, $createResult);
-        } while (isset($response['next']) && (0 === $limit || $response['next'] <= $limit));
+            if (isset($response['next'])) {
+                parse_str(parse_url($response['next'], PHP_URL_QUERY), $parse);
+            }
+        } while (isset($response['next']) && (0 === $limit || $parse['page'] <= $limit));
 
         return $results;
     }
