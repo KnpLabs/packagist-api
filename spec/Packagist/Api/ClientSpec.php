@@ -95,7 +95,9 @@ class ClientSpec extends ObjectBehavior
         $data = file_get_contents('spec/Packagist/Api/Fixture/get_composer.json');
         $response->getBody()->shouldBeCalled()->willReturn($data);
 
-        $client->request('get', 'https://packagist.org/p/sylius/sylius.json')->shouldBeCalled()->willReturn($response);
+        $client->request('GET', 'https://packagist.org/p/sylius/sylius.json')
+            ->shouldBeCalled()
+            ->willReturn($response);
 
         $factory->create(json_decode($data, true))->shouldBeCalled();
 
