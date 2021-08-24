@@ -38,6 +38,10 @@ class Factory
                 // Used for /explore/popular.json
                 return $this->createSearchResults($data['packages']);
             }
+            if (isset($data['minified']) && 'composer/2.0' === $data['minified']) {
+                // Used for /p2/<package>.json
+                return $this->createComposer2PackagesResults($data['packages']);
+            }
             // Used for /p/<package>.json
             return $this->createComposerPackagesResults($data['packages']);
         }
@@ -127,6 +131,19 @@ class Factory
             $version['name'] ??= '';
             $version['type'] ??= '';
 
+            if (isset($version['conflict']) && !is_array($version['conflict'])) {
+                unset($version['conflict']);
+            }
+            if (isset($version['suggest']) && !is_array($version['suggest'])) {
+                unset($version['suggest']);
+            }
+            if (isset($version['replace']) && !is_array($version['replace'])) {
+                unset($version['replace']);
+            }
+            if (isset($version['provide']) && !is_array($version['provide'])) {
+                unset($version['provide']);
+            }
+
             if (isset($version['authors']) && $version['authors']) {
                 foreach ($version['authors'] as $key => $author) {
                     // Cast some potentially null properties to empty strings
@@ -170,5 +187,28 @@ class Factory
         $result->fromArray($data);
 
         return $result;
+    }
+
+    /**
+     * @param array $packages
+     * @return Package[]
+     */
+    public function createComposer2PackagesResults(array $packages): array
+    {
+        $created = [];
+
+        foreach ($packages as $name => $package) {
+            // Create an empty package, only contains versions
+            $createdPackage = array(
+                'versions' => [],
+            );
+            foreach ($package as $version) {
+                $createdPackage['versions'][$version['version']] = $version;
+            }
+
+            $created[$name] = $this->createPackageResults($createdPackage);
+        }
+
+        return $created;
     }
 }

@@ -63,6 +63,22 @@ class FactorySpec extends ObjectBehavior
         }
     }
 
+    public function it_creates_composer_lite_packages(): void
+    {
+        $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_composer_lite.json'), true);
+
+        $results = $this->create($data);
+        $results->shouldHaveCount(1);
+        $results->shouldBeArray();
+        foreach ($results as $result) {
+            $result->shouldBeAnInstanceOf('Packagist\Api\Result\Package');
+
+            foreach ($result->getVersions() as $version) {
+                $version->shouldBeAnInstanceOf('Packagist\Api\Result\Version');
+            }
+        }
+    }
+
     public function it_creates_package_names()
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/all.json'), true);
@@ -115,4 +131,5 @@ class FactorySpec extends ObjectBehavior
             }
         );
     }
+
 }
