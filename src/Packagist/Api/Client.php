@@ -6,6 +6,7 @@ namespace Packagist\Api;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Packagist\Api\Result\Factory;
 use Packagist\Api\Result\Package;
 use Psr\Http\Message\StreamInterface;
@@ -55,9 +56,9 @@ class Client
      *    * type:   type of package (type in composer.json)
      *    * tags:   tags of package (keywords in composer.json)
      *
-     * @param string $query   Name of package
-     * @param array  $filters An array of filters
-     * @param int    $limit   Pages to limit results (0 = all pages)
+     * @param string $query Name of package
+     * @param array $filters An array of filters
+     * @param int $limit Pages to limit results (0 = all pages)
      *
      * @return array The results
      */
@@ -98,23 +99,25 @@ class Client
     }
 
     /**
-     * Similar to {@link get()}, but uses composer metadata which is Packagist's preferred
-     * way of retrieving details, since responses are cached efficiently as static files
-     * by the Packagist service. The response lacks some metadata that is provided
-     * by {@link get()}, see https://packagist.org/apidoc for details.
-     *
-     * Caution: Returns an array of packages, you need to select the correct one
-     * from the indexed array.
-     *
-     * @since 1.6
-     *
+     * @see https://packagist.org/apidoc#get-package-data
+     * Contains tagged releases and dev versions
      * @param string $package Full qualified name ex : myname/mypackage
-     *
-     * @return \Packagist\Api\Result\Package[] An array of packages, including the requested one.
+     * @return Package[] An array of packages, including the requested one.
      */
-    public function getComposer($package)
+    public function getComposer(string $package): array
     {
-        return $this->respond(sprintf($this->url('/p/%s.json'), $package));
+        return $this->respond(sprintf($this->url('/p2/%s~dev.json'), $package));
+    }
+
+    /**
+     * @see https://packagist.org/apidoc#get-package-data
+     * Contains only tagged releases
+     * @param string $package Full qualified name ex : myname/mypackage
+     * @return Package[] An array of packages, including the requested one.
+     */
+    public function getComposerLite(string $package): array
+    {
+        return $this->respond(sprintf($this->url('/p2/%s.json'), $package));
     }
 
     /**
@@ -197,9 +200,14 @@ class Client
      */
     protected function request(string $url): string
     {
-        return (string) $this->httpClient
-            ->request('GET', $url)
-            ->getBody();
+        try {
+            return $this->httpClient
+                ->request('GET', $url)
+                ->getBody()
+                ->getContents();
+        } catch (GuzzleException $e) {
+            return json_encode([]);
+        }
     }
 
     /**
