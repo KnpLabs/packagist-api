@@ -102,13 +102,17 @@ class ClientSpec extends ObjectBehavior
         $response->getBody()->shouldBeCalled()->willReturn($body);
         $body->getContents()->shouldBeCalled()->willReturn($data);
 
-        $client->request('GET', 'https://packagist.org/p/sylius/sylius.json')
+        $client->request('GET', 'https://packagist.org/p2/sylius/sylius~dev.json')
             ->shouldBeCalled()
             ->willReturn($response);
 
-        $factory->create(json_decode($data, true))->shouldBeCalled();
+        $packages = [
+            '1.0.0' => ['name' => 'sylius/sylius', 'version' => '1.0.0']
+        ];
 
-        $this->getComposer('sylius/sylius');
+        $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn($packages);
+
+        $this->getComposer('sylius/sylius')->shouldBe($packages);
     }
 
     public function it_gets_composer_lite_package_details(HttpClient $client, Factory $factory, Response $response, Stream $body): void
@@ -117,13 +121,17 @@ class ClientSpec extends ObjectBehavior
         $response->getBody()->shouldBeCalled()->willReturn($body);
         $body->getContents()->shouldBeCalled()->willReturn($data);
 
-        $client->request('GET', 'https://packagist.org/p/sylius/sylius.json')
+        $client->request('GET', 'https://packagist.org/p2/sylius/sylius.json')
             ->shouldBeCalled()
             ->willReturn($response);
 
-        $factory->create(json_decode($data, true))->shouldBeCalled();
+        $packages = [
+            '1.0.0' => ['name' => 'sylius/sylius', 'version' => '1.0.0']
+        ];
 
-        $this->getComposerLite('sylius/sylius');
+        $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn($packages);
+
+        $this->getComposerLite('sylius/sylius')->shouldBe($packages);
     }
 
     public function it_lists_all_package_names(HttpClient $client, Factory $factory, Response $response, Stream $body): void
