@@ -15,7 +15,8 @@
         "php": "^7.4 || ^8.0",
         "guzzlehttp/guzzle": "^6.0 || ^7.0",
         "doctrine/inflector": "^1.0 || ^2.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "composer/metadata-minifier": "^1.0"
 	},
     "require-dev": {
         "phpspec/phpspec": "^6.0 || ^7.0",
