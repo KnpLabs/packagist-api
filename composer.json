@@ -32,5 +32,9 @@
         "branch-alias": {
             "dev-master": "1.x-dev"
         }
+    },
+    "scripts": {
+        "lint": "vendor/bin/phpcs --standard=PSR12 src/",
+        "test": "vendor/bin/phpspec run -f pretty"
     }
 }
