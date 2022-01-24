@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Packagist\Api\Result;
 
+use Composer\MetadataMinifier\MetadataMinifier;
 use InvalidArgumentException;
 use Packagist\Api\Result\Package\Author;
 use Packagist\Api\Result\Package\Dist;
@@ -131,19 +132,6 @@ class Factory
             $version['name'] ??= '';
             $version['type'] ??= '';
 
-            if (isset($version['conflict']) && !is_array($version['conflict'])) {
-                unset($version['conflict']);
-            }
-            if (isset($version['suggest']) && !is_array($version['suggest'])) {
-                unset($version['suggest']);
-            }
-            if (isset($version['replace']) && !is_array($version['replace'])) {
-                unset($version['replace']);
-            }
-            if (isset($version['provide']) && !is_array($version['provide'])) {
-                unset($version['provide']);
-            }
-
             if (isset($version['authors']) && $version['authors']) {
                 foreach ($version['authors'] as $key => $author) {
                     // Cast some potentially null properties to empty strings
@@ -198,6 +186,7 @@ class Factory
         $created = [];
 
         foreach ($packages as $name => $package) {
+            $package = MetadataMinifier::expand($package);
             // Create an empty package, only contains versions
             $createdPackage = array(
                 'versions' => [],
