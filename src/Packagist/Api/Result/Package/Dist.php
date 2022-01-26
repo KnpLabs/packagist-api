@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Packagist\Api\Result\Package;
 
-class Dist extends Source
+use Packagist\Api\Result\AbstractResult;
+
+class Dist extends AbstractResult
 {
     protected string $shasum;
 
