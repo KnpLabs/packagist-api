@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Packagist\Api\Result\Package;
 
-class Dist extends Source
+use Packagist\Api\Result\AbstractResult;
+
+class Dist extends AbstractResult
 {
-    protected string $shasum;
+    protected ?string $shasum;
 
     protected string $type;
 
     protected string $url;
 
-    protected string $reference;
+    protected ?string $reference;
 
-    public function getShasum(): string
+    public function getShasum(): ?string
     {
         return $this->shasum;
     }
@@ -29,7 +31,7 @@ class Dist extends Source
         return $this->url;
     }
 
-    public function getReference(): string
+    public function getReference(): ?string
     {
         return $this->reference;
     }

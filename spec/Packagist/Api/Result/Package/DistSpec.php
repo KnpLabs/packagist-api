@@ -43,4 +43,28 @@ class DistSpec extends ObjectBehavior
     {
         $this->getShasum()->shouldReturn('cb0a489db41707d5df078f1f35e028e04ffd9e8e');
     }
+
+    public function it_can_deal_with_nullable_reference()
+    {
+        $this->fromArray([
+            'type'      => 'git',
+            'url'       => 'https://github.com/Sylius/Sylius.git',
+            'reference' => null,
+            'shasum'    => 'cb0a489db41707d5df078f1f35e028e04ffd9e8e',
+        ]);
+
+        $this->getReference()->shouldReturn(null);
+    }
+
+    public function it_can_deal_with_nullable_shasum()
+    {
+        $this->fromArray([
+            'type'      => 'git',
+            'url'       => 'https://github.com/Sylius/Sylius.git',
+            'reference' => 'cb0a489db41707d5df078f1f35e028e04ffd9e8e',
+            'shasum'    => null,
+        ]);
+
+        $this->getShasum()->shouldReturn(null);
+    }
 }
