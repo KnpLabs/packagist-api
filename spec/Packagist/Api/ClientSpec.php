@@ -115,9 +115,9 @@ class ClientSpec extends ObjectBehavior
         $this->getComposer('sylius/sylius')->shouldBe($packages);
     }
 
-    public function it_gets_composer_lite_package_details(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_gets_composer_releases_package_details(HttpClient $client, Factory $factory, Response $response, Stream $body): void
     {
-        $data = file_get_contents('spec/Packagist/Api/Fixture/get_composer_lite.json');
+        $data = file_get_contents('spec/Packagist/Api/Fixture/get_composer_releases.json');
         $response->getBody()->shouldBeCalled()->willReturn($body);
         $body->getContents()->shouldBeCalled()->willReturn($data);
 
@@ -131,7 +131,7 @@ class ClientSpec extends ObjectBehavior
 
         $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn($packages);
 
-        $this->getComposerLite('sylius/sylius')->shouldBe($packages);
+        $this->getComposerReleases('sylius/sylius')->shouldBe($packages);
     }
 
     public function it_lists_all_package_names(HttpClient $client, Factory $factory, Response $response, Stream $body): void

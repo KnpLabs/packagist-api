@@ -100,13 +100,16 @@ class Client
 
     /**
      * @see https://packagist.org/apidoc#get-package-data
-     * Contains tagged releases and dev versions
+     * Contains tagged releases and dev branches
      * @param string $package Full qualified name ex : myname/mypackage
      * @return Package[] An array of packages, including the requested one.
      */
     public function getComposer(string $package): array
     {
-        return $this->respond(sprintf($this->url('/p2/%s~dev.json'), $package));
+        return $this->multiRespond(
+            sprintf($this->url('/p2/%s.json'), $package),
+            sprintf($this->url('/p2/%s~dev.json'), $package)
+        );
     }
 
     /**
@@ -115,9 +118,20 @@ class Client
      * @param string $package Full qualified name ex : myname/mypackage
      * @return Package[] An array of packages, including the requested one.
      */
-    public function getComposerLite(string $package): array
+    public function getComposerReleases(string $package): array
     {
         return $this->respond(sprintf($this->url('/p2/%s.json'), $package));
+    }
+
+    /**
+     * @see https://packagist.org/apidoc#get-package-data
+     * Contains only dev branches
+     * @param string $package Full qualified name ex : myname/mypackage
+     * @return Package[] An array of packages, including the requested one.
+     */
+    public function getComposerBranches(string $package): array
+    {
+        return $this->respond(sprintf($this->url('/p2/%s~dev.json'), $package));
     }
 
     /**
@@ -190,6 +204,34 @@ class Client
         $response = $this->parse((string) $response);
 
         return $this->create($response);
+    }
+
+    /**
+     * Execute two urls request, parse and merge the responses
+     *
+     * @param string $url1
+     * @param string $url2
+     * @return array|Package
+     */
+    protected function multiRespond(string $url1, string $url2)
+    {
+        $response1 = $this->request($url1);
+        $response1 = $this->parse((string)$response1);
+
+        $response2 = $this->request($url2);
+        $response2 = $this->parse((string)$response2);
+
+        foreach ($response1['packages'] as $k1 => $package1) {
+            foreach ($response2['packages'] as $k2 => $package2) {
+                if ($k1 === $k2) {
+                    foreach ($package2 as $version) {
+                        $response1['packages'][$k1][] = $version;
+                    }
+                }
+            }
+        }
+
+        return $this->create($response1);
     }
 
     /**

@@ -63,9 +63,9 @@ class FactorySpec extends ObjectBehavior
         }
     }
 
-    public function it_creates_composer_lite_packages(): void
+    public function it_creates_composer_releases_packages(): void
     {
-        $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_composer_lite.json'), true);
+        $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_composer_releases.json'), true);
 
         $results = $this->create($data);
         $results->shouldHaveCount(1);
