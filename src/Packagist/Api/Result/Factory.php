@@ -81,6 +81,8 @@ class Factory
             );
         }
 
+        $package['description'] = (string) $package['description'] ?? '';
+
         foreach ($package['versions'] as $branch => $version) {
             if (isset($version['authors']) && $version['authors']) {
                 foreach ($version['authors'] as $key => $author) {
