@@ -99,14 +99,24 @@ class Client
     }
 
     /**
-     * @see https://packagist.org/apidoc#get-package-data
-     * Contains tagged releases and dev versions
+     * Similar to {@link get()}, but uses Composer metadata which is Packagist's preferred
+     * way of retrieving details, since responses are cached efficiently as static files
+     * by the Packagist service. The response lacks some metadata that is provided
+     * by {@link get()}, see https://packagist.org/apidoc for details.
+     *
+     * Caution: Returns an array of packages, you need to select the correct one
+     * from the indexed array.
+     *
+     * @since 1.6
      * @param string $package Full qualified name ex : myname/mypackage
-     * @return Package[] An array of packages, including the requested one.
+     * @return array An array of packages, including the requested one, containing releases and dev branch versions
      */
     public function getComposer(string $package): array
     {
-        return $this->respond(sprintf($this->url('/p2/%s~dev.json'), $package));
+        return $this->multiRespond(
+            sprintf($this->url('/p2/%s.json'), $package),
+            sprintf($this->url('/p2/%s~dev.json'), $package)
+        );
     }
 
     /**
@@ -115,9 +125,20 @@ class Client
      * @param string $package Full qualified name ex : myname/mypackage
      * @return Package[] An array of packages, including the requested one.
      */
-    public function getComposerLite(string $package): array
+    public function getComposerReleases(string $package): array
     {
         return $this->respond(sprintf($this->url('/p2/%s.json'), $package));
+    }
+
+    /**
+     * @see https://packagist.org/apidoc#get-package-data
+     * Contains only dev branches
+     * @param string $package Full qualified name ex : myname/mypackage
+     * @return Package[] An array of packages, including the requested one.
+     */
+    public function getComposerBranches(string $package): array
+    {
+        return $this->respond(sprintf($this->url('/p2/%s~dev.json'), $package));
     }
 
     /**
@@ -190,6 +211,35 @@ class Client
         $response = $this->parse((string) $response);
 
         return $this->create($response);
+    }
+
+    /**
+     * Execute two URLs request, parse and merge the responses by adding the versions from the second URL
+     * into the versions from the first URL.
+     *
+     * @param string $url1
+     * @param string $url2
+     * @return array|Package
+     */
+    protected function multiRespond(string $url1, string $url2)
+    {
+        $response1 = $this->request($url1);
+        $response1 = $this->parse((string) $response1);
+
+        $response2 = $this->request($url2);
+        $response2 = $this->parse((string) $response2);
+
+        foreach ($response1['packages'] as $name => $package1) {
+            if (empty($response2['packages'][$name])) {
+                continue;
+            }
+            $response1['packages'][$name] = [
+                ...$response1['packages'][$name],
+                ...$response2['packages'][$name],
+            ];
+        }
+
+        return $this->create($response1);
     }
 
     /**

@@ -98,26 +98,42 @@ class ClientSpec extends ObjectBehavior
 
     public function it_gets_composer_package_details(HttpClient $client, Factory $factory, Response $response, Stream $body): void
     {
-        $data = file_get_contents('spec/Packagist/Api/Fixture/get_composer.json');
+        $data1 = file_get_contents('spec/Packagist/Api/Fixture/v2_get.json');
+        $data2 = file_get_contents('spec/Packagist/Api/Fixture/v2_get_dev.json');
         $response->getBody()->shouldBeCalled()->willReturn($body);
-        $body->getContents()->shouldBeCalled()->willReturn($data);
+        $body->getContents()->shouldBeCalledTimes(2)->willReturn($data1, $data2);
+
+        $client->request('GET', 'https://packagist.org/p2/sylius/sylius.json')
+            ->shouldBeCalled()
+            ->willReturn($response);
 
         $client->request('GET', 'https://packagist.org/p2/sylius/sylius~dev.json')
             ->shouldBeCalled()
             ->willReturn($response);
 
-        $packages = [
-            '1.0.0' => ['name' => 'sylius/sylius', 'version' => '1.0.0']
+        $data1 = json_decode($data1, true);
+        $data2 = json_decode($data2, true);
+        $factoryInput = $data1;
+        $factoryInput['packages']['sylius/sylius'] = [
+            ...$data1['packages']['sylius/sylius'],
+            ...$data2['packages']['sylius/sylius'],
         ];
 
-        $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn($packages);
+        $factory->create($factoryInput)->shouldBeCalled()->willReturn([
+            'packages' => [
+                'sylius/sylius' => [
+                    ['name' => 'sylius/sylius', 'version' => '1.0.0'],
+                    ['name' => 'sylius/sylius', 'version' => 'dev-master'],
+                ],
+            ],
+        ]);
 
-        $this->getComposer('sylius/sylius')->shouldBe($packages);
+        $this->getComposer('sylius/sylius');
     }
 
-    public function it_gets_composer_lite_package_details(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_gets_composer_releases_package_details(HttpClient $client, Factory $factory, Response $response, Stream $body): void
     {
-        $data = file_get_contents('spec/Packagist/Api/Fixture/get_composer_lite.json');
+        $data = file_get_contents('spec/Packagist/Api/Fixture/v2_get.json');
         $response->getBody()->shouldBeCalled()->willReturn($body);
         $body->getContents()->shouldBeCalled()->willReturn($data);
 
@@ -131,7 +147,7 @@ class ClientSpec extends ObjectBehavior
 
         $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn($packages);
 
-        $this->getComposerLite('sylius/sylius')->shouldBe($packages);
+        $this->getComposerReleases('sylius/sylius')->shouldBe($packages);
     }
 
     public function it_lists_all_package_names(HttpClient $client, Factory $factory, Response $response, Stream $body): void
