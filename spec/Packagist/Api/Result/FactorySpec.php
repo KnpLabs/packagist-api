@@ -40,14 +40,14 @@ class FactorySpec extends ObjectBehavior
         }
     }
 
-    public function it_creates_packages()
+    public function it_creates_packages(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get.json'), true);
 
         $this->create($data)->shouldHaveType(Package::class);
     }
 
-    public function it_creates_composer_packages()
+    public function it_creates_composer_packages(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_composer.json'), true);
 
@@ -55,17 +55,17 @@ class FactorySpec extends ObjectBehavior
         $results->shouldHaveCount(1);
         $results->shouldBeArray();
         foreach ($results as $result) {
-            $result->shouldBeAnInstanceOf('Packagist\Api\Result\Package');
+            $result->shouldBeAnInstanceOf(Package::class);
 
             foreach ($result->getVersions() as $version) {
-                $version->shouldBeAnInstanceOf('Packagist\Api\Result\Version');
+                $version->shouldBeAnInstanceOf(Package\Version::class);
             }
         }
     }
 
     public function it_creates_composer_releases_packages(): void
     {
-        $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_composer_releases.json'), true);
+        $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/v2_get.json'), true);
 
         $results = $this->create($data);
         $results->shouldHaveCount(1);

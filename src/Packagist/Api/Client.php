@@ -99,10 +99,17 @@ class Client
     }
 
     /**
-     * @see https://packagist.org/apidoc#get-package-data
-     * Contains tagged releases and dev branches
+     * Similar to {@link get()}, but uses Composer metadata which is Packagist's preferred
+     * way of retrieving details, since responses are cached efficiently as static files
+     * by the Packagist service. The response lacks some metadata that is provided
+     * by {@link get()}, see https://packagist.org/apidoc for details.
+     *
+     * Caution: Returns an array of packages, you need to select the correct one
+     * from the indexed array.
+     *
+     * @since 1.6
      * @param string $package Full qualified name ex : myname/mypackage
-     * @return Package[] An array of packages, including the requested one.
+     * @return array An array of packages, including the requested one, containing releases and dev branch versions
      */
     public function getComposer(string $package): array
     {
@@ -207,7 +214,8 @@ class Client
     }
 
     /**
-     * Execute two urls request, parse and merge the responses
+     * Execute two URLs request, parse and merge the responses by adding the versions from the second URL
+     * into the versions from the first URL.
      *
      * @param string $url1
      * @param string $url2
@@ -216,19 +224,19 @@ class Client
     protected function multiRespond(string $url1, string $url2)
     {
         $response1 = $this->request($url1);
-        $response1 = $this->parse((string)$response1);
+        $response1 = $this->parse((string) $response1);
 
         $response2 = $this->request($url2);
-        $response2 = $this->parse((string)$response2);
+        $response2 = $this->parse((string) $response2);
 
-        foreach ($response1['packages'] as $k1 => $package1) {
-            foreach ($response2['packages'] as $k2 => $package2) {
-                if ($k1 === $k2) {
-                    foreach ($package2 as $version) {
-                        $response1['packages'][$k1][] = $version;
-                    }
-                }
+        foreach ($response1['packages'] as $name => $package1) {
+            if (empty($response2['packages'][$name])) {
+                continue;
             }
+            $response1['packages'][$name] = [
+                ...$response1['packages'][$name],
+                ...$response2['packages'][$name],
+            ];
         }
 
         return $this->create($response1);
