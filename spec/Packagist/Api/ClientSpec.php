@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace spec\Packagist\Api;
 
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Stream;
 use Packagist\Api\Client;
+use Packagist\Api\PackageNotFoundException;
 use Packagist\Api\Result\Factory;
 use PhpSpec\ObjectBehavior;
 
@@ -195,4 +198,17 @@ class ClientSpec extends ObjectBehavior
         $this->all(['vendor' => 'sylius']);
     }
 
+    public function it_throws_exception_on_404s(HttpClient $client): void
+    {
+        $request = new Request('GET', 'https://packagist.org/packages/i-do/not-exist.json');
+        $response = new Response(404, [], json_encode(['status' => 'error', 'message' => 'Package not found']));
+        $exception = new ClientException('', $request, $response);
+
+        $client->request('GET', 'https://packagist.org/packages/i-do/not-exist.json')
+            ->shouldBeCalled()
+            ->willThrow($exception);
+
+        $this->shouldThrow(PackageNotFoundException::class)
+            ->during('get', ['i-do/not-exist']);
+    }
 }

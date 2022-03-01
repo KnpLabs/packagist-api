@@ -9,7 +9,6 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Packagist\Api\Result\Factory;
 use Packagist\Api\Result\Package;
-use Psr\Http\Message\StreamInterface;
 
 /**
  * Packagist Api
@@ -247,6 +246,8 @@ class Client
      *
      * @param string $url
      * @return string
+     * @throws PackageNotFoundException
+     * @throws GuzzleException
      */
     protected function request(string $url): string
     {
@@ -256,7 +257,10 @@ class Client
                 ->getBody()
                 ->getContents();
         } catch (GuzzleException $e) {
-            return json_encode([]);
+            if ($e->getCode() === 404) {
+                throw new PackageNotFoundException('The requested package was not found.', 404);
+            }
+            throw $e;
         }
     }
 
