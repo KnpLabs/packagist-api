@@ -128,7 +128,7 @@ class Client
     {
         $url = '/packages/list.json';
         if ($filters) {
-            $url .= '?'.http_build_query($filters);
+            $url .= '?' . http_build_query($filters);
         }
 
         return $this->respond($this->url($url));
@@ -170,7 +170,7 @@ class Client
      */
     protected function url($route)
     {
-        return $this->packagistUrl.$route;
+        return $this->packagistUrl . $route;
     }
 
     /**
