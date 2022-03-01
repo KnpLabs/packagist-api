@@ -76,15 +76,15 @@ class Factory
      * @param array $packages
      * @return Package[]
      */
-    public function createComposerPackagesResults(array $packages)
+    public function createComposerPackagesResults(array $packages): array
     {
-        $created = array();
+        $created = [];
 
         foreach ($packages as $name => $package) {
             // Create an empty package, only contains versions
-            $createdPackage = array(
+            $createdPackage = [
                 'versions' => [],
-            );
+            ];
             foreach ($package as $branch => $version) {
                 $createdPackage['versions'][$branch] = $version;
             }

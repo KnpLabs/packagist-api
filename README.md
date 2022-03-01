@@ -129,15 +129,20 @@ $client->all(array('type' => 'library'));
 $client->all(array('vendor' => 'sylius'));
 ```
 
-#### Custom Packagist Repositories
+#### Custom Packagist repositories
 
-You can also set a custom Packagist Repository URL:
+You can also set a custom Packagist repository URL:
 
 ```php
 <?php
 
 $client->setPackagistUrl('https://custom.packagist.site.org');
 ```
+
+## Errors
+
+* A `Packagist\Api\PackageNotFoundException` will be thrown when the Packagist API returns a 404 response.
+* An `\InvalidArgumentException` will be thrown when the respond from Packagist was not able to be parsed.
 
 ## License
 
