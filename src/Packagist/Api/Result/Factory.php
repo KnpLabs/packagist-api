@@ -101,6 +101,7 @@ class Factory
      */
     public function createPackageResults(array $package): Package
     {
+        $package['description'] ??= '';
         $package['github_stars'] ??= 0;
         $package['github_watchers'] ??= 0;
         $package['github_forks'] ??= 0;
