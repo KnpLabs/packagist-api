@@ -11,12 +11,12 @@ use PhpSpec\ObjectBehavior;
 
 class FactorySpec extends ObjectBehavior
 {
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(Factory::class);
     }
 
-    public function it_creates_search_results()
+    public function it_creates_search_results(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/search.json'), true);
 
@@ -28,7 +28,7 @@ class FactorySpec extends ObjectBehavior
         }
     }
 
-    public function it_creates_popular_results()
+    public function it_creates_popular_results(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/popular.json'), true);
 
@@ -71,15 +71,15 @@ class FactorySpec extends ObjectBehavior
         $results->shouldHaveCount(1);
         $results->shouldBeArray();
         foreach ($results as $result) {
-            $result->shouldBeAnInstanceOf('Packagist\Api\Result\Package');
+            $result->shouldBeAnInstanceOf(Package::class);
 
             foreach ($result->getVersions() as $version) {
-                $version->shouldBeAnInstanceOf('Packagist\Api\Result\Version');
+                $version->shouldBeAnInstanceOf(Package\Version::class);
             }
         }
     }
 
-    public function it_creates_package_names()
+    public function it_creates_package_names(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/all.json'), true);
 
@@ -90,44 +90,52 @@ class FactorySpec extends ObjectBehavior
         ]);
     }
 
-    public function it_creates_packages_with_missing_optional_data()
+    public function it_creates_packages_with_missing_optional_data(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_nodist.json'), true);
 
         $this->create($data)->shouldHaveType(Package::class);
     }
 
-    public function it_creates_abandoned_packages()
+    public function it_creates_abandoned_packages(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_abandoned.json'), true);
 
         $this->create($data)->shouldHaveType(Package::class);
     }
 
-    public function it_creates_packages_with_suggesters()
+    public function it_creates_packages_with_suggesters(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_suggesters.json'), true);
         $this->create($data)->shouldHaveType(Package::class);
     }
 
-    public function it_creates_packages_with_dependents()
+    public function it_creates_packages_with_dependents(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_dependents.json'), true);
         $this->create($data)->shouldHaveType(Package::class);
     }
 
-    public function it_creates_packages_with_null_source()
+    public function it_creates_packages_with_null_source(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_null_source.json'), true);
         $this->create($data)->shouldHaveType(Package::class);
     }
 
-    public function it_creates_packages_with_null_description()
+    public function it_creates_packages_with_null_description(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_null_description.json'), true);
         $result = $this->create($data);
         $result->shouldHaveType(Package::class);
         $result->getDescription()->shouldBe('');
+    }
+
+    public function it_creates_packages_with_null_downloads(): void
+    {
+        $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_null_downloads.json'), true);
+        $result = $this->create($data);
+        $result->shouldHaveType(Package::class);
+        $result->getDownloads()->shouldBeNull();
     }
 
     public function getMatchers(): array
@@ -138,5 +146,4 @@ class FactorySpec extends ObjectBehavior
             }
         );
     }
-
 }

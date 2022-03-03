@@ -107,6 +107,7 @@ class Factory
         $package['github_forks'] ??= 0;
         $package['suggesters'] ??= 0;
         $package['dependents'] ??= 0;
+        $package['downloads'] ??= null;
         $package['favers'] ??= 0;
 
         if (isset($package['maintainers']) && $package['maintainers']) {
@@ -115,7 +116,7 @@ class Factory
             }
         }
 
-        if (isset($package['downloads']) && $package['downloads']) {
+        if (isset($package['downloads']) && is_array($package['downloads'])) {
             $package['downloads'] = $this->createResult(Downloads::class, $package['downloads']);
         }
 
