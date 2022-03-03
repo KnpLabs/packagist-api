@@ -22,7 +22,7 @@ class Package extends AbstractResult
 
     protected string $repository = '';
 
-    protected Downloads $downloads;
+    protected ?Downloads $downloads;
 
     protected int $favers = 0;
 
@@ -80,7 +80,7 @@ class Package extends AbstractResult
         return $this->repository;
     }
 
-    public function getDownloads(): Downloads
+    public function getDownloads(): ?Downloads
     {
         return $this->downloads;
     }
