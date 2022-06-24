@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Packagist\Api;
 
+use Composer\Semver\Semver;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
+use Packagist\Api\Result\Advisory;
 use Packagist\Api\Result\Factory;
 use Packagist\Api\Result\Package;
 
@@ -188,6 +190,96 @@ class Client
     }
 
     /**
+     * Get a list of known security vulnerability advisories
+     *
+     * $packages can be a simple array of package names, or an array with package names
+     * as keys and version strings as values.
+     *
+     * If $filterByVersion is true, any packages which are not accompanied by a version
+     * number will be ignored.
+     *
+     * @param array $packages
+     * @param integer|null $updatedSince A unix timestamp.
+     * Only advisories updated after this date/time will be included
+     * @param boolean $filterByVersion If true, only advisories which affect the version of packages in the
+     * $packages array will be included
+     * @return Advisory[]
+     */
+    public function advisories(array $packages = [], ?int $updatedSince = null, bool $filterByVersion = false): array
+    {
+        if (count($packages) === 0 && $updatedSince === null) {
+            throw new \InvalidArgumentException(
+                'At least one package or an $updatedSince timestamp must be passed in.'
+            );
+        }
+
+        if (count($packages) === 0 && $filterByVersion) {
+            return [];
+        }
+
+        // Add updatedSince to query if passed in
+        $query = [];
+        if ($updatedSince !== null) {
+            $query['updatedSince'] = $updatedSince;
+        }
+        $options = [
+            'query' => array_filter($query),
+        ];
+
+        // Add packages if appropriate
+        if (count($packages) > 0) {
+            $content = ['packages' => []];
+            foreach ($packages as $package => $version) {
+                if (is_numeric($package)) {
+                    $package = $version;
+                }
+                $content['packages'][] = $package;
+            }
+            $options['headers']['Content-type'] = 'application/x-www-form-urlencoded';
+            $options['body'] = http_build_query($content);
+        }
+
+        // Get advisories from API
+        /** @var Advisory[] $advisories */
+        $advisories = $this->respondPost($this->url('/api/security-advisories/'), $options);
+
+        // Filter advisories if necessary
+        if (count($advisories) > 0 && $filterByVersion) {
+            return $this->filterAdvisories($advisories, $packages);
+        }
+
+        return $advisories;
+    }
+
+    /**
+     * Filter the advisories array to only include any advisories that affect
+     * the versions of packages in the $packages array
+     *
+     * @param Advisory[] $advisories
+     * @param array $packages
+     * @return Advisory[] Filtered advisories array
+     */
+    private function filterAdvisories(array $advisories, array $packages): array
+    {
+        $filteredAdvisories = [];
+        foreach ($packages as $package => $version) {
+            // Skip any packages with no declared versions
+            if (is_numeric($package)) {
+                continue;
+            }
+            // Filter advisories by version
+            if (array_key_exists($package, $advisories)) {
+                foreach ($advisories[$package] as $advisory) {
+                    if (Semver::satisfies($version, $advisory->getAffectedVersions())) {
+                        $filteredAdvisories[$package][] = $advisory;
+                    }
+                }
+            }
+        }
+        return $filteredAdvisories;
+    }
+
+    /**
      * Assemble the packagist URL with the route
      *
      * @param string $route API Route that we want to achieve
@@ -208,6 +300,21 @@ class Client
     {
         $response = $this->request($url);
         $response = $this->parse((string) $response);
+
+        return $this->create($response);
+    }
+
+    /**
+     * Execute the POST request and parse the response
+     *
+     * @param string $url
+     * @param array $option
+     * @return array|Package
+     */
+    protected function respondPost(string $url, array $options)
+    {
+        $response = $this->postRequest($url, $options);
+        $response = $this->parse($response);
 
         return $this->create($response);
     }
@@ -239,6 +346,22 @@ class Client
         }
 
         return $this->create($response1);
+    }
+
+    /**
+     * Execute the POST request
+     *
+     * @param string $url
+     * @param array $options
+     * @return string
+     * @throws GuzzleException
+     */
+    protected function postRequest(string $url, array $options): string
+    {
+        return $this->httpClient
+            ->request('POST', $url, $options)
+            ->getBody()
+            ->getContents();
     }
 
     /**
