@@ -10,8 +10,9 @@ use Packagist\Api\Result\Package\Author;
 use Packagist\Api\Result\Package\Dist;
 use Packagist\Api\Result\Package\Downloads;
 use Packagist\Api\Result\Package\Maintainer;
-use Packagist\Api\Result\Package\Source;
+use Packagist\Api\Result\Package\Source as PackageSource;
 use Packagist\Api\Result\Package\Version;
+use Packagist\Api\Result\Advisory\Source as AdvisorySource;
 
 /**
  * Map raw data from website api to has a know type
@@ -51,6 +52,9 @@ class Factory
         }
         if (isset($data['packageNames'])) {
             return $data['packageNames'];
+        }
+        if (isset($data['advisories'])) {
+            return $this->createAdvisoryResults($data['advisories']);
         }
 
         throw new InvalidArgumentException('Invalid input data.');
@@ -145,7 +149,7 @@ class Factory
             }
 
             if ($version['source']) {
-                $version['source'] = $this->createResult(Source::class, $version['source']);
+                $version['source'] = $this->createResult(PackageSource::class, $version['source']);
             }
 
             if (isset($version['dist']) && $version['dist']) {
@@ -158,6 +162,36 @@ class Factory
         $created = new Package();
         $created->fromArray($package);
 
+        return $created;
+    }
+
+    /**
+     * @param array $advisories
+     * @return Advisory[]
+     */
+    public function createAdvisoryResults(array $advisories): array
+    {
+        $created = [];
+        foreach ($advisories as $package => $advisories2) {
+            foreach ($advisories2 as $advisory) {
+                $advisory['advisoryId'] ??= '';
+                $advisory['packageName'] ??= '';
+                $advisory['remoteId'] ??= '';
+                $advisory['title'] ??= '';
+                $advisory['link'] ??= '';
+                $advisory['cve'] ??= '';
+                $advisory['affectedVersions'] ??= '';
+                $advisory['sources'] ??= [];
+                $advisory['reportedAt'] ??= '';
+                $advisory['composerRepository'] ??= '';
+                foreach ($advisory['sources'] as $i => $source) {
+                    $source['name'] ??= '';
+                    $source['remoteId'] ??= '';
+                    $advisory['sources'][$i] = $this->createResult(AdvisorySource::class, $source);
+                }
+                $created[$package][] = $this->createResult(Advisory::class, $advisory);
+            }
+        }
         return $created;
     }
 
