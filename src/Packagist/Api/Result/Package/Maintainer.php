@@ -8,11 +8,11 @@ use Packagist\Api\Result\AbstractResult;
 
 class Maintainer extends AbstractResult
 {
-    protected string $name;
+    protected string $name = '';
 
-    protected string $email;
+    protected string $email = '';
 
-    protected string $homepage;
+    protected string $homepage = '';
 
     public function getName(): string
     {
