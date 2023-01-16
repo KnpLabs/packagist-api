@@ -8,13 +8,13 @@ use Packagist\Api\Result\AbstractResult;
 
 class Dist extends AbstractResult
 {
-    protected ?string $shasum;
+    protected ?string $shasum = null;
 
     protected string $type;
 
     protected string $url;
 
-    protected ?string $reference;
+    protected ?string $reference = null;
 
     public function getShasum(): ?string
     {
