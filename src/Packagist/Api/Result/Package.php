@@ -22,7 +22,7 @@ class Package extends AbstractResult
 
     protected string $repository = '';
 
-    protected ?Downloads $downloads;
+    protected ?Downloads $downloads = null;
 
     protected int $favers = 0;
 
