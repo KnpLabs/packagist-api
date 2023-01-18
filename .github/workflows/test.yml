@@ -4,8 +4,13 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-versions: ['7.4', '8.0']
+
+    name: PHP ${{ matrix.php-versions }}
 
     steps:
       - uses: actions/checkout@v2
@@ -13,7 +18,10 @@ jobs:
       - name: Set PHP version
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.0
+          php-version: ${{ matrix.php-versions }}
+
+      - name: Check PHP version
+        run: php -v
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
