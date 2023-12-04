@@ -6,6 +6,7 @@ namespace Packagist\Api\Result;
 
 use Doctrine\Inflector\InflectorFactory;
 
+#[\AllowDynamicProperties]
 abstract class AbstractResult
 {
     public function fromArray(array $data): void
