@@ -142,7 +142,7 @@ $client->setPackagistUrl('https://custom.packagist.site.org');
 ## Errors
 
 * A `Packagist\Api\PackageNotFoundException` will be thrown when the Packagist API returns a 404 response.
-* An `\InvalidArgumentException` will be thrown when the respond from Packagist was not able to be parsed.
+* An `\InvalidArgumentException` will be thrown when the response from Packagist was not able to be parsed.
 
 ## License
 
