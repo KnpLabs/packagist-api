@@ -29,6 +29,8 @@ class PackageSpec extends ObjectBehavior
             'dependents'  => 42,
             'github_stars' => 3086,
             'github_forks' => 1124,
+            // A dynamic property, causes deprecation warnings in PHP 8.2+ and is now ignored in AbstractResult
+            'supports_cheese' => true,
         ]);
     }
 

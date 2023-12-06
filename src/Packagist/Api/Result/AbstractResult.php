@@ -16,6 +16,9 @@ abstract class AbstractResult
             if (null === $value && !$this->isNullable($property)) {
                 continue;
             }
+            if (!property_exists($this, $property)) {
+                continue;
+            }
             $this->$property = $value;
         }
     }
