@@ -50,6 +50,12 @@ class Version extends AbstractResult
 
     protected array $suggest = [];
 
+    protected array $support = [];
+
+    protected string $targetDir = '';
+
+    protected bool $defaultBranch = false;
+
     /**
      * @var bool|string
      */
@@ -158,6 +164,21 @@ class Version extends AbstractResult
     public function getSuggest(): array
     {
         return $this->suggest;
+    }
+
+    public function getSupport(): array
+    {
+        return $this->support;
+    }
+
+    public function getTargetDir(): string
+    {
+        return $this->targetDir;
+    }
+
+    public function getDefaultBranch(): bool
+    {
+        return $this->defaultBranch;
     }
 
     public function isAbandoned(): bool

@@ -29,8 +29,11 @@ class PackageSpec extends ObjectBehavior
             'dependents'  => 42,
             'github_stars' => 3086,
             'github_forks' => 1124,
+            'github_watchers' => 480,
+            'github_open_issues' => 32,
             // A dynamic property, causes deprecation warnings in PHP 8.2+ and is now ignored in AbstractResult
             'supports_cheese' => true,
+            'language' => 'PHP',
         ]);
     }
 
@@ -142,5 +145,20 @@ class PackageSpec extends ObjectBehavior
     public function it_gets_github_forks()
     {
         $this->getGithubForks()->shouldReturn(1124);
+    }
+
+    public function it_gets_github_watchers()
+    {
+        $this->getGithubWatchers()->shouldReturn(480);
+    }
+
+    public function it_gets_github_open_issues()
+    {
+        $this->getGithubOpenIssues()->shouldReturn(32);
+    }
+
+    public function it_gets_language()
+    {
+        $this->getLanguage()->shouldReturn('PHP');
     }
 }

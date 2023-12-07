@@ -39,6 +39,12 @@ class Package extends AbstractResult
 
     protected int $githubForks = 0;
 
+    protected int $githubOpenIssues = 0;
+
+    protected int $githubWatchers = 0;
+
+    protected string $language = '';
+
     public function getName(): string
     {
         return $this->name;
@@ -131,5 +137,20 @@ class Package extends AbstractResult
     public function getGithubForks(): int
     {
         return $this->githubForks;
+    }
+
+    public function getGithubWatchers(): int
+    {
+        return $this->githubWatchers;
+    }
+
+    public function getGithubOpenIssues(): int
+    {
+        return $this->githubOpenIssues;
+    }
+
+    public function getLanguage(): string
+    {
+        return $this->language;
     }
 }
