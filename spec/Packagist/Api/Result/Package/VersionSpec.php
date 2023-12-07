@@ -34,6 +34,12 @@ class VersionSpec extends ObjectBehavior
             'require-dev'        => ['phpspec/phpspec2' => 'dev-develop'],
             'suggest'            => ['illuminate/events' => 'Required to use the observers with Eloquent (5.1.*).'],
             'bin'                => ['bin/sylius'],
+            'support'            => [
+                'issues' => 'https://github.com/Sylius/Sylius/issues',
+                'source' => 'https://github.com/Sylius/Sylius/tree/v0.1.0',
+            ],
+            'target_dir'         => '',
+            'default_branch'     => false,
         ]);
     }
 
@@ -172,5 +178,23 @@ class VersionSpec extends ObjectBehavior
         ]);
 
         $this->getReplacementPackage()->shouldReturn(null);
+    }
+
+    public function it_gets_support()
+    {
+        $this->getSupport()->shouldReturn([
+            'issues' => 'https://github.com/Sylius/Sylius/issues',
+            'source' => 'https://github.com/Sylius/Sylius/tree/v0.1.0',
+        ]);
+    }
+
+    public function it_gets_target_dir()
+    {
+        $this->getTargetDir()->shouldReturn('');
+    }
+
+    public function it_gets_default_branch()
+    {
+        $this->getDefaultBranch()->shouldReturn(false);
     }
 }

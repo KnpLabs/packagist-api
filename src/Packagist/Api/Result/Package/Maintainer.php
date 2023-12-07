@@ -14,6 +14,8 @@ class Maintainer extends AbstractResult
 
     protected string $homepage = '';
 
+    protected string $avatarUrl = '';
+
     public function getName(): string
     {
         return $this->name;
@@ -27,5 +29,10 @@ class Maintainer extends AbstractResult
     public function getHomepage(): string
     {
         return $this->homepage;
+    }
+
+    public function getAvatarUrl(): string
+    {
+        return $this->avatarUrl;
     }
 }

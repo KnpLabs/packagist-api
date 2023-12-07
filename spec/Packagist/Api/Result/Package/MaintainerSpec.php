@@ -15,6 +15,7 @@ class MaintainerSpec extends ObjectBehavior
             'name'     => 'Saša Stamenković',
             'email'    => 'umpirsky@gmail.com',
             'homepage' => 'umpirsky.com',
+            'avatar_url' => 'https://www.gravatar.com/avatar/example',
         ]);
     }
 
@@ -38,4 +39,8 @@ class MaintainerSpec extends ObjectBehavior
         $this->getHomepage()->shouldReturn('umpirsky.com');
     }
 
+    public function it_gets_avatar_url()
+    {
+        $this->getAvatarUrl()->shouldReturn('https://www.gravatar.com/avatar/example');
+    }
 }
