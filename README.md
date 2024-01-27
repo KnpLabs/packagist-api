@@ -13,7 +13,7 @@ Simple object oriented wrapper for Packagist API.
 The recommended way to install Packagist API is through composer:
 
 ```bash
-$ composer require knplabs/packagist-api
+composer require knplabs/packagist-api
 ```
 
 ## Usage
