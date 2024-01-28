@@ -148,7 +148,7 @@ class Factory
                 }
             }
 
-            if ($version['source']) {
+            if ($version['source']??false) {
                 $version['source'] = $this->createResult(PackageSource::class, $version['source']);
             }
 
