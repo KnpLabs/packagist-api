@@ -12,16 +12,20 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
-        "guzzlehttp/guzzle": "^6.0 || ^7.0",
+        "php": "^8.1",
         "doctrine/inflector": "^1.0 || ^2.0",
         "ext-json": "*",
         "composer/metadata-minifier": "^1.0",
-        "composer/semver": "^1.0|^2.0|^3.0"
+        "composer/semver": "^1.0|^2.0|^3.0",
+        "php-http/discovery": "^1.12",
+        "php-http/client-common": "^2.3",
+        "psr/http-client-implementation": "^1.0",
+        "psr/http-factory-implementation": "^1.0"
     },
     "require-dev": {
         "phpspec/phpspec": "^6.0 || ^7.0",
-        "squizlabs/php_codesniffer": "^3.0"
+        "squizlabs/php_codesniffer": "^3.0",
+        "guzzlehttp/guzzle": "^6.0 || ^7.0"
     },
     "autoload": {
         "psr-4": {
@@ -41,5 +45,10 @@
     "scripts": {
         "lint": "vendor/bin/phpcs --standard=PSR12 src/",
         "test": "vendor/bin/phpspec run -f pretty"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }
