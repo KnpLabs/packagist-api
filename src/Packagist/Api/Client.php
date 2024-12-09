@@ -31,8 +31,8 @@ class Client
      * @param string               $packagistUrl  Packagist URL
      */
     public function __construct(
-        ClientInterface $httpClient = null,
-        Factory $resultFactory = null,
+        ?ClientInterface $httpClient = null,
+        ?Factory $resultFactory = null,
         string $packagistUrl = 'https://packagist.org'
     ) {
         if (null === $httpClient) {
