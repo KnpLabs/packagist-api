@@ -287,6 +287,10 @@ class Client
      */
     protected function url(string $route): string
     {
+        if (preg_match('{^/p\d?/}', $route) && $this->packagistUrl === 'https://packagist.org') {
+            return 'https://repo.packagist.org' . $route;
+        }
+
         return $this->packagistUrl . $route;
     }
 
