@@ -106,11 +106,11 @@ class ClientSpec extends ObjectBehavior
         $response->getBody()->shouldBeCalled()->willReturn($body);
         $body->getContents()->shouldBeCalledTimes(2)->willReturn($data1, $data2);
 
-        $client->request('GET', 'https://packagist.org/p2/sylius/sylius.json')
+        $client->request('GET', 'https://repo.packagist.org/p2/sylius/sylius.json')
             ->shouldBeCalled()
             ->willReturn($response);
 
-        $client->request('GET', 'https://packagist.org/p2/sylius/sylius~dev.json')
+        $client->request('GET', 'https://repo.packagist.org/p2/sylius/sylius~dev.json')
             ->shouldBeCalled()
             ->willReturn($response);
 
@@ -140,7 +140,7 @@ class ClientSpec extends ObjectBehavior
         $response->getBody()->shouldBeCalled()->willReturn($body);
         $body->getContents()->shouldBeCalled()->willReturn($data);
 
-        $client->request('GET', 'https://packagist.org/p2/sylius/sylius.json')
+        $client->request('GET', 'https://repo.packagist.org/p2/sylius/sylius.json')
             ->shouldBeCalled()
             ->willReturn($response);
 
