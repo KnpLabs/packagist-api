@@ -24,9 +24,9 @@ class Version extends AbstractResult
 
     protected array $authors = [];
 
-    protected ?Source $source;
+    protected ?Source $source = null;
 
-    protected ?Dist $dist;
+    protected ?Dist $dist = null;
 
     protected string $type = '';
 
