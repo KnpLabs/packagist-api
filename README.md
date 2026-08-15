@@ -7,6 +7,11 @@ Simple object oriented wrapper for Packagist API.
 ## Requirements
 
 * PHP ^8.0 (for PHP 7.4 please use version ~2.1.0)
+* A [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client and [PSR-17](https://www.php-fig.org/psr/psr-17/) factories, e.g. `guzzlehttp/guzzle` ^7.0. These aren't required directly by this package, so if your project doesn't already pull one in, install one alongside it:
+
+```bash
+composer require guzzlehttp/guzzle
+```
 
 ## Installation
 
@@ -138,6 +143,25 @@ You can also set a custom Packagist repository URL:
 
 $client->setPackagistUrl('https://custom.packagist.site.org');
 ```
+
+#### Custom HTTP client
+
+By default, `Client` auto-discovers whichever [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP
+client and [PSR-17](https://www.php-fig.org/psr/psr-17/) factories are installed in your project,
+via [`php-http/discovery`](https://github.com/php-http/discovery). If you need to configure that
+client yourself (custom middleware, timeouts, auth, etc.), pass your own PSR-18 client instance as
+the first constructor argument instead:
+
+```php
+<?php
+
+use GuzzleHttp\Client as GuzzleClient;
+
+$httpClient = new GuzzleClient(['timeout' => 5]);
+$client = new Packagist\Api\Client($httpClient);
+```
+
+Any PSR-18 implementation works here, not just Guzzle.
 
 ## Errors
 
