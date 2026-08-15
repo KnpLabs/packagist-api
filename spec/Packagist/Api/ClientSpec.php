@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace spec\Packagist\Api;
 
-use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Stream;
 use Packagist\Api\Client;
 use Packagist\Api\PackageNotFoundException;
 use Packagist\Api\Result\Factory;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 class ClientSpec extends ObjectBehavior
 {
-    public function let(HttpClient $client, Factory $factory)
+    public function let(ClientInterface $client, Factory $factory)
     {
         $this->beConstructedWith($client, $factory);
     }
@@ -26,91 +26,96 @@ class ClientSpec extends ObjectBehavior
         $this->shouldHaveType(Client::class);
     }
 
-    public function it_search_for_packages(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_search_for_packages(ClientInterface $client, Factory $factory, ResponseInterface $response, StreamInterface $body): void
     {
         $data = file_get_contents('spec/Packagist/Api/Fixture/search.json');
-        $response->getBody()->shouldBeCalled()->willReturn($body);
-        $body->getContents()->shouldBeCalled()->willReturn($data);
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn($body);
+        $body->getContents()->willReturn($data);
 
-        $client->request('GET', 'https://packagist.org/search.json?q=sylius')
-			->shouldBeCalled()
-			->willReturn($response);
+        $client->sendRequest($this->requestMatching('GET', 'https://packagist.org/search.json?q=sylius'))
+            ->shouldBeCalled()
+            ->willReturn($response);
         $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn([]);
 
         $this->search('sylius');
     }
 
-    public function it_search_for_packages_with_limit(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_search_for_packages_with_limit(ClientInterface $client, Factory $factory, ResponseInterface $response, StreamInterface $body): void
     {
         $data = file_get_contents('spec/Packagist/Api/Fixture/search.json');
-        $response->getBody()->shouldBeCalled()->willReturn($body);
-        $body->getContents()->shouldBeCalled()->willReturn($data);
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn($body);
+        $body->getContents()->willReturn($data);
 
-        $client->request('GET', 'https://packagist.org/search.json?q=sylius')->shouldBeCalled()->willReturn($response);
+        $client->sendRequest($this->requestMatching('GET', 'https://packagist.org/search.json?q=sylius'))
+            ->shouldBeCalled()
+            ->willReturn($response);
         $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn(array());
 
         $this->search('sylius', [], 2);
     }
 
-    public function it_searches_for_packages_with_filters(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_searches_for_packages_with_filters(ClientInterface $client, Factory $factory, ResponseInterface $response, StreamInterface $body): void
     {
         $data = file_get_contents('spec/Packagist/Api/Fixture/search.json');
-        $response->getBody()->shouldBeCalled()->willReturn($body);
-        $body->getContents()->shouldBeCalled()->willReturn($data);
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn($body);
+        $body->getContents()->willReturn($data);
 
-        $client->request('GET', 'https://packagist.org/search.json?tag=storage&q=sylius')
-			->shouldBeCalled()
-			->willReturn($response);
-
+        $client->sendRequest($this->requestMatching('GET', 'https://packagist.org/search.json?tag=storage&q=sylius'))
+            ->shouldBeCalled()
+            ->willReturn($response);
         $factory->create(json_decode($data, true))->shouldBeCalled()->willReturn([]);
 
         $this->search('sylius', ['tag' => 'storage']);
     }
 
-    public function it_gets_popular_packages(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_gets_popular_packages(ClientInterface $client, Factory $factory, ResponseInterface $response, StreamInterface $body): void
     {
         $data = file_get_contents('spec/Packagist/Api/Fixture/popular.json');
-        $response->getBody()->shouldBeCalled()->willReturn($body);
-        $body->getContents()->shouldBeCalled()->willReturn($data);
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn($body);
+        $body->getContents()->willReturn($data);
 
-        $client->request('GET', 'https://packagist.org/explore/popular.json?page=1')
-			->shouldBeCalled()
-			->willReturn($response);
-
+        $client->sendRequest($this->requestMatching('GET', 'https://packagist.org/explore/popular.json?page=1'))
+            ->shouldBeCalled()
+            ->willReturn($response);
         $factory->create(json_decode($data, true))
-			->shouldBeCalled()
-			->willReturn(array_pad([], 5, null));
+            ->shouldBeCalled()
+            ->willReturn(array_pad([], 5, null));
 
         $this->popular(2)->shouldHaveCount(2);
     }
 
-    public function it_gets_package_details(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_gets_package_details(ClientInterface $client, Factory $factory, ResponseInterface $response, StreamInterface $body): void
     {
         $data = file_get_contents('spec/Packagist/Api/Fixture/get.json');
-        $response->getBody()->shouldBeCalled()->willReturn($body);
-        $body->getContents()->shouldBeCalled()->willReturn($data);
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn($body);
+        $body->getContents()->willReturn($data);
 
-        $client->request('GET', 'https://packagist.org/packages/sylius/sylius.json')
-			->shouldBeCalled()
-			->willReturn($response);
-
+        $client->sendRequest($this->requestMatching('GET', 'https://packagist.org/packages/sylius/sylius.json'))
+            ->shouldBeCalled()
+            ->willReturn($response);
         $factory->create(json_decode($data, true))->shouldBeCalled();
 
         $this->get('sylius/sylius');
     }
 
-    public function it_gets_composer_package_details(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_gets_composer_package_details(ClientInterface $client, Factory $factory, ResponseInterface $response, StreamInterface $body): void
     {
         $data1 = file_get_contents('spec/Packagist/Api/Fixture/v2_get.json');
         $data2 = file_get_contents('spec/Packagist/Api/Fixture/v2_get_dev.json');
-        $response->getBody()->shouldBeCalled()->willReturn($body);
-        $body->getContents()->shouldBeCalledTimes(2)->willReturn($data1, $data2);
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn($body);
+        $body->getContents()->willReturn($data1, $data2);
 
-        $client->request('GET', 'https://repo.packagist.org/p2/sylius/sylius.json')
+        $client->sendRequest($this->requestMatching('GET', 'https://repo.packagist.org/p2/sylius/sylius.json'))
             ->shouldBeCalled()
             ->willReturn($response);
 
-        $client->request('GET', 'https://repo.packagist.org/p2/sylius/sylius~dev.json')
+        $client->sendRequest($this->requestMatching('GET', 'https://repo.packagist.org/p2/sylius/sylius~dev.json'))
             ->shouldBeCalled()
             ->willReturn($response);
 
@@ -134,13 +139,14 @@ class ClientSpec extends ObjectBehavior
         $this->getComposer('sylius/sylius');
     }
 
-    public function it_gets_composer_releases_package_details(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_gets_composer_releases_package_details(ClientInterface $client, Factory $factory, ResponseInterface $response, StreamInterface $body): void
     {
         $data = file_get_contents('spec/Packagist/Api/Fixture/v2_get.json');
-        $response->getBody()->shouldBeCalled()->willReturn($body);
-        $body->getContents()->shouldBeCalled()->willReturn($data);
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn($body);
+        $body->getContents()->willReturn($data);
 
-        $client->request('GET', 'https://repo.packagist.org/p2/sylius/sylius.json')
+        $client->sendRequest($this->requestMatching('GET', 'https://repo.packagist.org/p2/sylius/sylius.json'))
             ->shouldBeCalled()
             ->willReturn($response);
 
@@ -153,62 +159,71 @@ class ClientSpec extends ObjectBehavior
         $this->getComposerReleases('sylius/sylius')->shouldBe($packages);
     }
 
-    public function it_lists_all_package_names(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_lists_all_package_names(ClientInterface $client, Factory $factory, ResponseInterface $response, StreamInterface $body): void
     {
         $data = file_get_contents('spec/Packagist/Api/Fixture/all.json');
-        $response->getBody()->shouldBeCalled()->willReturn($body);
-        $body->getContents()->shouldBeCalled()->willReturn($data);
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn($body);
+        $body->getContents()->willReturn($data);
 
-        $client->request('GET', 'https://packagist.org/packages/list.json')
-			->shouldBeCalled()
-			->willReturn($response);
-
+        $client->sendRequest($this->requestMatching('GET', 'https://packagist.org/packages/list.json'))
+            ->shouldBeCalled()
+            ->willReturn($response);
         $factory->create(json_decode($data, true))->shouldBeCalled();
 
         $this->all();
     }
 
-    public function it_filters_package_names_by_type(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_filters_package_names_by_type(ClientInterface $client, Factory $factory, ResponseInterface $response, StreamInterface $body): void
     {
         $data = file_get_contents('spec/Packagist/Api/Fixture/all.json');
-        $response->getBody()->shouldBeCalled()->willReturn($body);
-        $body->getContents()->shouldBeCalled()->willReturn($data);
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn($body);
+        $body->getContents()->willReturn($data);
 
-        $client->request('GET', 'https://packagist.org/packages/list.json?type=library')
-			->shouldBeCalled()
-			->willReturn($response);
-
+        $client->sendRequest($this->requestMatching('GET', 'https://packagist.org/packages/list.json?type=library'))
+            ->shouldBeCalled()
+            ->willReturn($response);
         $factory->create(json_decode($data, true))->shouldBeCalled();
 
         $this->all(['type' => 'library']);
     }
 
-    public function it_filters_package_names_by_vendor(HttpClient $client, Factory $factory, Response $response, Stream $body): void
+    public function it_filters_package_names_by_vendor(ClientInterface $client, Factory $factory, ResponseInterface $response, StreamInterface $body): void
     {
         $data = file_get_contents('spec/Packagist/Api/Fixture/all.json');
-        $response->getBody()->shouldBeCalled()->willReturn($body);
-        $body->getContents()->shouldBeCalled()->willReturn($data);
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn($body);
+        $body->getContents()->willReturn($data);
 
-        $client->request('GET', 'https://packagist.org/packages/list.json?vendor=sylius')
-			->shouldBeCalled()
-			->willReturn($response);
-
+        $client->sendRequest($this->requestMatching('GET', 'https://packagist.org/packages/list.json?vendor=sylius'))
+            ->shouldBeCalled()
+            ->willReturn($response);
         $factory->create(json_decode($data, true))->shouldBeCalled();
 
         $this->all(['vendor' => 'sylius']);
     }
 
-    public function it_throws_exception_on_404s(HttpClient $client): void
+    public function it_throws_exception_on_404s(ClientInterface $client, ResponseInterface $response): void
     {
-        $request = new Request('GET', 'https://packagist.org/packages/i-do/not-exist.json');
-        $response = new Response(404, [], json_encode(['status' => 'error', 'message' => 'Package not found']));
-        $exception = new ClientException('', $request, $response);
+        $response->getStatusCode()->willReturn(404);
 
-        $client->request('GET', 'https://packagist.org/packages/i-do/not-exist.json')
+        $client->sendRequest($this->requestMatching('GET', 'https://packagist.org/packages/i-do/not-exist.json'))
             ->shouldBeCalled()
-            ->willThrow($exception);
+            ->willReturn($response);
 
         $this->shouldThrow(PackageNotFoundException::class)
             ->during('get', ['i-do/not-exist']);
+    }
+
+    /**
+     * Builds a Prophecy argument matcher that asserts a PSR-7 request was built
+     * for the given HTTP method and fully qualified URL.
+     */
+    private function requestMatching(string $method, string $url): Argument\Token\TokenInterface
+    {
+        return Argument::that(function (RequestInterface $request) use ($method, $url): bool {
+            return $request->getMethod() === $method && (string) $request->getUri() === $url;
+        });
     }
 }

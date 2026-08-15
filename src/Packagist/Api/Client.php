@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Packagist\Api;
 
 use Composer\Semver\Semver;
-use Exception;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Client\Common\HttpMethodsClientInterface;
 use Http\Client\Common\PluginClientFactory;
@@ -371,7 +370,7 @@ class Client
      * @param array $headers
      * @param string|StreamInterface|null $body
      * @return string
-     * @throws Exception
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     protected function postRequest(string $url, array $headers = [], string|StreamInterface|null $body = null): string
     {
@@ -387,21 +386,16 @@ class Client
      * @param string $url
      * @return string
      * @throws PackageNotFoundException
-     * @throws Exception
      */
     protected function request(string $url): string
     {
-        try {
-            return $this->httpClient
-                ->get($url)
-                ->getBody()
-                ->getContents();
-        } catch (Exception $e) {
-            if ($e->getCode() === 404) {
-                throw new PackageNotFoundException('The requested package was not found.', 404);
-            }
-            throw $e;
+        $response = $this->httpClient->get($url);
+
+        if ($response->getStatusCode() === 404) {
+            throw new PackageNotFoundException('The requested package was not found.', 404);
         }
+
+        return $response->getBody()->getContents();
     }
 
     /**
