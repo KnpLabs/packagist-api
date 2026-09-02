@@ -28,11 +28,6 @@
             "Packagist\\Api\\": "src/"
         }
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.x-dev"
-        }
-    },
     "scripts": {
         "lint": "bin/phpcs --standard=PSR12 src/",
         "test": "bin/phpspec run -f pretty"
