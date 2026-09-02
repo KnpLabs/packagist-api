@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace Packagist\Api;
 
 use Composer\Semver\Semver;
-use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
+use Http\Client\Common\HttpMethodsClient;
+use Http\Client\Common\HttpMethodsClientInterface;
+use Http\Client\Common\PluginClientFactory;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 use Packagist\Api\Result\Advisory;
 use Packagist\Api\Result\Factory;
 use Packagist\Api\Result\Package;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Packagist Api
@@ -19,7 +23,7 @@ use Packagist\Api\Result\Package;
  */
 class Client
 {
-    protected ClientInterface $httpClient;
+    protected HttpMethodsClientInterface $httpClient;
 
     protected Factory $resultFactory;
 
@@ -36,14 +40,18 @@ class Client
         string $packagistUrl = 'https://packagist.org'
     ) {
         if (null === $httpClient) {
-            $httpClient = new HttpClient();
+            $httpClient = (new PluginClientFactory())->createClient(Psr18ClientDiscovery::find());
         }
 
         if (null === $resultFactory) {
             $resultFactory = new Factory();
         }
 
-        $this->httpClient = $httpClient;
+        $this->httpClient = new HttpMethodsClient(
+            $httpClient,
+            Psr17FactoryDiscovery::findRequestFactory(),
+            Psr17FactoryDiscovery::findStreamFactory()
+        );
         $this->resultFactory = $resultFactory;
         $this->packagistUrl = $packagistUrl;
     }
@@ -222,9 +230,11 @@ class Client
         if ($updatedSince !== null) {
             $query['updatedSince'] = $updatedSince;
         }
-        $options = [
+        $queryString = http_build_query([
             'query' => array_filter($query),
-        ];
+        ]);
+        $headers = [];
+        $body = null;
 
         // Add packages if appropriate
         if (count($packages) > 0) {
@@ -235,13 +245,13 @@ class Client
                 }
                 $content['packages'][] = $package;
             }
-            $options['headers']['Content-type'] = 'application/x-www-form-urlencoded';
-            $options['body'] = http_build_query($content);
+            $headers['Content-type'] = 'application/x-www-form-urlencoded';
+            $body = http_build_query($content);
         }
 
         // Get advisories from API
         /** @var Advisory[] $advisories */
-        $advisories = $this->respondPost($this->url('/api/security-advisories/'), $options);
+        $advisories = $this->respondPost($this->url('/api/security-advisories/?' . $queryString), $headers, $body);
 
         // Filter advisories if necessary
         if (count($advisories) > 0 && $filterByVersion) {
@@ -312,12 +322,13 @@ class Client
      * Execute the POST request and parse the response
      *
      * @param string $url
-     * @param array $option
+     * @param array $headers
+     * @param string|StreamInterface|null $body
      * @return array|Package
      */
-    protected function respondPost(string $url, array $options)
+    protected function respondPost(string $url, array $headers = [], string|StreamInterface|null $body = null)
     {
-        $response = $this->postRequest($url, $options);
+        $response = $this->postRequest($url, $headers, $body);
         $response = $this->parse($response);
 
         return $this->create($response);
@@ -356,14 +367,15 @@ class Client
      * Execute the POST request
      *
      * @param string $url
-     * @param array $options
+     * @param array $headers
+     * @param string|StreamInterface|null $body
      * @return string
-     * @throws GuzzleException
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    protected function postRequest(string $url, array $options): string
+    protected function postRequest(string $url, array $headers = [], string|StreamInterface|null $body = null): string
     {
         return $this->httpClient
-            ->request('POST', $url, $options)
+            ->post($url, $headers, $body)
             ->getBody()
             ->getContents();
     }
@@ -374,21 +386,16 @@ class Client
      * @param string $url
      * @return string
      * @throws PackageNotFoundException
-     * @throws GuzzleException
      */
     protected function request(string $url): string
     {
-        try {
-            return $this->httpClient
-                ->request('GET', $url)
-                ->getBody()
-                ->getContents();
-        } catch (GuzzleException $e) {
-            if ($e->getCode() === 404) {
-                throw new PackageNotFoundException('The requested package was not found.', 404);
-            }
-            throw $e;
+        $response = $this->httpClient->get($url);
+
+        if ($response->getStatusCode() === 404) {
+            throw new PackageNotFoundException('The requested package was not found.', 404);
         }
+
+        return $response->getBody()->getContents();
     }
 
     /**
