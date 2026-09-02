@@ -6,7 +6,7 @@ Simple object oriented wrapper for Packagist API.
 
 ## Requirements
 
-* PHP ^8.0 (for PHP 7.4 please use version ~2.1.0)
+* PHP ^8.2 (for PHP 7.4 please use version ~2.1.0; for PHP 8.0/8.1 please use version ~2.2.0)
 * A [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client and [PSR-17](https://www.php-fig.org/psr/psr-17/) factories. This package doesn't require a specific implementation directly - if your project doesn't already have one, [php-http/discovery](https://github.com/php-http/discovery) will automatically install a well-known implementation (e.g. `guzzlehttp/guzzle`) for you when you require this package. If you'd rather use a specific client, install it yourself before requiring this package, e.g.:
 
 ```bash

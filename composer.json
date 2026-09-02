@@ -12,9 +12,8 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.2",
         "doctrine/inflector": "^1.0 || ^2.0",
-        "ext-json": "*",
         "composer/metadata-minifier": "^1.0",
         "composer/semver": "^1.0|^2.0|^3.0",
         "php-http/discovery": "^1.12",
@@ -23,7 +22,7 @@
         "psr/http-factory-implementation": "^1.0"
     },
     "require-dev": {
-        "phpspec/phpspec": "^7.5 || ^8.0",
+        "phpspec/phpspec": "^8.3",
         "squizlabs/php_codesniffer": "^4.0",
         "guzzlehttp/guzzle": "^7.0"
     },
