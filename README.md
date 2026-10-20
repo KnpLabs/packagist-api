@@ -1,21 +1,33 @@
 # Packagist API
 
-![Build status](https://github.com/KnpLabs/packagist-api/actions/workflows/test.yml/badge.svg) [![Latest Stable Version](https://poser.pugx.org/KnpLabs/packagist-api/v/stable.png)](https://packagist.org/packages/KnpLabs/packagist-api) [![Total Downloads](https://poser.pugx.org/KnpLabs/packagist-api/downloads.png)](https://packagist.org/packages/KnpLabs/packagist-api)
+[![Build status](https://github.com/KnpLabs/packagist-api/actions/workflows/test.yml/badge.svg)](https://github.com/KnpLabs/packagist-api/actions/workflows/test.yml)
+[![Latest Stable Version](https://poser.pugx.org/knplabs/packagist-api/v/stable.svg)](https://packagist.org/packages/knplabs/packagist-api)
+[![Total Downloads](https://poser.pugx.org/knplabs/packagist-api/downloads.svg)](https://packagist.org/packages/knplabs/packagist-api)
 
-Simple object oriented wrapper for Packagist API.
+A simple, object oriented wrapper for the [Packagist API](https://packagist.org/apidoc).
 
 ## Requirements
 
-* PHP ^8.2 (for PHP 7.4 please use version ~2.1.0; for PHP 8.0/8.1 please use version ~2.2.0)
-* A [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client and [PSR-17](https://www.php-fig.org/psr/psr-17/) factories. This package doesn't require a specific implementation directly - if your project doesn't already have one, [php-http/discovery](https://github.com/php-http/discovery) will automatically install a well-known implementation (e.g. `guzzlehttp/guzzle`) for you when you require this package. If you'd rather use a specific client, install it yourself before requiring this package, e.g.:
+- PHP 8.2 or later
+- A [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client and [PSR-17](https://www.php-fig.org/psr/psr-17/) factories
+
+This package doesn't depend on a specific HTTP client. If your project doesn't have one yet,
+[php-http/discovery](https://github.com/php-http/discovery) installs a well-known implementation
+(such as `guzzlehttp/guzzle`) for you. To use a specific client, install it before this package:
 
 ```bash
 composer require guzzlehttp/guzzle
 ```
 
-## Installation
+### Older PHP versions
 
-The recommended way to install Packagist API is through composer:
+| PHP version | Package version |
+| ----------- | --------------- |
+| 8.2+        | `^3.0`          |
+| 8.0, 8.1    | `~2.2.0`        |
+| 7.4         | `~2.1.0`        |
+
+## Installation
 
 ```bash
 composer require knplabs/packagist-api
@@ -23,180 +35,197 @@ composer require knplabs/packagist-api
 
 ## Usage
 
-#### Search for packages:
+```php
+use Packagist\Api\Client;
+
+$client = new Client();
+```
+
+### Search for packages
 
 ```php
-<?php
-
-$client = new Packagist\Api\Client();
-
 foreach ($client->search('sylius') as $result) {
-    echo $result->getName();
+    echo $result->getName() . PHP_EOL;
 }
 
-// Outputs:
-sylius/sylius
-sylius/resource-bundle
-sylius/cart-bundle
-sylius/flow-bundle
-sylius/sales-bundle
-sylius/shipping-bundle
-sylius/taxation-bundle
-sylius/money-bundle
-sylius/assortment-bundle
-sylius/addressing-bundle
-sylius/payments-bundle
-sylius/taxonomies-bundle
-sylius/inventory-bundle
-sylius/settings-bundle
-sylius/promotions-bundle
-...
+// sylius/sylius
+// sylius/resource-bundle
+// sylius/grid-bundle
+// ...
 ```
 
-#### You can limit results to a desired amount of pages:
+Each result is a `Packagist\Api\Result\Result`, with `getName()`, `getDescription()`, `getUrl()`,
+`getRepository()`, `getDownloads()` and `getFavers()`.
+
+Results can be filtered by `vendor`, `type` or `tags`:
 
 ```php
-<?php
-
-$client->search('sylius', [], 2)  // get first 2 pages
+$client->search('cart', ['type' => 'symfony-bundle']);
 ```
 
-#### Get package details:
-
-Gets full package details, generated dynamically by the Packagist API.
-Consider using [getComposer()](#get-composer-details)
-instead to use the Packagist API more efficiently if you don't need all
-the full metadata for a package.
+By default all pages of results are fetched. Use `limit` to cap the number of pages:
 
 ```php
-<?php
+$client->search('sylius', limit: 2);
+```
 
+### Get package details
+
+`get()` returns full package details, generated dynamically by the Packagist API. If you don't
+need all the metadata, use [`getComposer()`](#get-composer-metadata) instead. It is cheaper for
+Packagist to serve.
+
+```php
 $package = $client->get('sylius/sylius');
 
-printf(
-    'Package %s. %s.',
-    $package->getName(),
-    $package->getDescription()
-);
+echo "{$package->getName()}: {$package->getDescription()}";
 
-// Outputs:
-Package sylius/sylius. Modern ecommerce for Symfony2.
+// sylius/sylius: E-Commerce platform for PHP, based on Symfony framework.
 ```
 
-#### Get composer details: {#get-composer-details}
+### Get Composer metadata
 
-Similar to `get()`, but uses Composer metadata which is Packagist's preferred
-way of retrieving details, since responses are cached efficiently as static files
-by the Packagist service. The response lacks some metadata that is provided
-by `get()`, see [Packagist API documentation](https://packagist.org/apidoc)
-for details. Returns multiple packages, you need to select the requested
-one from the indexed array.
+`getComposer()` uses Composer metadata, which is Packagist's preferred way of serving package
+details, since responses are cached as static files. It lacks some of the metadata that `get()`
+provides. See the [Packagist API documentation](https://packagist.org/apidoc) for details.
+
+It returns an array of packages keyed by name, so select the one you asked for:
 
 ```php
-<?php
+$package = $client->getComposer('sylius/sylius')['sylius/sylius'];
+$latest = $package->getVersions()[0];
 
-$packages = $client->getComposer('sylius/sylius');
-$package = $packages['sylius/sylius'];
-$versions = $package->getVersions();
+echo "{$latest->getName()} {$latest->getVersion()}";
 
-printf(
-    'Package %s. %s.',
-    $versions[0]->getName(),
-    $versions[0]->getDescription()
-);
-
-// Outputs:
-Package sylius/sylius. Modern ecommerce for Symfony2.
+// sylius/sylius v2.3.1
 ```
 
-#### List all packages:
+`getComposer()` returns both tagged releases and dev branches. To fetch only one of them, use
+`getComposerReleases()` or `getComposerBranches()`:
 
 ```php
-<?php
+$releases = $client->getComposerReleases('sylius/sylius');
+$branches = $client->getComposerBranches('sylius/sylius');
+```
 
-foreach ($client->all() as $package) {
-    echo $package;
+### List all packages
+
+```php
+foreach ($client->all() as $name) {
+    echo $name . PHP_EOL;
 }
 
-// Outputs:
-abhinavsingh/jaxl
-abishekrsrikaanth/fuel-util
-abmundi/database-commands-bundle
-...
+// 0.0.0/composer-include-files
+// 0.0.0/laravel-env-shim
+// ...
 ```
 
-#### They can be filtered by type or vendor:
+The list can be filtered by `type` or `vendor`:
 
 ```php
-<?php
-
-$client->all(array('type' => 'library'));
-$client->all(array('vendor' => 'sylius'));
+$client->all(['type' => 'library']);
+$client->all(['vendor' => 'sylius']);
 ```
 
-#### Extra fields can be requested for each package:
+Request extra `fields` to get an array keyed by package name, instead of a list of names:
 
 ```php
-<?php
+$client->all([
+    'vendor' => 'sylius',
+    'fields' => ['abandoned', 'repository', 'type'],
+]);
 
-$client->all(array('vendor' => 'sylius', 'fields' => array('abandoned', 'repository', 'type')));
-
-// Returns an array keyed by package name:
-array(
-    'sylius/sylius' => array(
-        'abandoned' => false,
-        'repository' => 'https://github.com/Sylius/Sylius',
-        'type' => 'project',
-    ),
-    ...
-)
+// [
+//     'sylius/addressing' => [
+//         'abandoned' => false,
+//         'repository' => 'https://github.com/Sylius/Addressing',
+//         'type' => 'library',
+//     ],
+//     ...
+// ]
 ```
 
-#### Custom Packagist repositories
-
-You can also set a custom Packagist repository URL:
+### Popular packages
 
 ```php
-<?php
+foreach ($client->popular(3) as $result) {
+    echo $result->getName() . PHP_EOL;
+}
 
+// symfony/deprecation-contracts
+// symfony/polyfill-mbstring
+// psr/log
+```
+
+### Security advisories
+
+Pass a list of package names to get known security advisories, keyed by package name:
+
+```php
+$advisories = $client->advisories(['monolog/monolog']);
+
+foreach ($advisories['monolog/monolog'] ?? [] as $advisory) {
+    echo "{$advisory->getTitle()} ({$advisory->getAffectedVersions()})" . PHP_EOL;
+}
+```
+
+To only get advisories that affect the versions you use, pass versions as values and set
+`filterByVersion`:
+
+```php
+$client->advisories(['monolog/monolog' => '1.8.1'], filterByVersion: true);
+
+// Header injection in NativeMailerHandler (>=1.8.0,<1.12.0)
+```
+
+You can also only return advisories updated after a given Unix timestamp:
+
+```php
+$client->advisories(['monolog/monolog'], updatedSince: strtotime('2024-01-01'));
+```
+
+### Custom Packagist repository
+
+```php
 $client->setPackagistUrl('https://custom.packagist.site.org');
+
+// Or in the constructor:
+$client = new Client(packagistUrl: 'https://custom.packagist.site.org');
 ```
 
-#### Custom HTTP client
+### Custom HTTP client
 
-By default, `Client` auto-discovers whichever [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP
-client and [PSR-17](https://www.php-fig.org/psr/psr-17/) factories are installed in your project,
-via [`php-http/discovery`](https://github.com/php-http/discovery). If you need to configure that
-client yourself (custom middleware, timeouts, auth, etc.), pass your own PSR-18 client instance as
-the first constructor argument instead:
+By default, `Client` auto-discovers whichever PSR-18 HTTP client and PSR-17 factories are
+installed, via [php-http/discovery](https://github.com/php-http/discovery). To configure the
+client yourself (middleware, timeouts, auth, etc.), pass your own PSR-18 client:
 
 ```php
-<?php
-
 use GuzzleHttp\Client as GuzzleClient;
+use Packagist\Api\Client;
 
-$httpClient = new GuzzleClient(['timeout' => 5]);
-$client = new Packagist\Api\Client($httpClient);
+$client = new Client(new GuzzleClient(['timeout' => 5]));
 ```
 
-Any PSR-18 implementation works here, not just Guzzle.
+Any PSR-18 implementation works, not only Guzzle.
+
+More runnable examples are in the [`examples`](examples) directory.
 
 ## Errors
 
-* A `Packagist\Api\PackageNotFoundException` will be thrown when the Packagist API returns a 404 response.
-* An `\InvalidArgumentException` will be thrown when the response from Packagist was not able to be parsed.
+- `Packagist\Api\PackageNotFoundException` is thrown when the Packagist API returns a 404 response.
+- `InvalidArgumentException` is thrown when the response from Packagist can't be parsed.
 
 ## License
 
-`packagist-api` is licensed under the MIT License - see the LICENSE file for details.
+`packagist-api` is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Maintainers
 
 KNPLabs is looking for maintainers ([see why](https://knplabs.com/en/blog/news-for-our-foss-projects-maintenance)).
 
-If you are interested, feel free to open a PR to ask to be added as a maintainer.
+If you are interested, feel free to open a PR to ask to be added as a maintainer. We'll be glad
+to hear from you!
 
-We’ll be glad to hear from you :)
+This library is maintained by the following people (alphabetically sorted):
 
-This library is maintained by the following people (alphabetically sorted) :
-- @robbieaverill
+- [@robbieaverill](https://github.com/robbieaverill)
