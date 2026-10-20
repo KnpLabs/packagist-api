@@ -35,6 +35,9 @@ class Factory
             return $this->createSearchResults($data['results']);
         }
         if (isset($data['packages'])) {
+            if (!$data['packages']) {
+                return [];
+            }
             $packageOrResult = $data['packages'][array_key_first($data['packages'])];
             if (isset($packageOrResult['name'])) {
                 // Used for /explore/popular.json
@@ -148,7 +151,7 @@ class Factory
                 }
             }
 
-            if ($version['source']) {
+            if (isset($version['source']) && $version['source']) {
                 $version['source'] = $this->createResult(PackageSource::class, $version['source']);
             }
 

@@ -151,22 +151,31 @@ class Client
     }
 
     /**
-     * Search packages
+     * List packages
      *
      * Available filters:
      *
      *    * vendor: vendor of package (require or require-dev in composer.json)
      *    * type:   type of package (type in composer.json)
-     *    * tags:   tags of package (keywords in composer.json)
+     *    * fields: extra fields to return for each package, e.g. ['abandoned', 'repository', 'type']
      *
      * @param array  $filters An array of filters
-     * @return array|Package The results, or single result
+     * @return string[]|array<string, array<string, mixed>> Package names, or package
+     *                                                      fields keyed by package name when "fields" is set
      */
     public function all(array $filters = [])
     {
         $url = '/packages/list.json';
         if ($filters) {
             $url .= '?' . http_build_query($filters);
+        }
+
+        if (!empty($filters['fields'])) {
+            // The "fields" response is a map of package name to field values, which
+            // the result factory cannot tell apart from other "packages" responses
+            $response = $this->parse($this->request($this->url($url)));
+
+            return $response['packages'] ?? [];
         }
 
         return $this->respond($this->url($url));

@@ -204,6 +204,32 @@ class ClientSpec extends ObjectBehavior
         $this->all(['vendor' => 'sylius']);
     }
 
+    public function it_lists_package_fields_without_using_the_factory(ClientInterface $client, Factory $factory, ResponseInterface $response, StreamInterface $body): void
+    {
+        $data = file_get_contents('spec/Packagist/Api/Fixture/all_fields.json');
+        $response->getStatusCode()->willReturn(200);
+        $response->getBody()->willReturn($body);
+        $body->getContents()->willReturn($data);
+
+        $client->sendRequest($this->requestMatching('GET', 'https://packagist.org/packages/list.json?vendor=knplabs&fields%5B0%5D=abandoned&fields%5B1%5D=repository&fields%5B2%5D=type'))
+            ->shouldBeCalled()
+            ->willReturn($response);
+        $factory->create(Argument::any())->shouldNotBeCalled();
+
+        $this->all(['vendor' => 'knplabs', 'fields' => ['abandoned', 'repository', 'type']])->shouldBe([
+            'knplabs/console-service-provider' => [
+                'abandoned' => true,
+                'repository' => 'https://github.com/KnpLabs/ConsoleServiceProvider',
+                'type' => 'library',
+            ],
+            'knplabs/dictionary-bundle' => [
+                'abandoned' => false,
+                'repository' => 'https://github.com/KnpLabs/DictionaryBundle',
+                'type' => 'symfony-bundle',
+            ],
+        ]);
+    }
+
     public function it_throws_exception_on_404s(ClientInterface $client, ResponseInterface $response): void
     {
         $response->getStatusCode()->willReturn(404);

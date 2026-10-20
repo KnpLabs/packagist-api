@@ -122,6 +122,20 @@ class FactorySpec extends ObjectBehavior
         $this->create($data)->shouldHaveType(Package::class);
     }
 
+    public function it_creates_packages_with_missing_source(): void
+    {
+        $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_null_source.json'), true);
+        foreach ($data['package']['versions'] as $branch => $version) {
+            unset($data['package']['versions'][$branch]['source']);
+        }
+        $this->create($data)->shouldHaveType(Package::class);
+    }
+
+    public function it_creates_empty_packages_list(): void
+    {
+        $this->create(['packages' => []])->shouldBe([]);
+    }
+
     public function it_creates_packages_with_null_description(): void
     {
         $data = json_decode(file_get_contents('spec/Packagist/Api/Fixture/get_null_description.json'), true);
