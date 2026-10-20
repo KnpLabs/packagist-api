@@ -134,6 +134,24 @@ $client->all(array('type' => 'library'));
 $client->all(array('vendor' => 'sylius'));
 ```
 
+#### Extra fields can be requested for each package:
+
+```php
+<?php
+
+$client->all(array('vendor' => 'sylius', 'fields' => array('abandoned', 'repository', 'type')));
+
+// Returns an array keyed by package name:
+array(
+    'sylius/sylius' => array(
+        'abandoned' => false,
+        'repository' => 'https://github.com/Sylius/Sylius',
+        'type' => 'project',
+    ),
+    ...
+)
+```
+
 #### Custom Packagist repositories
 
 You can also set a custom Packagist repository URL:
